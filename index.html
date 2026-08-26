@@ -271,10 +271,9 @@
 
         /* ========== 대시보드 ========== */
         .dashboard {
-            display: grid;
-            grid-template-columns: 250px 1fr;
-            gap: 30px;
+            display: flex;
             min-height: 100vh;
+            position: relative;
         }
 
         .sidebar {
@@ -318,8 +317,10 @@
         }
 
         .main-content {
+            flex: 1;
             margin-left: 250px;
-            padding-bottom: 40px;
+            padding: 40px 40px 40px 40px;
+            width: calc(100% - 250px);
         }
 
         .greeting {
@@ -890,6 +891,7 @@
 
             .main-content {
                 margin-left: 200px;
+                width: calc(100% - 200px);
             }
 
             .intro-title {
@@ -903,7 +905,7 @@
 
         @media (max-width: 768px) {
             .dashboard {
-                grid-template-columns: 1fr;
+                flex-direction: column;
                 gap: 0;
             }
 
@@ -939,6 +941,7 @@
 
             .main-content {
                 margin-left: 0;
+                width: 100%;
             }
 
             .intro-title {
@@ -1061,9 +1064,10 @@
             }
 
             .main-content {
-                margin-left: 0;
+                margin-left: 180px;
                 padding: 15px;
                 gap: 15px;
+                width: calc(100% - 180px);
             }
 
             .greeting {
