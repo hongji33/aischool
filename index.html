@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 웹앱 개발 12차시 진행 관리</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap">
+    <style>
+        :root {
+            --primary: #0066CC;
+            --success: #00AA44;
+            --warning: #FF9900;
+            --danger: #DD3333;
+            --neutral-light: #F0F4F8;
+            --neutral-bg: #E8E8E8;
+            --text-dark: #1A1A1A;
+            --text-light: #555555;
+            --border: #D0D0D0;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --neutral-light: #1a1a1a;
+                --neutral-bg: #2a2a2a;
+                --text-dark: #F5F5F5;
+                --text-light: #BBBBBB;
+                --border: #444444;
+            }
+        }
+
+        :root[data-theme="dark"] {
+            --neutral-light: #1a1a1a;
+            --neutral-bg: #2a2a2a;
+            --text-dark: #F5F5F5;
+            --text-light: #BBBBBB;
+            --border: #444444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: var(--neutral-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* 헤더 */
+        .header {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        .header p {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        /* 통계 카드 */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .stat-card {
+                background: #252525;
+            }
+        }
+
+        :root[data-theme="dark"] .stat-card {
+            background: #252525;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-bar {
+            width: 100%;
+            height: 6px;
+            background: var(--neutral-bg);
+            border-radius: 3px;
+            margin-top: 12px;
+            overflow: hidden;
+        }
+
+        .stat-bar-fill {
+            height: 100%;
+            background: var(--success);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        /* 메인 콘텐츠 */
+        .main {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        @media (max-width: 768px) {
+            .main {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 학생 목록 */
+        .student-list {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .student-list {
+                background: #252525;
+            }
+        }
+
+        :root[data-theme="dark"] .student-list {
+            background: #252525;
+        }
+
+        .student-list-header {
+            padding: 15px;
+            background: var(--neutral-bg);
+            border-bottom: 1px solid var(--border);
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            color: var(--text-light);
+            letter-spacing: 0.5px;
+        }
+
+        .student-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .student-item:last-child {
+            border-bottom: none;
+        }
+
+        .student-item:hover {
+            background: var(--neutral-bg);
+        }
+
+        .student-item.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .student-progress {
+            width: 40px;
+            height: 4px;
+            background: var(--neutral-bg);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+
+        .student-item.active .student-progress {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .student-progress-fill {
+            height: 100%;
+            background: var(--success);
+            transition: width 0.3s;
+        }
+
+        /* 차시 그리드 */
+        .sessions-container {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 30px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .sessions-container {
+                background: #252525;
+            }
+        }
+
+        :root[data-theme="dark"] .sessions-container {
+            background: #252525;
+        }
+
+        .student-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .student-header h2 {
+            font-size: 24px;
+            color: var(--text-dark);
+        }
+
+        .student-progress-info {
+            text-align: right;
+        }
+
+        .student-progress-info .progress-percent {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .student-progress-info .progress-label {
+            font-size: 12px;
+            color: var(--text-light);
+            text-transform: uppercase;
+        }
+
+        /* 프로젝트 섹션 */
+        .phase {
+            margin-bottom: 40px;
+        }
+
+        .phase-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-light);
+        }
+
+        .phase-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        /* 차시 카드 그리드 */
+        .sessions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 12px;
+        }
+
+        .session-card {
+            background: var(--neutral-bg);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .session-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary);
+        }
+
+        .session-card.completed {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+
+        .session-card.in-progress {
+            background: var(--warning);
+            border-color: var(--warning);
+            color: white;
+        }
+
+        .session-number {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .session-title {
+            font-size: 11px;
+            font-weight: 500;
+            line-height: 1.3;
+            text-wrap: balance;
+        }
+
+        .session-check {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            width: 16px;
+            height: 16px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .session-card.completed .session-check {
+            opacity: 1;
+            color: var(--success);
+        }
+
+        .session-card.in-progress .session-check {
+            opacity: 1;
+            color: var(--warning);
+        }
+
+        /* 추가 버튼 */
+        .add-student {
+            padding: 12px 15px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 8px;
+            margin-top: 15px;
+            transition: background 0.3s;
+        }
+
+        .add-student:hover {
+            background: #0052a3;
+        }
+
+        /* 지시사항 */
+        .instructions {
+            background: #E3F2FD;
+            border-left: 4px solid var(--primary);
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 30px;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #0d47a1;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .instructions {
+                background: #1a237e;
+                color: #90caf9;
+            }
+        }
+
+        :root[data-theme="dark"] .instructions {
+            background: #1a237e;
+            color: #90caf9;
+        }
+
+        /* 모달 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .modal-content {
+                background: #252525;
+            }
+        }
+
+        :root[data-theme="dark"] .modal-content {
+            background: #252525;
+        }
+
+        .modal-content h3 {
+            margin-bottom: 15px;
+            color: var(--text-dark);
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-family: 'Noto Sans KR', sans-serif;
+            background: var(--neutral-light);
+            color: var(--text-dark);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .modal-buttons button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .btn-save {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-save:hover {
+            background: #0052a3;
+        }
+
+        .btn-cancel {
+            background: var(--neutral-bg);
+            color: var(--text-dark);
+        }
+
+        .btn-cancel:hover {
+            background: var(--border);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 헤더 -->
+        <div class="header">
+            <h1>🚀 AI 웹앱 개발 12차시</h1>
+            <p>나에게, 우리에게 필요한 웹앱 만들기</p>
+        </div>
+
+        <!-- 통계 -->
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-label">전체 학생 수</div>
+                <div class="stat-value" id="totalStudents">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">평균 진행률</div>
+                <div class="stat-value" id="avgProgress">0%</div>
+                <div class="stat-bar">
+                    <div class="stat-bar-fill" id="avgProgressBar" style="width: 0%"></div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">완료한 차시</div>
+                <div class="stat-value" id="totalCompleted">0</div>
+            </div>
+        </div>
+
+        <!-- 메인 콘텐츠 -->
+        <div class="main">
+            <!-- 학생 목록 -->
+            <div class="student-list">
+                <div class="student-list-header">학생 목록</div>
+                <div id="studentListContainer"></div>
+                <button class="add-student" onclick="openAddStudentModal()">+ 학생 추가</button>
+            </div>
+
+            <!-- 진행 상황 -->
+            <div class="sessions-container">
+                <div id="contentArea">
+                    <p style="text-align: center; color: var(--text-light); padding: 40px 20px;">학생을 선택해주세요</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 지시사항 -->
+        <div class="instructions">
+            <strong>💡 사용 안내</strong><br>
+            • 학생을 추가하고 차시 카드를 클릭하여 완료/미완료를 표시하세요<br>
+            • 데이터는 자동으로 저장됩니다<br>
+            • 12차시는 4개 단계로 나뉩니다: 개념 학습(1-2차시) → 개인 프로젝트(3-5차시) → 공동 프로젝트(6-8차시) → 고급 프로젝트(9-12차시)
+        </div>
+    </div>
+
+    <!-- 모달 -->
+    <div class="modal" id="addStudentModal">
+        <div class="modal-content">
+            <h3>학생 추가</h3>
+            <input type="text" id="studentNameInput" placeholder="학생 이름을 입력하세요" autofocus>
+            <div class="modal-buttons">
+                <button class="btn-save" onclick="addStudent()">추가</button>
+                <button class="btn-cancel" onclick="closeAddStudentModal()">취소</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 데이터 구조
+        const sessionData = {
+            1: { title: "AI와 웹앱\n이해하기", phase: 1 },
+            2: { title: "Gemini 사용법\n배우기", phase: 1 },
+            3: { title: "내가 필요한 앱\n아이디어", phase: 2 },
+            4: { title: "프로토타입\n설계", phase: 2 },
+            5: { title: "코드 생성&\n구현", phase: 2 },
+            6: { title: "학교 앱\n주제 선정", phase: 3 },
+            7: { title: "팀 개발\n진행", phase: 3 },
+            8: { title: "기능 개선&\n디버깅", phase: 3 },
+            9: { title: "가족/친구 앱\n아이디어", phase: 4 },
+            10: { title: "전체 사이클\n경험", phase: 4 },
+            11: { title: "프로젝트\n완성", phase: 4 },
+            12: { title: "발표&\n평가", phase: 4 }
+        };
+
+        const phases = {
+            1: "1단계: 개념 학습",
+            2: "2단계: 개인 프로젝트",
+            3: "3단계: 공동 프로젝트",
+            4: "4단계: 고급 프로젝트 & 마무리"
+        };
+
+        let students = [];
+        let selectedStudent = null;
+
+        // 로컬 스토리지에서 데이터 로드
+        function loadData() {
+            const saved = localStorage.getItem('studentData');
+            if (saved) {
+                students = JSON.parse(saved);
+            } else {
+                // 기본 학생 추가
+                students = [
+                    { name: "예시 학생 1", progress: [0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
+                    { name: "예시 학생 2", progress: [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0] }
+                ];
+                saveData();
+            }
+        }
+
+        // 로컬 스토리지에 데이터 저장
+        function saveData() {
+            localStorage.setItem('studentData', JSON.stringify(students));
+            updateStats();
+        }
+
+        // 학생 추가
+        function addStudent() {
+            const name = document.getElementById('studentNameInput').value.trim();
+            if (!name) return;
+
+            students.push({
+                name: name,
+                progress: new Array(12).fill(0)
+            });
+
+            saveData();
+            renderStudentList();
+            closeAddStudentModal();
+            document.getElementById('studentNameInput').value = '';
+        }
+
+        // 차시 상태 변경
+        function toggleSession(index) {
+            if (!selectedStudent) return;
+
+            const sessionIndex = index - 1;
+            selectedStudent.progress[sessionIndex] = selectedStudent.progress[sessionIndex] === 0 ? 1 : 0;
+            saveData();
+            renderSessionGrid();
+        }
+
+        // 학생 선택
+        function selectStudent(index) {
+            selectedStudent = students[index];
+            renderStudentList();
+            renderSessionGrid();
+        }
+
+        // 학생 목록 렌더링
+        function renderStudentList() {
+            const container = document.getElementById('studentListContainer');
+            container.innerHTML = students.map((student, index) => {
+                const progress = (student.progress.filter(p => p === 1).length / 12) * 100;
+                const isActive = selectedStudent === student;
+                return `
+                    <div class="student-item ${isActive ? 'active' : ''}" onclick="selectStudent(${index})">
+                        <span>${student.name}</span>
+                        <div class="student-progress">
+                            <div class="student-progress-fill" style="width: ${progress}%"></div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // 차시 그리드 렌더링
+        function renderSessionGrid() {
+            if (!selectedStudent) {
+                document.getElementById('contentArea').innerHTML = '<p style="text-align: center; color: var(--text-light); padding: 40px 20px;">학생을 선택해주세요</p>';
+                return;
+            }
+
+            const progress = (selectedStudent.progress.filter(p => p === 1).length / 12) * 100;
+
+            let html = `
+                <div class="student-header">
+                    <h2>${selectedStudent.name}</h2>
+                    <div class="student-progress-info">
+                        <div class="progress-percent">${Math.round(progress)}%</div>
+                        <div class="progress-label">진행률</div>
+                    </div>
+                </div>
+            `;
+
+            for (let phase = 1; phase <= 4; phase++) {
+                const phaseSessions = Object.entries(sessionData)
+                    .filter(([_, data]) => data.phase === phase)
+                    .map(([num, _]) => parseInt(num));
+
+                html += `<div class="phase">
+                    <div class="phase-header">
+                        <div class="phase-number">${phase}</div>
+                        <span>${phases[phase]}</span>
+                    </div>
+                    <div class="sessions-grid">`;
+
+                phaseSessions.forEach(num => {
+                    const isCompleted = selectedStudent.progress[num - 1] === 1;
+                    const className = isCompleted ? 'session-card completed' : 'session-card';
+                    html += `
+                        <div class="${className}" onclick="toggleSession(${num})">
+                            <div class="session-number">${num}차시</div>
+                            <div class="session-title">${sessionData[num].title}</div>
+                            <div class="session-check">${isCompleted ? '✓' : ''}</div>
+                        </div>
+                    `;
+                });
+
+                html += `</div></div>`;
+            }
+
+            document.getElementById('contentArea').innerHTML = html;
+        }
+
+        // 통계 업데이트
+        function updateStats() {
+            document.getElementById('totalStudents').textContent = students.length;
+
+            if (students.length === 0) {
+                document.getElementById('avgProgress').textContent = '0%';
+                document.getElementById('avgProgressBar').style.width = '0%';
+                document.getElementById('totalCompleted').textContent = '0';
+                return;
+            }
+
+            const avgProgress = Math.round(
+                students.reduce((sum, s) => sum + s.progress.filter(p => p === 1).length, 0) /
+                (students.length * 12) * 100
+            );
+            document.getElementById('avgProgress').textContent = avgProgress + '%';
+            document.getElementById('avgProgressBar').style.width = avgProgress + '%';
+
+            const totalCompleted = students.reduce((sum, s) => sum + s.progress.filter(p => p === 1).length, 0);
+            document.getElementById('totalCompleted').textContent = totalCompleted;
+        }
+
+        // 모달 함수
+        function openAddStudentModal() {
+            document.getElementById('addStudentModal').classList.add('active');
+            document.getElementById('studentNameInput').focus();
+        }
+
+        function closeAddStudentModal() {
+            document.getElementById('addStudentModal').classList.remove('active');
+        }
+
+        // Enter 키로 학생 추가
+        document.addEventListener('DOMContentLoaded', () => {
+            loadData();
+            renderStudentList();
+            if (students.length > 0) {
+                selectedStudent = students[0];
+                renderSessionGrid();
+            }
+
+            document.getElementById('studentNameInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') addStudent();
+            });
+        });
+
+        // 모달 닫기
+        document.getElementById('addStudentModal').addEventListener('click', (e) => {
+            if (e.target.id === 'addStudentModal') closeAddStudentModal();
+        });
+    </script>
+</body>
+</html>
