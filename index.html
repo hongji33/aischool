@@ -19,7 +19,9 @@
             --gray-300: #D1D5DB;
             --gray-600: #4B5563;
             --gray-700: #374151;
+            --gray-800: #1F2937;
             --gray-900: #111827;
+            --gray-950: #030712;
             --text-primary: #1F2937;
             --text-secondary: #6B7280;
             --border-color: #E5E7EB;
@@ -31,6 +33,13 @@
                 --gray-100: #1E293B;
                 --gray-200: #334155;
                 --gray-300: #475569;
+                --gray-400: #64748B;
+                --gray-500: #94A3B8;
+                --gray-600: #78716D;
+                --gray-700: #334155;
+                --gray-800: #1E293B;
+                --gray-900: #0F172A;
+                --gray-950: #030712;
                 --text-primary: #F1F5F9;
                 --text-secondary: #CBD5E1;
                 --border-color: #334155;
@@ -42,6 +51,13 @@
             --gray-100: #1E293B;
             --gray-200: #334155;
             --gray-300: #475569;
+            --gray-400: #64748B;
+            --gray-500: #94A3B8;
+            --gray-600: #78716D;
+            --gray-700: #334155;
+            --gray-800: #1E293B;
+            --gray-900: #0F172A;
+            --gray-950: #030712;
             --text-primary: #F1F5F9;
             --text-secondary: #CBD5E1;
             --border-color: #334155;
@@ -318,8 +334,16 @@
             border-left-color: var(--primary);
         }
 
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) .step-item:hover {
+                background: var(--gray-700);
+                border-left-color: var(--primary);
+            }
+        }
+
         :root[data-theme="dark"] .step-item:hover {
             background: var(--gray-700);
+            border-left-color: var(--primary);
         }
 
         .step-item.active {
@@ -562,7 +586,33 @@
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: var(--gray-400);
+            background: var(--gray-200);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) ::-webkit-scrollbar-track {
+                background: var(--gray-900);
+            }
+
+            :root:not([data-theme="light"]) ::-webkit-scrollbar-thumb {
+                background: var(--gray-600);
+            }
+
+            :root:not([data-theme="light"]) ::-webkit-scrollbar-thumb:hover {
+                background: var(--gray-500);
+            }
+        }
+
+        :root[data-theme="dark"] ::-webkit-scrollbar-track {
+            background: var(--gray-900);
+        }
+
+        :root[data-theme="dark"] ::-webkit-scrollbar-thumb {
+            background: var(--gray-700);
+        }
+
+        :root[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+            background: var(--gray-600);
         }
     </style>
 </head>
