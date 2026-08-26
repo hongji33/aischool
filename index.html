@@ -136,14 +136,15 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
+            min-height: 90vh;
             text-align: center;
+            padding: 20px;
         }
 
         .intro-title {
-            font-size: 48px;
+            font-size: 42px;
             font-weight: 900;
-            margin-bottom: 20px;
+            margin-bottom: 12px;
             background: linear-gradient(135deg, var(--electric-blue), var(--violet));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -151,9 +152,9 @@
         }
 
         .intro-subtitle {
-            font-size: 18px;
+            font-size: 15px;
             color: var(--gray-light);
-            margin-bottom: 60px;
+            margin-bottom: 30px;
             max-width: 600px;
         }
 
@@ -197,32 +198,32 @@
             background: linear-gradient(135deg, rgba(45, 53, 97, 0.5), rgba(26, 31, 58, 0.5));
             backdrop-filter: blur(20px);
             border: 1px solid rgba(0, 217, 255, 0.2);
-            border-radius: 24px;
-            padding: 60px 40px;
+            border-radius: 20px;
+            padding: 35px 30px;
             max-width: 500px;
             width: 100%;
             box-shadow: 0 0 60px rgba(0, 217, 255, 0.1);
         }
 
         .name-card h2 {
-            font-size: 28px;
-            margin-bottom: 10px;
+            font-size: 24px;
+            margin-bottom: 8px;
             text-align: center;
         }
 
         .name-card p {
             text-align: center;
             color: var(--gray-light);
-            margin-bottom: 40px;
-            font-size: 14px;
+            margin-bottom: 20px;
+            font-size: 13px;
         }
 
         .name-input {
             width: 100%;
-            padding: 16px 20px;
+            padding: 12px 16px;
             background: rgba(0, 217, 255, 0.05);
             border: 2px solid var(--electric-blue);
-            border-radius: 12px;
+            border-radius: 10px;
             color: var(--white);
             font-size: 16px;
             margin-bottom: 20px;
@@ -472,30 +473,33 @@
         .mission-detail {
             max-width: 1000px;
             margin: 0 auto;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding-right: 8px;
         }
 
         .mission-detail-header {
             background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(124, 58, 237, 0.1));
             border: 1px solid rgba(0, 217, 255, 0.2);
             border-radius: 16px;
-            padding: 40px;
-            margin-bottom: 40px;
+            padding: 20px;
+            margin-bottom: 15px;
             text-align: center;
         }
 
         .mission-detail-number {
-            font-size: 14px;
+            font-size: 12px;
             color: var(--electric-blue);
             text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 20px;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
             font-weight: 700;
         }
 
         .mission-detail-title {
-            font-size: 40px;
+            font-size: 28px;
             font-weight: 900;
-            margin-bottom: 20px;
+            margin-bottom: 8px;
             background: linear-gradient(135deg, var(--electric-blue), var(--violet));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -503,7 +507,7 @@
         }
 
         .mission-detail-desc {
-            font-size: 16px;
+            font-size: 13px;
             color: var(--gray-light);
             max-width: 600px;
             margin: 0 auto;
@@ -513,26 +517,34 @@
         .content-card {
             background: linear-gradient(135deg, rgba(45, 53, 97, 0.3), rgba(26, 31, 58, 0.3));
             border: 1px solid rgba(0, 217, 255, 0.2);
-            border-radius: 16px;
-            padding: 30px;
-            margin-bottom: 24px;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
         }
 
         .content-card h3 {
-            font-size: 18px;
+            font-size: 15px;
             font-weight: 700;
-            margin-bottom: 16px;
+            margin-bottom: 10px;
             color: var(--electric-blue);
         }
 
         .content-card p {
             color: var(--gray-light);
-            line-height: 1.8;
-            margin-bottom: 16px;
+            line-height: 1.5;
+            margin-bottom: 10px;
+            font-size: 13px;
         }
 
         .input-group {
-            margin-bottom: 20px;
+            margin-bottom: 12px;
+        }
+
+        /* 대시보드 콘텐츠 높이 제한 */
+        .dashboard-content {
+            max-height: 85vh;
+            overflow-y: auto;
+            padding-right: 8px;
         }
 
         .input-label {
@@ -548,7 +560,8 @@
         input[type="text"],
         input[type="number"],
         textarea,
-        select {
+        select,
+        .mission-input {
             width: 100%;
             padding: 12px 16px;
             background: rgba(0, 217, 255, 0.05);
@@ -559,6 +572,10 @@
             font-family: inherit;
             transition: all 0.3s ease;
             resize: vertical;
+        }
+
+        .mission-input {
+            display: block;
         }
 
         input[type="text"]:focus,
@@ -578,8 +595,8 @@
         /* 버튼 그룹 */
         .button-group {
             display: flex;
-            gap: 12px;
-            margin-top: 30px;
+            gap: 8px;
+            margin-top: 12px;
             flex-wrap: wrap;
         }
 
@@ -950,6 +967,260 @@
 
             .name-card {
                 padding: 40px 25px;
+            }
+        }
+
+        /* 크롬북 최적화 (1366px 너비) */
+        @media (min-width: 769px) and (max-width: 1366px) {
+            * {
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                font-size: 13px;
+            }
+
+            .container {
+                padding: 0 15px;
+            }
+
+            header {
+                padding: 12px 0;
+            }
+
+            .logo {
+                font-size: 18px;
+                letter-spacing: 1px;
+            }
+
+            .progress-mini {
+                font-size: 11px;
+                gap: 10px;
+            }
+
+            .intro-screen {
+                padding: 30px 20px;
+                text-align: center;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .intro-title {
+                font-size: 32px;
+                margin-bottom: 10px;
+            }
+
+            .intro-tagline {
+                font-size: 16px;
+                margin-bottom: 20px;
+            }
+
+            .intro-subtitle {
+                font-size: 13px;
+                margin-bottom: 30px;
+            }
+
+            .btn {
+                padding: 10px 20px;
+                font-size: 12px;
+                border-radius: 8px;
+            }
+
+            .dashboard {
+                display: grid;
+                grid-template-columns: 180px 1fr;
+                gap: 15px;
+                padding: 15px;
+            }
+
+            .sidebar {
+                width: 180px;
+                padding: 15px 10px;
+                gap: 8px;
+            }
+
+            .sidebar-menu {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .sidebar-menu li {
+                padding: 0;
+            }
+
+            .nav-link {
+                padding: 10px 12px;
+                font-size: 12px;
+                gap: 6px;
+            }
+
+            .nav-icon {
+                font-size: 16px;
+                min-width: 16px;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 15px;
+                gap: 15px;
+            }
+
+            .greeting {
+                font-size: 20px;
+                margin-bottom: 10px;
+            }
+
+            .header-stats {
+                gap: 12px;
+            }
+
+            .stat-box {
+                padding: 12px 15px;
+                gap: 8px;
+            }
+
+            .stat-label {
+                font-size: 11px;
+            }
+
+            .stat-value {
+                font-size: 18px;
+            }
+
+            .progress-bar {
+                height: 6px;
+                border-radius: 3px;
+            }
+
+            .mission-map {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                gap: 10px;
+            }
+
+            .mission-card {
+                padding: 12px 10px;
+                min-height: 140px;
+                border-radius: 8px;
+            }
+
+            .mission-number {
+                font-size: 10px;
+                letter-spacing: 0.5px;
+            }
+
+            .mission-title {
+                font-size: 12px;
+                margin-top: 4px;
+            }
+
+            .mission-icon {
+                font-size: 24px;
+            }
+
+            .mission-desc {
+                font-size: 10px;
+                margin-top: 4px;
+                line-height: 1.3;
+            }
+
+            .content-card {
+                padding: 16px;
+                margin-bottom: 12px;
+                border-radius: 10px;
+            }
+
+            .content-card h3 {
+                font-size: 14px;
+                margin-bottom: 8px;
+            }
+
+            .content-card p {
+                font-size: 13px;
+                line-height: 1.4;
+            }
+
+            .input-group {
+                margin-bottom: 12px;
+            }
+
+            .input-label {
+                font-size: 12px;
+                margin-bottom: 6px;
+            }
+
+            input[type="text"],
+            input[type="number"],
+            textarea,
+            select {
+                padding: 8px 12px;
+                font-size: 12px;
+                border-radius: 8px;
+            }
+
+            textarea {
+                min-height: 80px;
+            }
+
+            .button-group {
+                gap: 8px;
+                flex-direction: column;
+            }
+
+            .btn-primary, .btn-secondary, .btn-success {
+                width: 100%;
+                padding: 10px;
+                font-size: 11px;
+                letter-spacing: 0px;
+            }
+
+            .badge {
+                min-width: 70px;
+                padding: 10px 8px;
+            }
+
+            .badge-icon {
+                font-size: 28px;
+            }
+
+            .badge-name {
+                font-size: 10px;
+            }
+
+            .mission-detail-header {
+                padding: 12px 16px;
+                margin-bottom: 12px;
+            }
+
+            .mission-detail-number {
+                font-size: 11px;
+            }
+
+            .mission-detail-title {
+                font-size: 20px;
+                margin-top: 6px;
+            }
+
+            .mission-detail-desc {
+                font-size: 12px;
+                margin-top: 4px;
+            }
+
+            .category-btn {
+                min-height: 110px;
+                padding: 12px 10px;
+                font-size: 11px;
+            }
+
+            .prompt-builder {
+                padding: 16px;
+                border-radius: 10px;
+            }
+
+            .prompt-output {
+                font-size: 11px;
+                padding: 12px;
+                max-height: 300px;
             }
         }
 
@@ -1546,7 +1817,7 @@
             ];
 
             let categoryButtons = categories.map(cat => `
-                <button class="category-btn" onclick="selectCategory('${cat.name}', \`${cat.examples}\`)">
+                <button class="category-btn" onclick="selectCategory('${cat.name}', '${cat.examples}')">
                     <div style="font-size: 32px; margin-bottom: 8px;">${cat.emoji}</div>
                     <div style="font-weight: 600;">${cat.name}</div>
                     <div style="font-size: 12px; color: var(--gray-light); margin-top: 4px;">${cat.examples}</div>
@@ -1747,7 +2018,7 @@
 
                     <div class="input-group">
                         <label class="input-label">친구들이 쉽게 사용했나요?</label>
-                        <select id="easyToUse" class="mission-input" style="padding: 10px; background: rgba(10, 14, 39, 0.5); color: white; border: 1px solid rgba(0, 217, 255, 0.3); border-radius: 8px;">
+                        <select id="easyToUse" class="mission-input">
                             <option value="">선택하세요</option>
                             <option value="매우 쉬워요" ${savedData.easyToUse === '매우 쉬워요' ? 'selected' : ''}>매우 쉬워요 ✓</option>
                             <option value="보통이에요" ${savedData.easyToUse === '보통이에요' ? 'selected' : ''}>보통이에요</option>
@@ -1884,6 +2155,9 @@
 
         // ========== 미션 완료 ==========
         function completeMission(missionId) {
+            if (!state.missions[missionId]) {
+                state.missions[missionId] = { completed: false, data: {} };
+            }
             state.missions[missionId].completed = true;
 
             // 배지 획득
@@ -2002,6 +2276,8 @@ HTML, CSS, JavaScript를 사용해서 위 요구사항을 만족하는 웹앱을
         }
 
         function saveMission2() {
+            if (!state.missions[2]) state.missions[2] = { completed: false, data: {} };
+
             const category = document.getElementById('appCategory').value;
             const name = document.getElementById('appName').value;
             const desc = document.getElementById('appDesc').value;
@@ -2031,6 +2307,8 @@ HTML, CSS, JavaScript를 사용해서 위 요구사항을 만족하는 웹앱을
         }
 
         function saveMission3() {
+            if (!state.missions[3]) state.missions[3] = { completed: false, data: {} };
+
             const name = document.getElementById('app2Name').value;
             const desc = document.getElementById('app2Desc').value;
             const features = document.getElementById('app2Features').value;
@@ -2061,6 +2339,8 @@ HTML, CSS, JavaScript를 사용해서 위 요구사항을 만족하는 웹앱을
         }
 
         function saveMission6() {
+            if (!state.missions[6]) state.missions[6] = { completed: false, data: {} };
+
             const screen1 = document.getElementById('screen1').value;
             const screen2 = document.getElementById('screen2').value;
             const screen3 = document.getElementById('screen3').value;
@@ -2077,6 +2357,8 @@ HTML, CSS, JavaScript를 사용해서 위 요구사항을 만족하는 웹앱을
         }
 
         function generateDebugPrompt() {
+            if (!state.missions[9]) state.missions[9] = { completed: false, data: {} };
+
             const bug1 = document.getElementById('bug1').value;
             const bug2 = document.getElementById('bug2').value;
             const bug3 = document.getElementById('bug3').value;
@@ -2112,6 +2394,8 @@ HTML, CSS, JavaScript를 사용해서 위 요구사항을 만족하는 웹앱을
         }
 
         function saveMission10() {
+            if (!state.missions[10]) state.missions[10] = { completed: false, data: {} };
+
             const testerCount = document.getElementById('testerCount').value;
             const easyToUse = document.getElementById('easyToUse').value;
             const positive = document.getElementById('positive').value;
@@ -2133,6 +2417,8 @@ HTML, CSS, JavaScript를 사용해서 위 요구사항을 만족하는 웹앱을
         }
 
         function saveMission11() {
+            if (!state.missions[11]) state.missions[11] = { completed: false, data: {} };
+
             const upgrade1 = document.getElementById('upgrade1').value;
             const upgrade2 = document.getElementById('upgrade2').value;
             const upgrade3 = document.getElementById('upgrade3').value;
@@ -2161,6 +2447,8 @@ HTML, CSS, JavaScript를 사용해서 위 요구사항을 만족하는 웹앱을
         }
 
         function saveMission12() {
+            if (!state.missions[12]) state.missions[12] = { completed: false, data: {} };
+
             const portfolioTitle = document.getElementById('portfolioTitle').value;
             const portfolioLearning = document.getElementById('portfolioLearning').value;
             const portfolioGoal = document.getElementById('portfolioGoal').value;
