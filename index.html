@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI APP MAKER - 내 아이디어를 진짜 앱으로</title>
+    <title>Vibe Coding Academy</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap">
     <style>
         * {
             margin: 0;
@@ -12,2654 +13,900 @@
         }
 
         :root {
-            --deep-navy: #f5f5f5;
-            --navy: #ffffff;
-            --dark-blue: #f0f0f0;
-            --electric-blue: #0066cc;
-            --neon-blue: #0052a3;
-            --violet: #6b5b95;
-            --cyan: #0084b4;
-            --white: #1a1a1a;
-            --gray-light: #333333;
-            --gray-dark: #999999;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
+            --primary: #FF6B6B;
+            --secondary: #4ECDC4;
+            --tertiary: #FFE66D;
+            --dark: #2D3436;
+            --light: #636E72;
+            --bg-light: #F8F9FA;
+            --bg-white: #FFFFFF;
+            --border: #DFE6E9;
         }
 
         body {
-            font-family: 'Segoe UI', 'Noto Sans KR', sans-serif;
-            background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
-            color: #1a1a1a;
-            line-height: 1.6;
-            min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* 배경 애니메이션 */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image:
-                radial-gradient(circle at 20% 50%, rgba(0, 102, 204, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(107, 91, 149, 0.03) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        /* 모든 콘텐츠는 z-index 1 이상 */
-        .container {
-            position: relative;
-            z-index: 1;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* ========== 헤더 ========== */
-        header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(0, 102, 204, 0.2);
-            padding: 20px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--electric-blue), var(--violet));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: 2px;
-            transition: opacity 0.3s ease;
-        }
-
-        .logo:hover {
-            opacity: 0.8;
-            cursor: pointer;
-        }
-
-        .progress-mini {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-size: 12px;
-            color: var(--gray-light);
-        }
-
-        .progress-bar-mini {
-            width: 200px;
-            height: 4px;
-            background: var(--navy);
-            border-radius: 2px;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-light);
+            color: var(--dark);
             overflow: hidden;
         }
 
-        .progress-bar-mini .fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--electric-blue), var(--violet));
-            transition: width 0.5s ease;
-        }
-
-        /* ========== 메인 화면 ========== */
-        .screen {
-            display: none;
-            min-height: 100vh;
-            padding: 60px 20px 40px;
-            animation: fadeIn 0.6s ease;
-        }
-
-        .screen.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* 시작 화면 */
-        .intro-screen {
+        header {
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            min-height: 90vh;
-            text-align: center;
-            padding: 20px;
+            background: var(--bg-white);
+            padding: 20px 40px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            border-bottom: 2px solid var(--border);
         }
 
-        .intro-title {
-            font-size: 42px;
-            font-weight: 900;
-            margin-bottom: 12px;
-            background: linear-gradient(135deg, var(--electric-blue), var(--violet));
+        .logo {
+            font-family: 'Poppins', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .intro-subtitle {
-            font-size: 15px;
-            color: var(--gray-light);
-            margin-bottom: 30px;
-            max-width: 600px;
-        }
-
-        .intro-tagline {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 40px;
-            color: var(--white);
-            line-height: 1.4;
-        }
-
-        .cta-button {
-            padding: 16px 48px;
-            background: linear-gradient(135deg, var(--electric-blue), var(--violet));
-            color: var(--deep-navy);
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 30px rgba(0, 217, 255, 0.3);
-            letter-spacing: 1px;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 0 50px rgba(0, 217, 255, 0.5);
-        }
-
-        /* 이름 입력 화면 */
-        .name-input-screen {
+        .nav-main {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
+            gap: 20px;
         }
 
-        .name-card {
-            background: linear-gradient(135deg, rgba(45, 53, 97, 0.5), rgba(26, 31, 58, 0.5));
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(0, 217, 255, 0.2);
-            border-radius: 20px;
-            padding: 35px 30px;
-            max-width: 500px;
-            width: 100%;
-            box-shadow: 0 0 60px rgba(0, 217, 255, 0.1);
-        }
-
-        .name-card h2 {
-            font-size: 24px;
-            margin-bottom: 8px;
-            text-align: center;
-        }
-
-        .name-card p {
-            text-align: center;
-            color: var(--gray-light);
-            margin-bottom: 20px;
-            font-size: 13px;
-        }
-
-        .name-input {
-            width: 100%;
-            padding: 12px 16px;
-            background: rgba(0, 217, 255, 0.05);
-            border: 2px solid var(--electric-blue);
-            border-radius: 10px;
-            color: var(--white);
-            font-size: 16px;
-            margin-bottom: 20px;
-            transition: all 0.3s ease;
-        }
-
-        .name-input::placeholder {
-            color: rgba(224, 231, 255, 0.3);
-        }
-
-        .name-input:focus {
-            outline: none;
-            box-shadow: 0 0 30px rgba(0, 217, 255, 0.4);
-            background: rgba(0, 217, 255, 0.1);
-        }
-
-        .name-button-group {
-            display: flex;
-            gap: 12px;
-        }
-
-        .name-button-group button {
-            flex: 1;
-            padding: 14px 20px;
-            border: none;
-            border-radius: 10px;
+        .nav-btn {
+            background: none;
+            border: 2px solid var(--border);
+            padding: 10px 24px;
+            border-radius: 50px;
             font-size: 14px;
-            font-weight: 700;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            transition: all 0.3s;
+            color: var(--light);
         }
 
-        .start-btn {
-            background: linear-gradient(135deg, var(--electric-blue), var(--violet));
-            color: var(--deep-navy);
-            box-shadow: 0 0 30px rgba(0, 217, 255, 0.3);
+        .nav-btn.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-color: transparent;
         }
 
-        .start-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 50px rgba(0, 217, 255, 0.5);
-        }
-
-        /* ========== 대시보드 ========== */
-        .dashboard {
+        .container {
             display: flex;
-            min-height: 100vh;
-            position: relative;
+            height: calc(100vh - 90px);
         }
 
         .sidebar {
-            position: fixed;
-            left: 0;
-            top: 80px;
-            width: 250px;
-            height: calc(100vh - 80px);
-            background: rgba(245, 248, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border-right: 1px solid rgba(0, 102, 204, 0.15);
-            padding: 40px 0;
+            width: 280px;
+            background: linear-gradient(180deg, var(--bg-white) 0%, var(--bg-light) 100%);
+            border-right: 2px solid var(--border);
+            padding: 30px 20px;
             overflow-y: auto;
         }
 
-        .sidebar-menu {
-            list-style: none;
+        .sidebar-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--light);
+            margin-bottom: 16px;
+            letter-spacing: 1px;
         }
 
-        .sidebar-menu li {
-            padding: 0;
-        }
-
-        .sidebar-menu a {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 14px 20px;
-            color: var(--gray-light);
-            text-decoration: none;
-            transition: all 0.3s ease;
+        .week-btn {
+            width: 100%;
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            background: var(--bg-white);
+            font-size: 14px;
+            font-weight: 600;
             cursor: pointer;
-            border-left: 3px solid transparent;
+            transition: all 0.3s;
+            color: var(--dark);
         }
 
-        .sidebar-menu a:hover,
-        .sidebar-menu a.active {
-            background: rgba(0, 217, 255, 0.1);
-            color: var(--electric-blue);
-            border-left-color: var(--electric-blue);
+        .week-btn.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-color: transparent;
         }
 
         .main-content {
             flex: 1;
-            margin-left: 250px;
-            padding: 40px 40px 40px 40px;
-            width: calc(100% - 250px);
+            padding: 40px;
+            overflow-y: auto;
+            background: var(--bg-light);
         }
 
-        .greeting {
-            font-size: 32px;
-            font-weight: 900;
-            margin-bottom: 40px;
-            background: linear-gradient(135deg, var(--electric-blue), var(--violet));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .week-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 12px;
         }
 
-        /* 전체 진행도 */
-        .overall-progress {
-            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(124, 58, 237, 0.1));
-            border: 1px solid rgba(0, 217, 255, 0.2);
+        .week-subtitle {
+            font-size: 18px;
+            color: var(--light);
+            margin-bottom: 30px;
+        }
+
+        .content-card {
+            background: var(--bg-white);
             border-radius: 16px;
-            padding: 30px;
-            margin-bottom: 40px;
+            padding: 32px;
+            margin-bottom: 24px;
+            border: 2px solid var(--border);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
         }
 
-        .progress-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
+        .section-label {
+            font-family: 'Poppins', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--primary);
+            letter-spacing: 1.2px;
+            margin-bottom: 12px;
         }
 
-        .level-info {
+        .section-title {
+            font-family: 'Poppins', sans-serif;
             font-size: 24px;
             font-weight: 700;
-        }
-
-        .level-info .level {
-            color: var(--electric-blue);
-        }
-
-        .progress-percentage {
-            font-size: 32px;
-            font-weight: 900;
-            color: var(--electric-blue);
-        }
-
-        .progress-bar-large {
-            width: 100%;
-            height: 12px;
-            background: var(--navy);
-            border-radius: 6px;
-            overflow: hidden;
-            margin-bottom: 15px;
-        }
-
-        .progress-bar-large .fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--electric-blue), var(--violet));
-            transition: width 0.8s ease;
-            box-shadow: 0 0 20px rgba(0, 217, 255, 0.5);
-        }
-
-        .progress-text {
-            font-size: 13px;
-            color: var(--gray-light);
-        }
-
-        /* ========== 미션 맵 ========== */
-        .mission-map {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-            margin-bottom: 40px;
-        }
-
-        .mission-card {
-            background: linear-gradient(135deg, rgba(230, 240, 255, 0.8), rgba(240, 245, 255, 0.8));
-            border: 2px solid rgba(0, 102, 204, 0.25);
-            border-radius: 16px;
-            padding: 24px;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .mission-card:hover {
-            transform: translateY(-8px);
-            border-color: #0066cc;
-            box-shadow: 0 0 40px rgba(0, 102, 204, 0.2);
-        }
-
-        .mission-card.locked {
-            opacity: 0.5;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-
-        .mission-card.locked:hover {
-            transform: none;
-            box-shadow: none;
-        }
-
-        .mission-number {
-            font-size: 12px;
-            color: #0066cc;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 700;
-        }
-
-        .mission-title {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: #1a1a1a;
-        }
-
-        .mission-desc {
-            font-size: 13px;
-            color: #555555;
-            margin-bottom: 20px;
-            line-height: 1.4;
-        }
-
-        .mission-status {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 15px;
-            border-top: 1px solid rgba(0, 217, 255, 0.1);
-        }
-
-        .mission-badge {
-            font-size: 12px;
-            padding: 6px 12px;
-            background: rgba(16, 185, 129, 0.2);
-            color: var(--success);
-            border-radius: 6px;
-            text-transform: uppercase;
-            font-weight: 700;
-        }
-
-        .mission-lock {
-            font-size: 20px;
-        }
-
-        .mission-card.completed .mission-badge::before {
-            content: '✓ ';
-        }
-
-        /* ========== 미션 상세 화면 ========== */
-        .mission-detail {
-            max-width: 1000px;
-            margin: 0 auto;
-            max-height: 85vh;
-            overflow-y: auto;
-            padding-right: 8px;
-        }
-
-        .mission-detail-header {
-            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(124, 58, 237, 0.1));
-            border: 1px solid rgba(0, 217, 255, 0.2);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .mission-detail-number {
-            font-size: 12px;
-            color: var(--electric-blue);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-            font-weight: 700;
-        }
-
-        .mission-detail-title {
-            font-size: 28px;
-            font-weight: 900;
-            margin-bottom: 8px;
-            background: linear-gradient(135deg, var(--electric-blue), var(--violet));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .mission-detail-desc {
-            font-size: 13px;
-            color: var(--gray-light);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* 콘텐츠 카드 */
-        .content-card {
-            background: linear-gradient(135deg, rgba(240, 240, 255, 0.8), rgba(245, 248, 255, 0.8));
-            border: 1px solid rgba(0, 102, 204, 0.2);
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 12px;
-        }
-
-        .content-card h3 {
-            font-size: 15px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: #0066cc;
-        }
-
-        .content-card p {
-            color: #333333;
-            line-height: 1.5;
-            margin-bottom: 10px;
-            font-size: 13px;
-        }
-
-        .input-group {
-            margin-bottom: 12px;
-        }
-
-        /* 대시보드 콘텐츠 높이 제한 */
-        .dashboard-content {
-            display: none;
-            max-height: 85vh;
-            overflow-y: auto;
-            padding-right: 8px;
-        }
-
-        .dashboard-content.active {
-            display: block;
-        }
-
-        .input-label {
-            display: block;
-            font-size: 14px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--electric-blue);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        input[type="text"],
-        input[type="number"],
-        textarea,
-        select,
-        .mission-input {
-            width: 100%;
-            padding: 12px 16px;
-            background: rgba(0, 102, 204, 0.05);
-            border: 2px solid rgba(0, 102, 204, 0.3);
-            border-radius: 10px;
-            color: #1a1a1a;
-            font-size: 14px;
-            font-family: inherit;
-            transition: all 0.3s ease;
-            resize: vertical;
-        }
-
-        .mission-input {
-            display: block;
-        }
-
-        input[type="text"]:focus,
-        input[type="number"]:focus,
-        textarea:focus,
-        select:focus {
-            outline: none;
-            border-color: #0066cc;
-            background: rgba(0, 102, 204, 0.1);
-            box-shadow: 0 0 20px rgba(0, 102, 204, 0.2);
-        }
-
-        input::placeholder {
-            color: rgba(26, 26, 26, 0.4);
-        }
-
-        /* 버튼 그룹 */
-        .button-group {
-            display: flex;
-            gap: 8px;
-            margin-top: 12px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--electric-blue), var(--violet));
-            color: var(--deep-navy);
-            box-shadow: 0 0 30px rgba(0, 217, 255, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 50px rgba(0, 217, 255, 0.5);
-        }
-
-        .btn-secondary {
-            background: rgba(0, 217, 255, 0.1);
-            color: var(--electric-blue);
-            border: 2px solid var(--electric-blue);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(0, 217, 255, 0.2);
-        }
-
-        .btn-success {
-            background: rgba(16, 185, 129, 0.2);
-            color: var(--success);
-            border: 2px solid var(--success);
-        }
-
-        .btn-success:hover {
-            background: rgba(16, 185, 129, 0.3);
-        }
-
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none !important;
-        }
-
-        /* 프롬프트 빌더 */
-        .prompt-builder {
-            background: linear-gradient(135deg, rgba(230, 240, 255, 0.8), rgba(240, 245, 255, 0.8));
-            border: 2px solid rgba(0, 102, 204, 0.3);
-            border-radius: 16px;
-            padding: 30px;
-            margin-top: 30px;
-        }
-
-        .prompt-builder h3 {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: #0066cc;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .prompt-output {
-            background: rgba(245, 248, 255, 0.9);
-            border: 1px solid rgba(0, 102, 204, 0.2);
-            border-radius: 12px;
-            padding: 20px;
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            line-height: 1.6;
-            color: #0052a3;
-            max-height: 400px;
-            overflow-y: auto;
-            white-space: pre-wrap;
-            word-wrap: break-word;
+            color: var(--dark);
             margin-bottom: 16px;
         }
 
-        .copy-button {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, var(--success), #059669);
+        .section-description {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--light);
+            white-space: pre-line;
+            margin-bottom: 20px;
+        }
+
+        .step {
+            display: flex;
+            gap: 16px;
+            padding: 16px;
+            background: var(--bg-light);
+            border-radius: 12px;
+            border-left: 4px solid var(--secondary);
+            margin-bottom: 12px;
+        }
+
+        .step-number {
+            font-family: 'Poppins', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--secondary);
+            min-width: 32px;
+        }
+
+        .step-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 6px;
+        }
+
+        .step-description {
+            font-size: 14px;
+            color: var(--light);
+            line-height: 1.6;
+        }
+
+        .code-block {
+            background: #f5f5f5;
+            border-radius: 8px;
+            padding: 16px;
+            overflow-x: auto;
+            margin: 16px 0;
+            border: 1px solid var(--border);
+        }
+
+        .code-block code {
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: var(--dark);
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, rgba(78, 205, 196, 0.1), rgba(255, 107, 107, 0.1));
+            border-left: 4px solid var(--secondary);
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+
+        .tip-label {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .tip-text {
+            font-size: 14px;
+            color: var(--light);
+            line-height: 1.6;
+            white-space: pre-line;
+        }
+
+        .demo-app {
+            background: var(--bg-light);
+            border-radius: 12px;
+            padding: 24px;
+            border: 2px solid var(--border);
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .demo-button {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             border: none;
-            border-radius: 10px;
-            font-weight: 700;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 16px rgba(255, 107, 107, 0.3);
         }
 
-        .copy-button:hover {
+        .demo-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
         }
 
-        .copy-feedback {
-            position: fixed;
-            top: 100px;
-            right: 20px;
-            background: var(--success);
-            color: white;
-            padding: 12px 24px;
+        .demo-result {
+            margin-top: 16px;
+            padding: 16px;
+            background: white;
             border-radius: 8px;
-            font-weight: 700;
-            animation: slideIn 0.3s ease, slideOut 0.3s ease 2.7s;
-            z-index: 1000;
-        }
-
-        .category-btn {
-            background: rgba(0, 217, 255, 0.1);
-            border: 2px solid rgba(0, 217, 255, 0.3);
-            border-radius: 12px;
-            padding: 16px 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            color: var(--white);
-            font-family: inherit;
-            min-height: 140px;
+            min-height: 40px;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
+            font-size: 18px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
         }
 
-        .category-btn:hover {
-            background: rgba(0, 217, 255, 0.2);
-            border-color: var(--electric-blue);
-            transform: translateY(-4px);
-            box-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
+        .checklist {
+            margin: 16px 0;
         }
 
-        @keyframes slideIn {
-            from {
-                transform: translateX(400px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        @keyframes slideOut {
-            from {
-                transform: translateX(0);
-                opacity: 1;
-            }
-            to {
-                transform: translateX(400px);
-                opacity: 0;
-            }
-        }
-
-        /* 배지 시스템 */
-        .badges-section {
-            margin-top: 40px;
-        }
-
-        .badges-title {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 24px;
-            color: var(--white);
-        }
-
-        .badges-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 16px;
-        }
-
-        .badge {
-            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(124, 58, 237, 0.1));
-            border: 2px solid rgba(0, 217, 255, 0.2);
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-            transition: all 0.3s ease;
-            opacity: 0.3;
-        }
-
-        .badge.unlocked {
-            opacity: 1;
-            border-color: var(--electric-blue);
-            box-shadow: 0 0 30px rgba(0, 217, 255, 0.3);
-            animation: badgeUnlock 0.6s ease;
-        }
-
-        @keyframes badgeUnlock {
-            0% {
-                transform: scale(0);
-                opacity: 0;
-            }
-            50% {
-                transform: scale(1.2);
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        .badge-icon {
-            font-size: 40px;
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
             margin-bottom: 8px;
-        }
-
-        .badge-name {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--electric-blue);
-        }
-
-        /* 포트폴리오 */
-        .portfolio-section {
-            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(124, 58, 237, 0.1));
-            border: 2px solid rgba(0, 217, 255, 0.3);
-            border-radius: 16px;
-            padding: 40px;
-            margin-top: 40px;
-        }
-
-        .portfolio-title {
-            font-size: 32px;
-            font-weight: 900;
-            margin-bottom: 30px;
-            text-align: center;
-            background: linear-gradient(135deg, var(--electric-blue), var(--violet));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-            margin-top: 30px;
-        }
-
-        .portfolio-item {
-            background: linear-gradient(135deg, rgba(45, 53, 97, 0.3), rgba(26, 31, 58, 0.3));
-            border: 1px solid rgba(0, 217, 255, 0.2);
-            border-radius: 12px;
-            padding: 20px;
-        }
-
-        .portfolio-item-label {
-            font-size: 12px;
-            color: var(--electric-blue);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .portfolio-item-value {
+            background: var(--bg-light);
+            border-radius: 8px;
             font-size: 14px;
-            color: var(--gray-light);
-            word-break: break-all;
         }
 
-        .portfolio-item.large {
-            grid-column: 1 / -1;
+        .checklist-item input {
+            width: 18px;
+            height: 18px;
+            margin-right: 12px;
+            cursor: pointer;
         }
 
-        /* 반응형 */
-        @media (max-width: 1024px) {
-            .dashboard {
-                grid-template-columns: 200px 1fr;
-                gap: 20px;
-            }
-
-            .sidebar {
-                width: 200px;
-            }
-
-            .main-content {
-                margin-left: 200px;
-                width: calc(100% - 200px);
-            }
-
-            .intro-title {
-                font-size: 36px;
-            }
-
-            .intro-tagline {
-                font-size: 20px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .dashboard {
-                flex-direction: column;
-                gap: 0;
-            }
-
-            .sidebar {
-                position: static;
-                width: 100%;
-                height: auto;
-                border-right: none;
-                border-bottom: 1px solid rgba(0, 217, 255, 0.1);
-                padding: 15px 0;
-                margin-bottom: 30px;
-                display: flex;
-                gap: 0;
-            }
-
-            .sidebar-menu {
-                display: flex;
-                gap: 0;
-                width: 100%;
-                overflow-x: auto;
-            }
-
-            .sidebar-menu li {
-                flex-shrink: 0;
-            }
-
-            .sidebar-menu a {
-                padding: 12px 15px;
-                font-size: 12px;
-                flex-direction: column;
-                gap: 6px;
-            }
-
-            .main-content {
-                margin-left: 0;
-                width: 100%;
-            }
-
-            .intro-title {
-                font-size: 28px;
-            }
-
-            .intro-tagline {
-                font-size: 16px;
-            }
-
-            .mission-detail-title {
-                font-size: 28px;
-            }
-
-            .greeting {
-                font-size: 24px;
-            }
-
-            .mission-map {
-                grid-template-columns: 1fr;
-            }
-
-            .progress-mini {
-                display: none;
-            }
-
-            .name-card {
-                padding: 40px 25px;
-            }
-        }
-
-        /* 크롬북 최적화 (1366px 너비) */
-        @media (min-width: 769px) and (max-width: 1366px) {
-            * {
-                margin: 0;
-                padding: 0;
-            }
-
-            body {
-                font-size: 13px;
-            }
-
-            .container {
-                padding: 0 15px;
-            }
-
-            header {
-                padding: 12px 0;
-            }
-
-            .logo {
-                font-size: 18px;
-                letter-spacing: 1px;
-            }
-
-            .progress-mini {
-                font-size: 11px;
-                gap: 10px;
-            }
-
-            .intro-screen {
-                padding: 30px 20px;
-                text-align: center;
-                align-items: center;
-                justify-content: center;
-            }
-
-            .intro-title {
-                font-size: 32px;
-                margin-bottom: 10px;
-            }
-
-            .intro-tagline {
-                font-size: 16px;
-                margin-bottom: 20px;
-            }
-
-            .intro-subtitle {
-                font-size: 13px;
-                margin-bottom: 30px;
-            }
-
-            .btn {
-                padding: 10px 20px;
-                font-size: 12px;
-                border-radius: 8px;
-            }
-
-            .dashboard {
-                display: grid;
-                grid-template-columns: 180px 1fr;
-                gap: 15px;
-                padding: 15px;
-            }
-
-            .sidebar {
-                width: 180px;
-                padding: 15px 10px;
-                gap: 8px;
-            }
-
-            .sidebar-menu {
-                flex-direction: column;
-                gap: 8px;
-            }
-
-            .sidebar-menu li {
-                padding: 0;
-            }
-
-            .nav-link {
-                padding: 10px 12px;
-                font-size: 12px;
-                gap: 6px;
-            }
-
-            .nav-icon {
-                font-size: 16px;
-                min-width: 16px;
-            }
-
-            .main-content {
-                margin-left: 180px;
-                padding: 15px;
-                gap: 15px;
-                width: calc(100% - 180px);
-            }
-
-            .greeting {
-                font-size: 20px;
-                margin-bottom: 10px;
-            }
-
-            .header-stats {
-                gap: 12px;
-            }
-
-            .stat-box {
-                padding: 12px 15px;
-                gap: 8px;
-            }
-
-            .stat-label {
-                font-size: 11px;
-            }
-
-            .stat-value {
-                font-size: 18px;
-            }
-
-            .progress-bar {
-                height: 6px;
-                border-radius: 3px;
-            }
-
-            .mission-map {
-                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-                gap: 10px;
-            }
-
-            .mission-card {
-                padding: 12px 10px;
-                min-height: 140px;
-                border-radius: 8px;
-            }
-
-            .mission-number {
-                font-size: 10px;
-                letter-spacing: 0.5px;
-            }
-
-            .mission-title {
-                font-size: 12px;
-                margin-top: 4px;
-            }
-
-            .mission-icon {
-                font-size: 24px;
-            }
-
-            .mission-desc {
-                font-size: 10px;
-                margin-top: 4px;
-                line-height: 1.3;
-            }
-
-            .content-card {
-                padding: 16px;
-                margin-bottom: 12px;
-                border-radius: 10px;
-            }
-
-            .content-card h3 {
-                font-size: 14px;
-                margin-bottom: 8px;
-            }
-
-            .content-card p {
-                font-size: 13px;
-                line-height: 1.4;
-            }
-
-            .input-group {
-                margin-bottom: 12px;
-            }
-
-            .input-label {
-                font-size: 12px;
-                margin-bottom: 6px;
-            }
-
-            input[type="text"],
-            input[type="number"],
-            textarea,
-            select {
-                padding: 8px 12px;
-                font-size: 12px;
-                border-radius: 8px;
-            }
-
-            textarea {
-                min-height: 80px;
-            }
-
-            .button-group {
-                gap: 8px;
-                flex-direction: column;
-            }
-
-            .btn-primary, .btn-secondary, .btn-success {
-                width: 100%;
-                padding: 10px;
-                font-size: 11px;
-                letter-spacing: 0px;
-            }
-
-            .badge {
-                min-width: 70px;
-                padding: 10px 8px;
-            }
-
-            .badge-icon {
-                font-size: 28px;
-            }
-
-            .badge-name {
-                font-size: 10px;
-            }
-
-            .mission-detail-header {
-                padding: 12px 16px;
-                margin-bottom: 12px;
-            }
-
-            .mission-detail-number {
-                font-size: 11px;
-            }
-
-            .mission-detail-title {
-                font-size: 20px;
-                margin-top: 6px;
-            }
-
-            .mission-detail-desc {
-                font-size: 12px;
-                margin-top: 4px;
-            }
-
-            .category-btn {
-                min-height: 110px;
-                padding: 12px 10px;
-                font-size: 11px;
-            }
-
-            .prompt-builder {
-                padding: 16px;
-                border-radius: 10px;
-            }
-
-            .prompt-output {
-                font-size: 11px;
-                padding: 12px;
-                max-height: 300px;
-            }
-        }
-
-        /* 스크롤바 */
         ::-webkit-scrollbar {
             width: 8px;
         }
 
-        ::-webkit-scrollbar-track {
-            background: #f5f5f5;
-        }
-
         ::-webkit-scrollbar-thumb {
-            background: #0066cc;
+            background: var(--secondary);
             border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #0052a3;
         }
     </style>
 </head>
 <body>
-    <!-- 헤더 -->
     <header>
-        <div class="header-content">
-            <div class="logo" onclick="goToIntro()" style="cursor: pointer;">AI APP MAKER</div>
-            <div class="progress-mini">
-                <div>LEVEL <span id="headerLevel">01</span> / 12</div>
-                <div class="progress-bar-mini">
-                    <div class="fill" id="headerProgress" style="width: 0%"></div>
-                </div>
-                <div id="headerPercent">0%</div>
-            </div>
-        </div>
+        <div class="logo">🎵 Vibe Coding</div>
+        <nav class="nav-main">
+            <button class="nav-btn active" onclick="changeLevel(0)">기초 바이브 코딩</button>
+            <button class="nav-btn" onclick="changeLevel(1)">중급 바이브 코딩</button>
+            <button class="nav-btn" onclick="changeLevel(2)">고급 바이브 코딩</button>
+        </nav>
     </header>
 
-    <!-- 시작 화면 -->
-    <div class="screen intro-screen active" data-screen="intro">
-        <div class="container">
-            <div class="intro-title">AI APP MAKER</div>
-            <div class="intro-subtitle">중학생을 위한 AI 바이브코딩 과제탐구 학습 플랫폼</div>
-            <div class="intro-tagline">
-                YOUR IDEA<br>BECOMES AN APP
-            </div>
-            <div class="intro-subtitle" style="margin-bottom: 30px;">AI와 함께 만드는 나만의 앱 프로젝트</div>
-            <button class="cta-button" onclick="goToScreen('name-input')">START MISSION →</button>
-        </div>
-    </div>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-title">📚 주차별 학습</div>
+            <div id="weekButtons"></div>
+        </aside>
 
-    <!-- 이름 입력 화면 -->
-    <div class="screen" data-screen="name-input">
-        <div class="container">
-            <div class="name-input-screen">
-                <div class="name-card">
-                    <h2>APP MAKER의 이름을 입력하세요</h2>
-                    <p>12주의 앱 개발 여정을 시작하겠습니다</p>
-                    <input type="text" id="studentName" class="name-input" placeholder="나의 이름" onkeypress="if(event.key==='Enter') startJourney()">
-                    <div class="name-button-group">
-                        <button class="start-btn" onclick="startJourney()">START JOURNEY</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 대시보드 -->
-    <div class="screen" data-screen="dashboard">
-        <div class="dashboard">
-            <!-- 사이드바 -->
-            <div class="sidebar">
-                <ul class="sidebar-menu">
-                    <li><a class="nav-link active" onclick="showDashboard(); return false;" href="javascript:void(0);" data-target="dashboard-home">🏠 HOME</a></li>
-                    <li><a class="nav-link" onclick="showMissions(); return false;" href="javascript:void(0);" data-target="dashboard-missions">🎯 MISSION</a></li>
-                    <li><a class="nav-link" onclick="showMyProject(); return false;" href="javascript:void(0);" data-target="dashboard-project">💡 MY PROJECT</a></li>
-                    <li><a class="nav-link" onclick="showAIToolkit(); return false;" href="javascript:void(0);" data-target="dashboard-toolkit">🤖 AI TOOLKIT</a></li>
-                    <li><a class="nav-link" onclick="showBadges(); return false;" href="javascript:void(0);" data-target="dashboard-badges">🏆 BADGES</a></li>
-                    <li><a class="nav-link" onclick="showPortfolio(); return false;" href="javascript:void(0);" data-target="dashboard-portfolio">📄 PORTFOLIO</a></li>
-                </ul>
-            </div>
-
-            <!-- 메인 콘텐츠 -->
-            <div class="main-content">
-                <!-- 홈 -->
-                <div class="dashboard-content active" data-content="dashboard-home">
-                    <div class="greeting" id="greeting">환영합니다!</div>
-
-                    <div class="overall-progress">
-                        <div class="progress-header">
-                            <div class="level-info">LEVEL <span class="level" id="levelNumber">01</span> / 12</div>
-                            <div class="progress-percentage" id="progressPercent">0%</div>
-                        </div>
-                        <div class="progress-bar-large">
-                            <div class="fill" id="progressFill" style="width: 0%"></div>
-                        </div>
-                        <div class="progress-text">
-                            <span id="completedMissions">0</span> / 12 미션 완료
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 미션 목록 -->
-                <div class="dashboard-content" data-content="dashboard-missions">
-                    <h2 class="greeting">MISSION MAP</h2>
-                    <div class="mission-map" id="missionMap"></div>
-                </div>
-
-                <!-- 내 프로젝트 -->
-                <div class="dashboard-content" data-content="dashboard-project">
-                    <h2 class="greeting">MY PROJECT</h2>
-                    <div class="content-card">
-                        <p style="text-align: center; color: var(--gray-light);">프로젝트 정보가 여기에 표시됩니다</p>
-                    </div>
-                </div>
-
-                <!-- AI 툴킷 -->
-                <div class="dashboard-content" data-content="dashboard-toolkit">
-                    <h2 class="greeting">AI TOOLKIT</h2>
-                    <div class="content-card">
-                        <h3>📝 프롬프트 가이드</h3>
-                        <p>효과적인 AI 프롬프트를 작성하는 방법을 배우세요.</p>
-                    </div>
-                </div>
-
-                <!-- 배지 -->
-                <div class="dashboard-content" data-content="dashboard-badges">
-                    <h2 class="greeting">MY BADGES</h2>
-                    <div class="badges-section">
-                        <div class="badges-grid" id="badgesGrid"></div>
-                    </div>
-                </div>
-
-                <!-- 포트폴리오 -->
-                <div class="dashboard-content" data-content="dashboard-portfolio">
-                    <h2 class="greeting">MY APP PORTFOLIO</h2>
-                    <div class="portfolio-section" id="portfolioContent">
-                        <p style="text-align: center; color: var(--gray-light);">아직 완성된 앱이 없습니다</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 미션 상세 -->
-    <div class="screen" data-screen="mission-detail">
-        <div class="container">
-            <button class="btn btn-secondary" onclick="backToDashboard()">← 돌아가기</button>
-
-            <div class="mission-detail" id="missionDetailContent">
-                <!-- 동적으로 생성됨 -->
-            </div>
-        </div>
+        <main class="main-content">
+            <div id="content"></div>
+        </main>
     </div>
 
     <script>
-        // ========== 상태 관리 ==========
-        const state = {
-            studentName: '',
-            missions: {},
-            badges: [],
-            projectData: {},
-            currentMission: null
+        const lessons = {
+            beginner: {
+                1: {
+                    title: "✨ 오늘의 운세 앱 만들기",
+                    subtitle: "나의 첫 번째 웹앱을 완성하자!",
+                    content: `<div class="content-card">
+                        <div class="section-label">📖 학습 목표</div>
+                        <h2 class="section-title">이 시간에 배울 것</h2>
+                        <p class="section-description">HTML, CSS, JavaScript의 기본 개념을 이해하고, 버튼을 클릭하면 운세가 나오는 앱을 완성한다.</p>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="section-label">💡 핵심 개념</div>
+                        <h2 class="section-title">알아야 할 것</h2>
+                        <p class="section-description">변수(Variable): 데이터를 저장하는 상자
+배열(Array): 여러 데이터를 한 번에 저장
+함수(Function): 특정 작업을 반복해서 사용</p>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="section-label">🎯 활동</div>
+                        <h2 class="section-title">단계별 활동</h2>
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <div class="step-title">HTML 파일 생성</div>
+                                <div class="step-description">메모장을 열고 운세 앱의 기본 구조를 만들기</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <div class="step-title">CSS로 꾸미기</div>
+                                <div class="step-description">버튼과 텍스트를 아름답게 디자인하기</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <div class="step-title">JavaScript로 동작시키기</div>
+                                <div class="step-description">버튼을 누르면 운세가 나오도록 프로그래밍</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="section-label">🚀 실습</div>
+                        <h2 class="section-title">지금 바로 시도해봐요!</h2>
+                        <div class="demo-app">
+                            <button class="demo-button" onclick="showFortune()">🎰 운세 보기</button>
+                            <div class="demo-result" id="fortuneResult" style="display: none;"></div>
+                        </div>
+                    </div>`
+                },
+                2: {
+                    title: "🎨 운세 앱 업그레이드하기",
+                    subtitle: "지난주 앱에 새로운 기능을 추가해보자!",
+                    content: `<div class="content-card">
+                        <div class="section-label">📖 학습 목표</div>
+                        <h2 class="section-title">더 나은 앱 만들기</h2>
+                        <p class="section-description">사용자 입력 받기, 조건 처리, 이벤트 처리 등 프로그래밍의 중요한 개념들을 배운다</p>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="section-label">💡 새로 배우는 것</div>
+                        <h2 class="section-title">핵심 개념</h2>
+                        <p class="section-description">if문(조건문): 상황에 따라 다른 결과 보여주기
+input 태그: 사용자 입력받기
+concat(): 문자열 합치기</p>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="section-label">🎯 활동</div>
+                        <h2 class="section-title">이름을 입력받아 운세 만들기</h2>
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <div class="step-title">입력 필드 추가</div>
+                                <div class="step-description">이름을 입력할 수 있는 input 태그 만들기</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <div class="step-title">JavaScript 수정</div>
+                                <div class="step-description">입력된 이름을 포함한 운세 보여주기</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <div class="step-title">감정별 운세 분류</div>
+                                <div class="step-description">행복한 운세, 동기부여 운세 등으로 구분</div>
+                            </div>
+                        </div>
+                    </div>`
+                },
+                3: {
+                    title: "🎨 색상 성격 테스트",
+                    subtitle: "색상 심리학을 배우며 인터렉티브 앱 만들기",
+                    content: `<div class="content-card">
+                        <div class="section-label">📖 학습 목표</div>
+                        <h2 class="section-title">DOM 조작 배우기</h2>
+                        <p class="section-description">사용자가 선택한 색상에 따라 다른 결과를 보여주는 앱을 만든다.</p>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="section-label">🚀 실습</div>
+                        <h2 class="section-title">색상을 선택해보세요!</h2>
+                        <div class="demo-app">
+                            <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 20px 0;">
+                                <button style="width: 60px; height: 60px; border-radius: 50%; background: #FF6B6B; border: 2px solid #ddd; cursor: pointer;" onclick="selectColor('빨강', '열정적이고 에너지가 넘쳐요!')"></button>
+                                <button style="width: 60px; height: 60px; border-radius: 50%; background: #4ECDC4; border: 2px solid #ddd; cursor: pointer;" onclick="selectColor('청록', '창의적이고 차분해요!')"></button>
+                                <button style="width: 60px; height: 60px; border-radius: 50%; background: #FFE66D; border: 2px solid #ddd; cursor: pointer;" onclick="selectColor('노랑', '밝고 긍정적이에요!')"></button>
+                                <button style="width: 60px; height: 60px; border-radius: 50%; background: #95E1D3; border: 2px solid #ddd; cursor: pointer;" onclick="selectColor('민트', '부드럽고 따뜻해요!')"></button>
+                                <button style="width: 60px; height: 60px; border-radius: 50%; background: #B19CD9; border: 2px solid #ddd; cursor: pointer;" onclick="selectColor('보라', '신비롭고 독특해요!')"></button>
+                            </div>
+                            <div class="demo-result" id="colorResult" style="display: none;"></div>
+                        </div>
+                    </div>`
+                },
+                4: {
+                    title: "🎮 숫자 맞추기 게임",
+                    subtitle: "루프와 조건문으로 게임 로직 구현하기",
+                    content: `<div class="content-card">
+                        <div class="section-label">🎮 게임 규칙</div>
+                        <h2 class="section-title">어떻게 진행될까?</h2>
+                        <p class="section-description">1. 컴퓨터가 1~100 사이의 숫자를 정한다
+2. 플레이어가 숫자를 맞춘다
+3. '너무 작아요' 또는 '너무 커요' 힌트를 준다
+4. 맞췄을 때 시도 횟수를 표시한다</p>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="section-label">🚀 실습</div>
+                        <h2 class="section-title">1~100 사이의 숫자를 맞춰보세요!</h2>
+                        <div class="demo-app">
+                            <div style="display: flex; gap: 10px; margin: 20px 0;">
+                                <input type="number" id="gameGuess" min="1" max="100" placeholder="숫자 입력" style="padding:10px; border:2px solid #ddd; border-radius:8px; flex: 1;">
+                                <button class="demo-button" onclick="makeGameGuess()" style="margin-left: 0;">제출</button>
+                            </div>
+                            <div class="demo-result" id="gameResult" style="display: none;"></div>
+                        </div>
+                    </div>`
+                },
+                5: {
+                    title: "💬 오늘의 명언 생성기",
+                    subtitle: "기초 단계의 완성! 모든 개념을 종합하기",
+                    content: `<div class="content-card">
+                        <div class="section-label">🎉 축하합니다!</div>
+                        <h2 class="section-title">기초 단계 완료</h2>
+                        <p class="section-description">당신은 이제 HTML, CSS, JavaScript의 기본을 완벽하게 습득했습니다!
+
+✅ 5주 동안 4개의 완성된 웹앱을 만들었습니다
+✅ 변수, 배열, 함수, 조건문, 루프의 개념을 배웠습니다
+✅ DOM을 조작해서 동적인 웹페이지를 만들었습니다
+✅ 사용자와 상호작용하는 앱을 만들 수 있습니다
+
+다음 중급 단계에서는 자신만의 앱을 처음부터 끝까지 기획하고 개발하게 됩니다. 정말 자랑스러워요!</p>
+                    </div>`
+                }
+            },
+            intermediate: {
+                6: {
+                    title: "💡 내 앱 아이디어 구체화하기",
+                    subtitle: "나만의 웹앱 프로젝트 기획하기",
+                    content: `<div class="content-card">
+                        <div class="section-label">📖 학습 목표</div>
+                        <h2 class="section-title">앱 개발 계획 수립</h2>
+                        <p class="section-description">좋은 아이디어를 구체적인 개발 계획으로 변환하는 과정을 배운다.</p>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="section-label">💡 아이디어 예시</div>
+                        <h2 class="section-title">어떤 앱을 만들까?</h2>
+                        <p class="section-description">• 할일 관리 앱 (체크리스트)
+• 시간표 앱 (나의 일정)
+• 영어 단어 외우기 앱
+• 음악/영화 추천 앱
+• 저축한 돈 추적 앱
+• 건강 습관 추적 앱
+• 계산기 앱
+• 색상 팔레트 생성기</p>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="section-label">🎯 활동</div>
+                        <h2 class="section-title">아이디어 정리하기</h2>
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <div class="step-title">문제 정의하기</div>
+                                <div class="step-description">내 앱이 어떤 문제를 해결할까?</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <div class="step-title">사용자 정의하기</div>
+                                <div class="step-description">이 앱을 누가 사용할까?</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <div class="step-title">핵심 기능 정하기</div>
+                                <div class="step-description">필수 기능 3~5개를 정하기</div>
+                            </div>
+                        </div>
+                    </div>`
+                },
+                7: {
+                    title: "🏗️ 앱 구조 설계하기",
+                    subtitle: "복잡한 기능을 체계적으로 구성하기",
+                    content: `<div class="content-card">
+                        <div class="section-label">📖 학습 목표</div>
+                        <h2 class="section-title">함수 설계 및 구조화</h2>
+                        <p class="section-description">큰 프로젝트를 작은 단위(함수)로 나누어 관리하는 방법을 배운다</p>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="section-label">🎯 설계 요소</div>
+                        <h2 class="section-title">앱 구조 만들기</h2>
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <div class="step-title">데이터 구조 설계</div>
+                                <div class="step-description">어떤 정보를 저장할 것인가?</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <div class="step-title">함수 목록 작성</div>
+                                <div class="step-description">필요한 모든 함수를 나열하기</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <div class="step-title">와이어프레임 그리기</div>
+                                <div class="step-description">종이에 앱의 레이아웃 스케치하기</div>
+                            </div>
+                        </div>
+                    </div>`
+                },
+                8: {
+                    title: "💻 앱 코드 작성하기",
+                    subtitle: "설계한 앱을 실제로 구현하기",
+                    content: `<div class="content-card">
+                        <div class="section-label">📖 학습 목표</div>
+                        <h2 class="section-title">독립적인 프로젝트 개발</h2>
+                        <p class="section-description">혼자 완전한 웹앱 프로젝트를 완성하는 경험을 쌓는다</p>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="section-label">📝 개발 순서</div>
+                        <h2 class="section-title">단계별 개발</h2>
+                        <p class="section-description">1. HTML 구조 작성 (모든 요소)
+2. CSS 스타일링 (예쁘게 디자인)
+3. JavaScript 구현 (하나씩, 함수별로)
+4. 테스트 및 버그 수정
+5. 최적화 및 정리</p>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="section-label">💡 개발 팁</div>
+                        <h2 class="section-title">좋은 코딩 습관</h2>
+                        <div class="tip-box">
+                            <div class="tip-label">💡 팁</div>
+                            <div class="tip-text">✅ 한 번에 모든 기능을 완성하려고 하지 말 것
+✅ 자주 저장하기
+✅ 브라우저 개발자 도구(F12)로 디버깅
+✅ console.log()로 변수 확인하기</div>
+                        </div>
+                    </div>`
+                },
+                9: {
+                    title: "🚀 GitHub에 앱 올리기",
+                    subtitle: "완성된 앱을 세상과 공유하기",
+                    content: `<div class="content-card">
+                        <div class="section-label">📖 학습 목표</div>
+                        <h2 class="section-title">버전 관리와 배포</h2>
+                        <p class="section-description">GitHub를 사용하여 코드를 관리하고 인터넷에 공개한다</p>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="section-label">🎯 GitHub 시작하기</div>
+                        <h2 class="section-title">3단계로 배포하기</h2>
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <div class="step-title">저장소 만들기</div>
+                                <div class="step-description">github.com에서 새 Repository 생성</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <div class="step-title">파일 업로드</div>
+                                <div class="step-description">HTML, CSS, JS 파일을 GitHub에 업로드</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <div class="step-title">GitHub Pages 배포</div>
+                                <div class="step-description">Settings → Pages에서 배포 활성화</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="section-label">🎉 축하합니다!</div>
+                        <h2 class="section-title">중급 단계 완료</h2>
+                        <p class="section-description">당신의 앱이 인터넷에 공개되었습니다! 이제 누구나 당신의 앱을 사용할 수 있습니다. GitHub는 프로그래머들의 필수 도구입니다. 고급 단계에서 더 멋진 기능들을 배우게 됩니다!</p>
+                    </div>`
+                }
+            },
+            advanced: {
+                10: {
+                    title: "👥 친구/가족을 위한 앱 기획",
+                    subtitle: "실제 사용자를 생각하며 앱 만들기",
+                    content: `<div class="content-card">
+                        <div class="section-label">📖 학습 목표</div>
+                        <h2 class="section-title">사용자 중심 설계</h2>
+                        <p class="section-description">나를 위한 앱이 아닌, 다른 사람을 위한 앱을 설계한다.</p>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="section-label">🎯 활동</div>
+                        <h2 class="section-title">사용자 인터뷰하기</h2>
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <div class="step-title">대상 선정</div>
+                                <div class="step-description">앱을 사용할 친구나 가족 선택</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <div class="step-title">질문하기</div>
+                                <div class="step-description">어떤 앱이 있으면 좋을까? 불편한 점은?</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <div class="step-title">기록하기</div>
+                                <div class="step-description">답변을 메모해두기</div>
+                            </div>
+                        </div>
+                    </div>`
+                },
+                11: {
+                    title: "🛠️ 고급 기능 구현하기",
+                    subtitle: "더 강력한 기능들로 앱 완성하기",
+                    content: `<div class="content-card">
+                        <div class="section-label">📖 학습 목표</div>
+                        <h2 class="section-title">고급 프로그래밍 기능</h2>
+                        <p class="section-description">localStorage, API, 애니메이션 등 프로필셔널 기능을 배운다</p>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="section-label">🎯 고급 기능들</div>
+                        <h2 class="section-title">배울 수 있는 것들</h2>
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <div class="step-title">데이터 저장 (localStorage)</div>
+                                <div class="step-description">사용자 정보를 브라우저에 저장</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <div class="step-title">API 활용</div>
+                                <div class="step-description">날씨, 이미지, 뉴스 등 외부 데이터 가져오기</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <div class="step-title">애니메이션</div>
+                                <div class="step-description">CSS와 JavaScript로 동적 효과 만들기</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <div class="step-title">다크모드</div>
+                                <div class="step-description">라이트/다크 테마 지원하기</div>
+                            </div>
+                        </div>
+                    </div>`
+                },
+                12: {
+                    title: "🎬 앱 완성 및 발표",
+                    subtitle: "당신의 창작물을 반 친구들에게 보여주기",
+                    content: `<div class="content-card">
+                        <div class="section-label">✅ 마무리 체크리스트</div>
+                        <h2 class="section-title">발표 전 확인</h2>
+                        <div class="checklist">
+                            <label class="checklist-item">
+                                <input type="checkbox">
+                                <span>모든 기능이 제대로 작동하는가?</span>
+                            </label>
+                            <label class="checklist-item">
+                                <input type="checkbox">
+                                <span>모바일에서도 잘 보이는가?</span>
+                            </label>
+                            <label class="checklist-item">
+                                <input type="checkbox">
+                                <span>버그나 오류가 없는가?</span>
+                            </label>
+                            <label class="checklist-item">
+                                <input type="checkbox">
+                                <span>GitHub에 올려졌는가?</span>
+                            </label>
+                            <label class="checklist-item">
+                                <input type="checkbox">
+                                <span>발표 자료가 준비되었는가?</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="section-label">🎤 발표 구성</div>
+                        <h2 class="section-title">5분 발표 스크립트</h2>
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <div class="step-title">인사 (30초)</div>
+                                <div class="step-description">안녕하세요, 저는 홍길동입니다. 오늘 제가 만든 앱을 소개하겠습니다.</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <div class="step-title">문제 소개 (30초)</div>
+                                <div class="step-description">현재 많은 학생들이 ~하는데 불편함을 느낍니다.</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <div class="step-title">솔루션 (1분)</div>
+                                <div class="step-description">그래서 저는 ~기능이 있는 앱을 만들었습니다.</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <div class="step-title">라이브 데모 (2분)</div>
+                                <div class="step-description">실제로 앱을 사용하며 보여주기</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <div class="step-title">마무리 (1분)</div>
+                                <div class="step-description">감사합니다! 질문 있으신가요?</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="section-label">🏆 축하합니다!</div>
+                        <h2 class="section-title">당신은 이제 웹 개발자입니다!</h2>
+                        <p class="section-description">12주간의 노력이 결실을 맺었습니다!
+
+✅ HTML, CSS, JavaScript의 기본을 완벽하게 습득했습니다
+✅ 4개의 예시 앱을 만들었습니다
+✅ 자신만의 완성된 웹앱 프로젝트를 만들었습니다
+✅ GitHub를 사용해서 코드를 관리했습니다
+✅ 다른 사람을 위한 앱을 설계했습니다
+✅ 반 친구들 앞에서 당당하게 발표했습니다
+
+이것이 시작입니다. 계속 배우고, 더 많은 앱을 만들고, 세상과 공유하세요!
+
+화이팅! 🚀✨</p>
+                    </div>`
+                }
+            }
         };
 
-        // 12개 미션 정의
-        const missions = [
-            {
-                id: 1,
-                title: "AI와 친해지기",
-                desc: "AI가 어떤 일을 할 수 있는지 경험합니다",
-                type: "intro",
-                icon: "🤖"
-            },
-            {
-                id: 2,
-                title: "첫 번째 앱 만들기",
-                desc: "AI와 함께 나의 첫 앱을 만듭니다",
-                type: "app-build",
-                icon: "📱"
-            },
-            {
-                id: 3,
-                title: "두 번째 앱 만들기",
-                desc: "카테고리를 선택해 앱을 만듭니다",
-                type: "app-build",
-                icon: "🎮"
-            },
-            {
-                id: 4,
-                title: "나의 문제 찾기",
-                desc: "해결하고 싶은 문제를 발견합니다",
-                type: "ideation",
-                icon: "💭"
-            },
-            {
-                id: 5,
-                title: "앱 아이디어 만들기",
-                desc: "문제를 해결하는 앱 아이디어를 구체화합니다",
-                type: "ideation",
-                icon: "💡"
-            },
-            {
-                id: 6,
-                title: "앱 구조 설계",
-                desc: "앱의 화면과 기능을 설계합니다",
-                type: "design",
-                icon: "🎨"
-            },
-            {
-                id: 7,
-                title: "AI에게 설명하기",
-                desc: "AI 개발자에게 앱을 설명합니다",
-                type: "prompt",
-                icon: "💬"
-            },
-            {
-                id: 8,
-                title: "바이브코딩 START",
-                desc: "Gemini Canvas에서 앱을 만듭니다",
-                type: "coding",
-                icon: "⚡"
-            },
-            {
-                id: 9,
-                title: "AI 디버깅 탐정",
-                desc: "오류를 찾아 AI에게 수정을 요청합니다",
-                type: "debug",
-                icon: "🔍"
-            },
-            {
-                id: 10,
-                title: "사용자 테스트",
-                desc: "다른 친구에게 앱을 사용하게 합니다",
-                type: "test",
-                icon: "👥"
-            },
-            {
-                id: 11,
-                title: "앱 UPGRADE",
-                desc: "피드백을 바탕으로 앱을 개선합니다",
-                type: "improve",
-                icon: "⬆️"
-            },
-            {
-                id: 12,
-                title: "AI APP FESTIVAL",
-                desc: "최종 앱을 포트폴리오로 완성합니다",
-                type: "final",
-                icon: "🎉"
-            }
-        ];
+        let currentLevel = 0;
+        let currentWeek = 1;
 
-        // 배지 정의
-        const allBadges = [
-            { id: 'first_coder', name: 'FIRST CODER', icon: '💻', desc: '첫 앱 완성' },
-            { id: 'idea_hunter', name: 'IDEA HUNTER', icon: '🔍', desc: '문제를 발견함' },
-            { id: 'prompt_master', name: 'PROMPT MASTER', icon: '🎯', desc: 'AI 프롬프트 완성' },
-            { id: 'vibe_coder', name: 'VIBE CODER', icon: '⚡', desc: '바이브코딩 성공' },
-            { id: 'bug_detective', name: 'BUG DETECTIVE', icon: '🔧', desc: '오류를 찾아 해결함' },
-            { id: 'user_researcher', name: 'USER RESEARCHER', icon: '📊', desc: '사용자 테스트 완료' },
-            { id: 'app_designer', name: 'APP DESIGNER', icon: '✨', desc: '앱 개선 완료' },
-            { id: 'app_maker', name: 'APP MAKER', icon: '🏆', desc: '최종 앱 완성' }
-        ];
-
-        // ========== 초기화 ==========
-        function initApp() {
-            loadData();
-            if (state.studentName) {
-                goToScreen('dashboard');
-                renderDashboard();
-            }
-        }
-
-        // ========== 데이터 관리 ==========
-        function saveData() {
-            localStorage.setItem('appmakerState', JSON.stringify(state));
-        }
-
-        function loadData() {
-            const saved = localStorage.getItem('appmakerState');
-            if (saved) {
-                Object.assign(state, JSON.parse(saved));
-            }
-        }
-
-        // ========== 화면 전환 ==========
-        function goToScreen(screenName) {
-            try {
-                // 모든 screen 요소에서 active 제거
-                document.querySelectorAll('.screen').forEach(screen => {
-                    screen.classList.remove('active');
-                });
-
-                // 해당 screen에 active 추가
-                const targetScreen = document.querySelector(`[data-screen="${screenName}"]`);
-                if (targetScreen) {
-                    targetScreen.classList.add('active');
-                    console.log(`✓ 화면 이동: ${screenName}`);
-                } else {
-                    console.error(`❌ 화면을 찾을 수 없음: ${screenName}`);
-                }
-            } catch (error) {
-                console.error(`화면 전환 오류: ${error.message}`);
-            }
-        }
-
-        function goToIntro() {
-            goToScreen('intro');
-            document.getElementById('headerLevel').textContent = '01';
-            document.getElementById('headerProgress').style.width = '0%';
-            document.getElementById('headerPercent').textContent = '0%';
-        }
-
-        function startJourney() {
-            const name = document.getElementById('studentName').value.trim();
-            if (!name) {
-                alert('이름을 입력하세요!');
-                return;
-            }
-            state.studentName = name;
-
-            // 미션 초기화
-            missions.forEach(mission => {
-                if (!state.missions[mission.id]) {
-                    state.missions[mission.id] = {
-                        completed: false,
-                        data: {}
-                    };
-                }
-            });
-
-            saveData();
-            goToScreen('dashboard');
-            renderDashboard();
-        }
-
-        // ========== 대시보드 ==========
-        function renderDashboard() {
-            const completedCount = Object.values(state.missions).filter(m => m.completed).length;
-            const percentage = Math.round((completedCount / 12) * 100);
-
-            document.getElementById('greeting').textContent = `${state.studentName}님의 APP MAKER JOURNEY`;
-            document.getElementById('levelNumber').textContent = String(completedCount + 1).padStart(2, '0');
-            document.getElementById('progressPercent').textContent = percentage + '%';
-            document.getElementById('progressFill').style.width = percentage + '%';
-            document.getElementById('completedMissions').textContent = completedCount;
-
-            // 헤더 진행도
-            document.getElementById('headerLevel').textContent = String(completedCount + 1).padStart(2, '0');
-            document.getElementById('headerProgress').style.width = percentage + '%';
-            document.getElementById('headerPercent').textContent = percentage + '%';
-
-            renderMissionMap();
-            renderBadges();
-        }
-
-        function renderMissionMap() {
-            const missionMap = document.getElementById('missionMap');
-            missionMap.innerHTML = missions.map((mission, index) => {
-                const missionState = state.missions[mission.id];
-                const isCompleted = missionState.completed;
-                const isLocked = index > 0 && !state.missions[missions[index - 1].id].completed;
-
-                return `
-                    <div class="mission-card ${isCompleted ? 'completed' : ''} ${isLocked ? 'locked' : ''}"
-                         onclick="!${isLocked} && startMission(${mission.id})">
-                        <div class="mission-number">MISSION ${String(mission.id).padStart(2, '0')}</div>
-                        <div class="mission-title">${mission.icon} ${mission.title}</div>
-                        <div class="mission-desc">${mission.desc}</div>
-                        <div class="mission-status">
-                            <div class="mission-badge">${isCompleted ? 'COMPLETE' : isLocked ? 'LOCKED' : 'READY'}</div>
-                            ${isLocked ? '<div class="mission-lock">🔒</div>' : ''}
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function renderBadges() {
-            const badgesGrid = document.getElementById('badgesGrid');
-            badgesGrid.innerHTML = allBadges.map(badge => {
-                const unlocked = state.badges.includes(badge.id);
-                return `
-                    <div class="badge ${unlocked ? 'unlocked' : ''}">
-                        <div class="badge-icon">${badge.icon}</div>
-                        <div class="badge-name">${badge.name}</div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        // ========== 미션 시작 ==========
-        function startMission(missionId) {
-            state.currentMission = missionId;
-            const mission = missions.find(m => m.id === missionId);
-
-            let content = `
-                <div class="mission-detail-header">
-                    <div class="mission-detail-number">MISSION ${String(missionId).padStart(2, '0')}</div>
-                    <div class="mission-detail-title">${mission.icon} ${mission.title}</div>
-                    <div class="mission-detail-desc">${mission.desc}</div>
-                </div>
-            `;
-
-            // 미션별 콘텐츠
-            if (missionId === 1) {
-                content += getMission01Content();
-            } else if (missionId === 2) {
-                content += getMission02Content();
-            } else if (missionId === 3) {
-                content += getMission03Content();
-            } else if (missionId === 4) {
-                content += getMission04Content();
-            } else if (missionId === 5) {
-                content += getMission05Content();
-            } else if (missionId === 6) {
-                content += getMission06Content();
-            } else if (missionId === 7) {
-                content += getMission07Content();
-            } else if (missionId === 8) {
-                content += getMission08Content();
-            } else if (missionId === 9) {
-                content += getMission09Content();
-            } else if (missionId === 10) {
-                content += getMission10Content();
-            } else if (missionId === 11) {
-                content += getMission11Content();
-            } else if (missionId === 12) {
-                content += getMission12Content();
-            }
-
-            document.getElementById('missionDetailContent').innerHTML = content;
-            goToScreen('mission-detail');
-        }
-
-        // ========== 미션별 콘텐츠 ==========
-        function getMission01Content() {
-            return `
-                <div class="content-card">
-                    <h3>🎯 미션 소개</h3>
-                    <p>AI가 무엇을 할 수 있는지 직접 경험해봅시다. 간단한 프롬프트로 AI에게 앱 만들기를 요청해보세요.</p>
-                </div>
-                <div class="content-card">
-                    <h3>📝 프롬프트 예시</h3>
-                    <p style="background: rgba(0, 217, 255, 0.05); padding: 16px; border-radius: 8px; margin-bottom: 0;">
-                        "HTML, CSS, JavaScript를 사용해서 버튼을 누르면 랜덤으로 결과가 나오는 운세 앱을 만들어줘."
-                    </p>
-                </div>
-                <div class="content-card">
-                    <h3>✅ 완료 방법</h3>
-                    <p>1. Gemini Canvas에 위 프롬프트를 복사해서 실행하세요.<br>
-                       2. AI가 만든 앱이 작동하는지 확인하세요.<br>
-                       3. 아래 버튼을 눌러 미션을 완료하세요.</p>
-                    <div class="button-group">
-                        <button class="btn btn-secondary" onclick="window.open('https://gemini.google.com/app', '_blank')">
-                            🌐 Gemini Canvas 열기
-                        </button>
-                        <button class="btn btn-primary" onclick="completeMission(1)">✓ 미션 완료</button>
-                    </div>
-                </div>
-            `;
-        }
-
-        function getMission04Content() {
-            const savedAnswers = state.missions[4].data;
-            return `
-                <div class="content-card">
-                    <h3>❓ 문제 찾기</h3>
-                    <p>당신의 주변에서 불편한 문제를 찾아봅시다. 다음 질문에 답해보세요.</p>
-
-                    <div class="input-group">
-                        <label class="input-label">Q1. 최근 학교생활에서 불편했던 것은?</label>
-                        <textarea placeholder="예: 급식 정보를 매번 확인하기 어려워요"
-                                  id="q1" class="mission-input">${savedAnswers.q1 || ''}</textarea>
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label">Q2. 집에서 불편했던 것은?</label>
-                        <textarea placeholder="예: 해야 할 일을 정리하기가 어려워요"
-                                  id="q2" class="mission-input">${savedAnswers.q2 || ''}</textarea>
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label">Q3. 친구들이 자주 불편해하는 것은?</label>
-                        <textarea placeholder="예: 숙제 제출 기한을 자주 잊어버려요"
-                                  id="q3" class="mission-input">${savedAnswers.q3 || ''}</textarea>
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label">Q4. 이 문제를 해결하면 누가 좋아질까?</label>
-                        <textarea placeholder="예: 나, 친구들, 선생님 등"
-                                  id="q4" class="mission-input">${savedAnswers.q4 || ''}</textarea>
-                    </div>
-
-                    <div class="button-group">
-                        <button class="btn btn-primary" onclick="saveMission4()">💾 저장</button>
-                        <button class="btn btn-success" onclick="completeMission4()">✓ 미션 완료</button>
-                    </div>
-                </div>
-            `;
-        }
-
-        function getMission05Content() {
-            const savedData = state.missions[5].data;
-            return `
-                <div class="content-card">
-                    <h3>💡 앱 아이디어 구체화</h3>
-                    <p>미션 4에서 발견한 문제를 바탕으로 앱 아이디어를 구체화합니다.</p>
-
-                    <div class="input-group">
-                        <label class="input-label">1. 누구를 위한 앱인가?</label>
-                        <input type="text" placeholder="예: 중학생들" id="idea1" class="mission-input" value="${savedData.idea1 || ''}">
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label">2. 어떤 문제를 해결하는가?</label>
-                        <input type="text" placeholder="예: 숙제 관리" id="idea2" class="mission-input" value="${savedData.idea2 || ''}">
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label">3. 가장 중요한 기능은?</label>
-                        <input type="text" placeholder="예: 숙제 추가/삭제, 완료 표시" id="idea3" class="mission-input" value="${savedData.idea3 || ''}">
-                    </div>
-
-                    <div class="button-group">
-                        <button class="btn btn-primary" onclick="saveMission5()">💾 저장</button>
-                        <button class="btn btn-success" onclick="completeMission(5)">✓ 미션 완료</button>
-                    </div>
-                </div>
-            `;
-        }
-
-        function getMission07Content() {
-            const savedData = state.missions[7].data;
-            return `
-                <div class="content-card">
-                    <h3>🤖 AI 프롬프트 작성</h3>
-                    <p>AI 개발자에게 정확하게 앱을 설명하는 프롬프트를 작성합니다.</p>
-
-                    <div class="input-group">
-                        <label class="input-label">역할 (ROLE)</label>
-                        <input type="text" placeholder="예: 너는 숙련된 웹앱 개발자야" id="role" class="mission-input" value="${savedData.role || ''}">
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label">목표 (GOAL)</label>
-                        <input type="text" placeholder="예: 숙제 관리 앱을 만들 것" id="goal" class="mission-input" value="${savedData.goal || ''}">
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label">사용자 (USER)</label>
-                        <input type="text" placeholder="예: 중학생" id="user" class="mission-input" value="${savedData.user || ''}">
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label">핵심 기능 (FEATURES)</label>
-                        <textarea placeholder="예: 숙제 추가, 완료 표시, 삭제" id="features" class="mission-input">${savedData.features || ''}</textarea>
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label">디자인 (DESIGN)</label>
-                        <input type="text" placeholder="예: 깔끔하고 모던한 느낌" id="design" class="mission-input" value="${savedData.design || ''}">
-                    </div>
-
-                    <button class="btn btn-primary" onclick="generatePrompt()" style="width: 100%;">
-                        ✨ 프롬프트 생성
-                    </button>
-
-                    <div id="promptOutput" style="display: none; margin-top: 20px;"></div>
-
-                    <div class="button-group" style="margin-top: 20px;">
-                        <button class="btn btn-success" onclick="completeMission(7)">✓ 미션 완료</button>
-                    </div>
-                </div>
-            `;
-        }
-
-        function getMission08Content() {
-            return `
-                <div class="content-card">
-                    <h3>⚡ VIBE CODING START</h3>
-                    <p>미션 7에서 생성한 프롬프트를 Gemini Canvas에 붙여넣기하고 앱을 만듭니다.</p>
-
-                    <div style="background: rgba(0, 217, 255, 0.1); border: 2px dashed var(--electric-blue); border-radius: 12px; padding: 24px; margin: 20px 0; text-align: center;">
-                        <div style="font-size: 14px; line-height: 1.8;">
-                            <div style="margin-bottom: 10px;">
-                                <strong>STEP 1:</strong> 프롬프트 복사<br>
-                                <strong>STEP 2:</strong> Gemini Canvas 열기<br>
-                                <strong>STEP 3:</strong> 프롬프트 붙여넣기<br>
-                                <strong>STEP 4:</strong> 앱 생성<br>
-                                <strong>STEP 5:</strong> 테스트
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="button-group">
-                        <button class="btn btn-secondary" onclick="window.open('https://gemini.google.com/app', '_blank')">
-                            🌐 Gemini Canvas 열기
-                        </button>
-                        <button class="btn btn-primary" onclick="completeMission(8)">✓ 미션 완료</button>
-                    </div>
-                </div>
-            `;
-        }
-
-        function getMission02Content() {
-            const savedData = state.missions[2].data;
-            const categories = [
-                { name: '게임', emoji: '🎮', examples: '숫자 맞추기, 색 맞추기, 주사위 게임' },
-                { name: '도구', emoji: '🛠️', examples: '계산기, 타이머, 단위 변환기' },
-                { name: '정보', emoji: '📚', examples: '백과사전, 천체 정보, 동물 도감' },
-                { name: '음악', emoji: '🎵', examples: '악기, 멜로디 생성, 음악 재생' },
-                { name: '그래픽', emoji: '🎨', examples: '그림판, 도형 그리기, 색 생성기' }
+        // 전역 함수들
+        window.showFortune = function() {
+            const fortunes = [
+                "오늘 하루는 행운이 가득할 거예요! 🍀",
+                "누군가 당신을 응원하고 있어요. 💪",
+                "새로운 친구를 사귈 수 있는 날이에요. 👫",
+                "당신의 노력이 꽃을 피우는 날이에요. 🌸",
+                "웃음이 많은 하루가 될 거예요. 😊"
             ];
+            const idx = Math.floor(Math.random() * fortunes.length);
+            document.getElementById('fortuneResult').textContent = fortunes[idx];
+            document.getElementById('fortuneResult').style.display = 'flex';
+        };
 
-            let categoryButtons = categories.map(cat => `
-                <button class="category-btn" onclick="selectCategory('${cat.name}', '${cat.examples}')">
-                    <div style="font-size: 32px; margin-bottom: 8px;">${cat.emoji}</div>
-                    <div style="font-weight: 600;">${cat.name}</div>
-                    <div style="font-size: 12px; color: var(--gray-light); margin-top: 4px;">${cat.examples}</div>
-                </button>
-            `).join('');
+        window.selectColor = function(name, meaning) {
+            document.getElementById('colorResult').innerHTML = '<div style="font-weight:600;">' + name + '</div><div style="margin-top:8px;">' + meaning + '</div>';
+            document.getElementById('colorResult').style.display = 'flex';
+        };
 
-            return `
-                <div class="content-card">
-                    <h3>📱 첫 번째 앱 만들기</h3>
-                    <p>아래 카테고리 중 하나를 선택해서 AI와 함께 앱을 만들어봅시다!</p>
-                </div>
-
-                <div class="content-card">
-                    <h3>카테고리 선택</h3>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; margin-bottom: 20px;">
-                        ${categoryButtons}
-                    </div>
-                </div>
-
-                <div class="content-card">
-                    <h3>선택한 앱 정보</h3>
-                    <div class="input-group">
-                        <label class="input-label">앱 카테고리</label>
-                        <input type="text" id="appCategory" class="mission-input" placeholder="카테고리를 선택해주세요" value="${savedData.category || ''}" disabled>
-                    </div>
-                    <div class="input-group">
-                        <label class="input-label">앱 이름</label>
-                        <input type="text" id="appName" class="mission-input" placeholder="예: 숫자 맞추기 게임" value="${savedData.name || ''}">
-                    </div>
-                    <div class="input-group">
-                        <label class="input-label">앱 설명</label>
-                        <textarea id="appDesc" class="mission-input" placeholder="예: 1부터 100까지의 숫자를 맞추는 게임입니다">${savedData.desc || ''}</textarea>
-                    </div>
-                    <div class="button-group">
-                        <button class="btn btn-primary" onclick="saveMission2()">💾 저장</button>
-                        <button class="btn btn-secondary" onclick="launchGeminiForMission2()">🚀 Gemini Canvas에서 만들기</button>
-                        <button class="btn btn-success" onclick="completeMission(2)">✓ 미션 완료</button>
-                    </div>
-                </div>
-            `;
-        }
-
-        function getMission03Content() {
-            const savedData = state.missions[3].data;
-            return `
-                <div class="content-card">
-                    <h3>🎮 두 번째 앱 만들기</h3>
-                    <p>미션 2에서 경험한 것을 바탕으로 미션 2와는 다른 카테고리의 앱을 만들어봅시다!</p>
-                </div>
-
-                <div class="content-card">
-                    <h3>앱 정보 입력</h3>
-                    <div class="input-group">
-                        <label class="input-label">첫 번째 앱 (미션 2)을 다시 보기</label>
-                        <div style="background: rgba(0, 217, 255, 0.1); padding: 12px; border-radius: 8px; margin-top: 8px;">
-                            <div><strong>${state.missions[2].data.name || '미션 2를 먼저 진행하세요'}</strong></div>
-                            <div style="font-size: 12px; color: var(--gray-light); margin-top: 4px;">${state.missions[2].data.desc || ''}</div>
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label">두 번째 앱 이름</label>
-                        <input type="text" id="app2Name" class="mission-input" placeholder="예: 운세 맞추기" value="${savedData.name || ''}">
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label">앱 설명</label>
-                        <textarea id="app2Desc" class="mission-input" placeholder="예: 당신의 생일을 입력하면 오늘의 운세를 알려줍니다">${savedData.desc || ''}</textarea>
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label">주요 기능</label>
-                        <textarea id="app2Features" class="mission-input" placeholder="예: 생일 입력, 운세 생성, 공유하기">${savedData.features || ''}</textarea>
-                    </div>
-
-                    <div class="button-group">
-                        <button class="btn btn-primary" onclick="saveMission3()">💾 저장</button>
-                        <button class="btn btn-secondary" onclick="launchGeminiForMission3()">🚀 Gemini Canvas에서 만들기</button>
-                        <button class="btn btn-success" onclick="completeMission(3)">✓ 미션 완료</button>
-                    </div>
-                </div>
-            `;
-        }
-
-        function getMission06Content() {
-            const savedData = state.missions[6].data;
-            return `
-                <div class="content-card">
-                    <h3>🎨 앱 구조 설계</h3>
-                    <p>만들 앱의 화면 구성과 기능을 시각적으로 설계합니다. 이를 통해 AI에게 더 명확하게 지시할 수 있습니다.</p>
-                </div>
-
-                <div class="content-card">
-                    <h3>📐 앱의 구조</h3>
-                    <div style="background: rgba(0, 217, 255, 0.1); border: 1px solid var(--electric-blue); border-radius: 12px; padding: 20px; margin: 16px 0;">
-                        <div style="text-align: center; line-height: 2;">
-                            <div style="font-weight: 600; margin-bottom: 12px;">📱 앱 구조 예시</div>
-                            <div>┌─ 시작 화면 (홈)</div>
-                            <div>├─ 입력 화면</div>
-                            <div>├─ 결과 화면</div>
-                            <div>└─ 설정/정보 화면</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="content-card">
-                    <h3>내 앱의 구조</h3>
-                    <div class="input-group">
-                        <label class="input-label">첫 번째 화면 이름 (시작 화면)</label>
-                        <input type="text" id="screen1" class="mission-input" placeholder="예: 홈 화면, 메뉴, 시작 페이지" value="${savedData.screen1 || ''}">
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label">두 번째 화면 이름</label>
-                        <input type="text" id="screen2" class="mission-input" placeholder="예: 입력 페이지, 설정" value="${savedData.screen2 || ''}">
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label">세 번째 화면 이름</label>
-                        <input type="text" id="screen3" class="mission-input" placeholder="예: 결과 화면, 결과" value="${savedData.screen3 || ''}">
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label">추가 기능들</label>
-                        <textarea id="appFunctions" class="mission-input" placeholder="예: 버튼, 입력창, 결과 표시, 초기화 버튼 등">${savedData.functions || ''}</textarea>
-                    </div>
-
-                    <div class="button-group">
-                        <button class="btn btn-primary" onclick="saveMission6()">💾 저장</button>
-                        <button class="btn btn-success" onclick="completeMission(6)">✓ 미션 완료</button>
-                    </div>
-                </div>
-            `;
-        }
-
-        function getMission09Content() {
-            const savedData = state.missions[9].data;
-            return `
-                <div class="content-card">
-                    <h3>🔍 AI 디버깅 탐정</h3>
-                    <p>Gemini Canvas에서 만든 앱에 오류가 있으면 찾아내고 AI에게 수정을 요청합니다.</p>
-                </div>
-
-                <div class="content-card">
-                    <h3>⚠️ 앱에서 발견한 오류</h3>
-                    <p style="margin-bottom: 12px; color: var(--gray-light);">아래에 앱을 사용하면서 발견한 오류나 문제를 입력하세요.</p>
-
-                    <div class="input-group">
-                        <label class="input-label">문제가 무엇인가요?</label>
-                        <input type="text" id="bug1" class="mission-input" placeholder="예: 버튼을 누르면 아무것도 안 나타나요" value="${savedData.bug1 || ''}">
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label">언제 발생하나요?</label>
-                        <input type="text" id="bug2" class="mission-input" placeholder="예: 숫자를 입력하고 '계산' 버튼을 눌렀을 때" value="${savedData.bug2 || ''}">
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label">예상되는 결과는?</label>
-                        <input type="text" id="bug3" class="mission-input" placeholder="예: 계산 결과가 화면에 표시되어야 해요" value="${savedData.bug3 || ''}">
-                    </div>
-                </div>
-
-                <div class="content-card">
-                    <h3>🛠️ AI에게 보낼 수정 요청</h3>
-                    <div style="background: rgba(124, 58, 237, 0.1); border: 1px solid var(--violet); border-radius: 8px; padding: 16px; margin: 12px 0;">
-                        <p style="font-size: 12px; margin-bottom: 8px; color: var(--gray-light);">생성된 수정 요청 프롬프트</p>
-                        <div id="debugPrompt" style="background: rgba(0, 0, 0, 0.2); padding: 12px; border-radius: 6px; font-size: 13px; line-height: 1.6; max-height: 200px; overflow-y: auto; color: var(--cyan);">
-                            클릭해서 프롬프트를 생성하세요
-                        </div>
-                    </div>
-
-                    <div class="button-group">
-                        <button class="btn btn-primary" onclick="generateDebugPrompt()">✨ 수정 프롬프트 생성</button>
-                        <button class="btn btn-secondary" onclick="copyDebugPrompt()">📋 복사</button>
-                        <button class="btn btn-success" onclick="completeMission(9)">✓ 미션 완료</button>
-                    </div>
-                </div>
-            `;
-        }
-
-        function getMission10Content() {
-            const savedData = state.missions[10].data;
-            return `
-                <div class="content-card">
-                    <h3>👥 사용자 테스트</h3>
-                    <p>다른 친구들에게 당신의 앱을 사용해보게 하고 의견을 받아봅시다!</p>
-                </div>
-
-                <div class="content-card">
-                    <h3>📋 테스트 준비</h3>
-                    <p style="margin-bottom: 12px; color: var(--gray-light);">친구들이 앱을 테스트하는 동안 관찰한 것들을 기록하세요.</p>
-
-                    <div class="input-group">
-                        <label class="input-label">테스트 대상자 수</label>
-                        <input type="number" id="testerCount" class="mission-input" min="1" max="10" placeholder="예: 3명" value="${savedData.testerCount || ''}">
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label">친구들이 쉽게 사용했나요?</label>
-                        <select id="easyToUse" class="mission-input">
-                            <option value="">선택하세요</option>
-                            <option value="매우 쉬워요" ${savedData.easyToUse === '매우 쉬워요' ? 'selected' : ''}>매우 쉬워요 ✓</option>
-                            <option value="보통이에요" ${savedData.easyToUse === '보통이에요' ? 'selected' : ''}>보통이에요</option>
-                            <option value="어려워요" ${savedData.easyToUse === '어려워요' ? 'selected' : ''}>어려워요</option>
-                        </select>
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label">좋았던 점</label>
-                        <textarea id="positive" class="mission-input" placeholder="예: 버튼이 크고 눌리기 쉬워요, 결과가 빨리 나와요">${savedData.positive || ''}</textarea>
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label">개선하면 좋을 점</label>
-                        <textarea id="improvement" class="mission-input" placeholder="예: 색깔이 더 화려하면 좋겠어요, 음소거 버튼이 있으면 좋아요">${savedData.improvement || ''}</textarea>
-                    </div>
-
-                    <div class="button-group">
-                        <button class="btn btn-primary" onclick="saveMission10()">💾 저장</button>
-                        <button class="btn btn-success" onclick="completeMission(10)">✓ 미션 완료</button>
-                    </div>
-                </div>
-            `;
-        }
-
-        function getMission11Content() {
-            const savedData = state.missions[11].data;
-            const feedback10 = state.missions[10].data;
-            return `
-                <div class="content-card">
-                    <h3>⬆️ 앱 UPGRADE</h3>
-                    <p>미션 10의 피드백을 바탕으로 앱을 개선합니다!</p>
-                </div>
-
-                <div class="content-card">
-                    <h3>📊 수집한 피드백</h3>
-                    <div style="background: rgba(124, 58, 237, 0.1); border-left: 4px solid var(--violet); padding: 12px; margin: 12px 0; border-radius: 4px;">
-                        <div style="margin-bottom: 8px;">
-                            <strong>🎯 개선할 점:</strong>
-                            <div style="margin-top: 4px; font-size: 13px; color: var(--gray-light);">
-                                ${feedback10.improvement || '미션 10을 먼저 완료하세요'}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="content-card">
-                    <h3>🔧 개선 계획</h3>
-                    <div class="input-group">
-                        <label class="input-label">첫 번째 개선사항</label>
-                        <input type="text" id="upgrade1" class="mission-input" placeholder="예: 배경색을 더 밝게 변경" value="${savedData.upgrade1 || ''}">
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label">두 번째 개선사항</label>
-                        <input type="text" id="upgrade2" class="mission-input" placeholder="예: 음소거 버튼 추가" value="${savedData.upgrade2 || ''}">
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label">세 번째 개선사항</label>
-                        <input type="text" id="upgrade3" class="mission-input" placeholder="예: 폰트 크기 조절 기능" value="${savedData.upgrade3 || ''}">
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label">AI에게 전달할 개선 요청</label>
-                        <textarea id="upgradePrompt" class="mission-input" placeholder="예: 다음 기능들을 추가해줘: 1) 배경색 옵션, 2) 음소거 버튼">${savedData.upgradePrompt || ''}</textarea>
-                    </div>
-
-                    <div class="button-group">
-                        <button class="btn btn-primary" onclick="saveMission11()">💾 저장</button>
-                        <button class="btn btn-secondary" onclick="copyUpgradePrompt()">📋 프롬프트 복사</button>
-                        <button class="btn btn-success" onclick="completeMission(11)">✓ 미션 완료</button>
-                    </div>
-                </div>
-            `;
-        }
-
-        function getMission12Content() {
-            const app1Data = state.missions[2].data;
-            const app2Data = state.missions[3].data;
-            const test10Data = state.missions[10].data;
-
-            return `
-                <div class="content-card">
-                    <h3>🎉 AI APP FESTIVAL</h3>
-                    <p>모든 미션을 완료한 당신을 축하합니다! 당신의 최종 앱을 포트폴리오로 완성합니다.</p>
-                </div>
-
-                <div class="content-card">
-                    <h3>🏆 당신의 AI 개발 여정</h3>
-                    <div style="background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(124, 58, 237, 0.1)); border: 1px solid rgba(0, 217, 255, 0.2); border-radius: 12px; padding: 20px;">
-                        <div style="margin-bottom: 16px;">
-                            <div style="font-size: 13px; color: var(--gray-light); margin-bottom: 4px;">📱 만든 앱들</div>
-                            <div style="margin-left: 12px;">
-                                <div>✓ 첫 번째 앱: <strong>${app1Data.name || '(미완료)'}</strong></div>
-                                <div style="margin-top: 4px;">✓ 두 번째 앱: <strong>${app2Data.name || '(미완료)'}</strong></div>
-                            </div>
-                        </div>
-
-                        <div style="margin-bottom: 16px; padding-top: 16px; border-top: 1px solid rgba(0, 217, 255, 0.2);">
-                            <div style="font-size: 13px; color: var(--gray-light); margin-bottom: 4px;">👥 사용자 평가</div>
-                            <div style="margin-left: 12px;">
-                                <div>테스트 인원: ${test10Data.testerCount ? test10Data.testerCount + '명' : '(미완료)'}</div>
-                                <div style="margin-top: 4px;">사용 난이도: ${test10Data.easyToUse || '(미완료)'}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="content-card">
-                    <h3>📝 최종 포트폴리오</h3>
-                    <div class="input-group">
-                        <label class="input-label">나의 포트폴리오 제목</label>
-                        <input type="text" id="portfolioTitle" class="mission-input" placeholder="예: 내가 만든 AI 앱 모음" value="${state.missions[12].data.portfolioTitle || ''}">
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label">이 과정을 통해 배운 점</label>
-                        <textarea id="portfolioLearning" class="mission-input" placeholder="예: AI와 협업하는 방법, 문제 해결 능력, 사용자 중심 설계의 중요성 등">${state.missions[12].data.portfolioLearning || ''}</textarea>
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label">앞으로의 목표</label>
-                        <textarea id="portfolioGoal" class="mission-input" placeholder="예: 더 복잡한 앱 만들기, 프로그래밍 배우기, AI 활용 극대화 등">${state.missions[12].data.portfolioGoal || ''}</textarea>
-                    </div>
-
-                    <div class="button-group">
-                        <button class="btn btn-primary" onclick="saveMission12()">💾 저장</button>
-                        <button class="btn btn-success" onclick="completeMission(12)">🎉 최종 완료!</button>
-                    </div>
-                </div>
-            `;
-        }
-
-        // ========== 미션 완료 ==========
-        function completeMission(missionId) {
-            if (!state.missions[missionId]) {
-                state.missions[missionId] = { completed: false, data: {} };
+        let gameTarget = Math.floor(Math.random() * 100) + 1;
+        window.makeGameGuess = function() {
+            const guess = parseInt(document.getElementById('gameGuess').value);
+            if (isNaN(guess) || guess < 1 || guess > 100) {
+                document.getElementById('gameResult').textContent = '❌ 1~100 입력!';
+            } else if (guess === gameTarget) {
+                document.getElementById('gameResult').textContent = '🎉 정답!';
+                document.getElementById('gameGuess').disabled = true;
+            } else if (guess < gameTarget) {
+                document.getElementById('gameResult').textContent = '📈 더 큰 숫자!';
+            } else {
+                document.getElementById('gameResult').textContent = '📉 더 작은 숫자!';
             }
-            state.missions[missionId].completed = true;
+            document.getElementById('gameResult').style.display = 'flex';
+        };
 
-            // 배지 획득
-            if (missionId === 2) grantBadge('first_coder');
-            if (missionId === 4) grantBadge('idea_hunter');
-            if (missionId === 7) grantBadge('prompt_master');
-            if (missionId === 8) grantBadge('vibe_coder');
-            if (missionId === 9) grantBadge('bug_detective');
-            if (missionId === 10) grantBadge('user_researcher');
-            if (missionId === 11) grantBadge('app_designer');
-            if (missionId === 12) {
-                grantBadge('app_maker');
-                showCelebration();
-            }
+        function changeLevel(level) {
+            currentLevel = level;
+            currentWeek = Object.keys(lessons[['beginner', 'intermediate', 'advanced'][level]])[0];
+            updateUI();
 
-            saveData();
-            showConfetti();
-
-            setTimeout(() => {
-                backToDashboard();
-            }, 1500);
-        }
-
-        function completeMission4() {
-            const q1 = document.getElementById('q1')?.value;
-            const q2 = document.getElementById('q2')?.value;
-            const q3 = document.getElementById('q3')?.value;
-            const q4 = document.getElementById('q4')?.value;
-
-            if (!q1 || !q2 || !q3 || !q4) {
-                alert('모든 질문에 답해주세요!');
-                return;
-            }
-
-            completeMission(4);
-        }
-
-        function saveMission4() {
-            state.missions[4].data = {
-                q1: document.getElementById('q1').value,
-                q2: document.getElementById('q2').value,
-                q3: document.getElementById('q3').value,
-                q4: document.getElementById('q4').value
-            };
-            saveData();
-            alert('저장되었습니다!');
-        }
-
-        function saveMission5() {
-            state.missions[5].data = {
-                idea1: document.getElementById('idea1').value,
-                idea2: document.getElementById('idea2').value,
-                idea3: document.getElementById('idea3').value
-            };
-            saveData();
-            alert('저장되었습니다!');
-        }
-
-        function generatePrompt() {
-            const role = document.getElementById('role').value;
-            const goal = document.getElementById('goal').value;
-            const user = document.getElementById('user').value;
-            const features = document.getElementById('features').value;
-            const design = document.getElementById('design').value;
-
-            if (!role || !goal || !user || !features) {
-                alert('모든 항목을 입력해주세요!');
-                return;
-            }
-
-            const prompt = `너는 ${role}
-
-역할: ${role}
-목표: ${goal}
-사용자: ${user}
-핵심 기능:
-${features}
-
-디자인: ${design}
-
-HTML, CSS, JavaScript를 사용해서 위 요구사항을 만족하는 웹앱을 만들어줘.`;
-
-            const output = document.getElementById('promptOutput');
-            output.style.display = 'block';
-            output.innerHTML = `
-                <div class="prompt-builder">
-                    <h3>✨ 생성된 프롬프트</h3>
-                    <div class="prompt-output">${prompt}</div>
-                    <button class="copy-button" onclick="copyPrompt('${prompt.replace(/'/g, "\\'")}')">
-                        📋 프롬프트 복사
-                    </button>
-                </div>
-            `;
-
-            state.missions[7].data = {
-                role, goal, user, features, design,
-                generatedPrompt: prompt
-            };
-            saveData();
-        }
-
-        function copyPrompt(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                showCopyFeedback();
-                grantBadge('prompt_master');
+            document.querySelectorAll('.nav-btn').forEach((btn, idx) => {
+                btn.classList.toggle('active', idx === level);
             });
         }
 
-        function showCopyFeedback() {
-            const feedback = document.createElement('div');
-            feedback.className = 'copy-feedback';
-            feedback.textContent = '✓ 프롬프트 복사됨!';
-            document.body.appendChild(feedback);
-            setTimeout(() => feedback.remove(), 3000);
+        function changeWeek(week) {
+            currentWeek = week;
+            updateUI();
         }
 
-        function selectCategory(category, examples) {
-            document.getElementById('appCategory').value = category;
-        }
+        function updateUI() {
+            const levelNames = ['beginner', 'intermediate', 'advanced'];
+            const levelDisplay = ['기초 바이브 코딩', '중급 바이브 코딩', '고급 바이브 코딩'];
+            const currentLevelData = lessons[levelNames[currentLevel]];
 
-        function saveMission2() {
-            if (!state.missions[2]) state.missions[2] = { completed: false, data: {} };
-
-            const category = document.getElementById('appCategory').value;
-            const name = document.getElementById('appName').value;
-            const desc = document.getElementById('appDesc').value;
-
-            if (!category || !name) {
-                alert('카테고리와 앱 이름을 입력해주세요!');
-                return;
-            }
-
-            state.missions[2].data = { category, name, desc };
-            saveData();
-            alert('저장되었습니다!');
-        }
-
-        function launchGeminiForMission2() {
-            const name = document.getElementById('appName').value;
-            const desc = document.getElementById('appDesc').value;
-
-            if (!name) {
-                alert('앱 이름을 입력해주세요!');
-                return;
-            }
-
-            const prompt = `${name}이라는 앱을 만들어줘. ${desc || ''}`;
-            window.geminiPrompt = prompt;
-            window.open('https://gemini.google.com/app', '_blank');
-        }
-
-        function saveMission3() {
-            if (!state.missions[3]) state.missions[3] = { completed: false, data: {} };
-
-            const name = document.getElementById('app2Name').value;
-            const desc = document.getElementById('app2Desc').value;
-            const features = document.getElementById('app2Features').value;
-
-            if (!name) {
-                alert('앱 이름을 입력해주세요!');
-                return;
-            }
-
-            state.missions[3].data = { name, desc, features };
-            saveData();
-            alert('저장되었습니다!');
-        }
-
-        function launchGeminiForMission3() {
-            const name = document.getElementById('app2Name').value;
-            const desc = document.getElementById('app2Desc').value;
-            const features = document.getElementById('app2Features').value;
-
-            if (!name) {
-                alert('앱 이름을 입력해주세요!');
-                return;
-            }
-
-            const prompt = `${name}이라는 앱을 만들어줘. 설명: ${desc || ''}. 주요 기능: ${features || ''}`;
-            window.geminiPrompt = prompt;
-            window.open('https://gemini.google.com/app', '_blank');
-        }
-
-        function saveMission6() {
-            if (!state.missions[6]) state.missions[6] = { completed: false, data: {} };
-
-            const screen1 = document.getElementById('screen1').value;
-            const screen2 = document.getElementById('screen2').value;
-            const screen3 = document.getElementById('screen3').value;
-            const functions = document.getElementById('appFunctions').value;
-
-            if (!screen1 || !screen2 || !screen3) {
-                alert('모든 화면을 입력해주세요!');
-                return;
-            }
-
-            state.missions[6].data = { screen1, screen2, screen3, functions };
-            saveData();
-            alert('저장되었습니다!');
-        }
-
-        function generateDebugPrompt() {
-            if (!state.missions[9]) state.missions[9] = { completed: false, data: {} };
-
-            const bug1 = document.getElementById('bug1').value;
-            const bug2 = document.getElementById('bug2').value;
-            const bug3 = document.getElementById('bug3').value;
-
-            if (!bug1 || !bug2 || !bug3) {
-                alert('모든 항목을 입력해주세요!');
-                return;
-            }
-
-            const debugPrompt = `앱에 다음과 같은 오류가 있습니다:
-
-문제: ${bug1}
-발생 상황: ${bug2}
-예상 결과: ${bug3}
-
-이 오류를 수정해주세요.`;
-
-            document.getElementById('debugPrompt').textContent = debugPrompt;
-            state.missions[9].data = {
-                bug1, bug2, bug3,
-                debugPrompt: debugPrompt
-            };
-            saveData();
-        }
-
-        function copyDebugPrompt() {
-            const prompt = state.missions[9].data.debugPrompt || '';
-            if (!prompt) {
-                alert('먼저 수정 프롬프트를 생성하세요!');
-                return;
-            }
-            navigator.clipboard.writeText(prompt).then(() => {
-                showCopyFeedback();
-                grantBadge('bug_detective');
+            // 주차 버튼 업데이트
+            const weekButtons = document.getElementById('weekButtons');
+            weekButtons.innerHTML = '';
+            Object.keys(currentLevelData).forEach(week => {
+                const btn = document.createElement('button');
+                btn.className = `week-btn ${parseInt(week) === currentWeek ? 'active' : ''}`;
+                btn.textContent = `${week}주차`;
+                btn.onclick = () => changeWeek(parseInt(week));
+                weekButtons.appendChild(btn);
             });
-        }
 
-        function saveMission10() {
-            if (!state.missions[10]) state.missions[10] = { completed: false, data: {} };
-
-            const testerCount = document.getElementById('testerCount').value;
-            const easyToUse = document.getElementById('easyToUse').value;
-            const positive = document.getElementById('positive').value;
-            const improvement = document.getElementById('improvement').value;
-
-            if (!testerCount || !easyToUse || !positive || !improvement) {
-                alert('모든 항목을 입력해주세요!');
-                return;
-            }
-
-            state.missions[10].data = {
-                testerCount,
-                easyToUse,
-                positive,
-                improvement
-            };
-            saveData();
-            alert('저장되었습니다!');
-        }
-
-        function saveMission11() {
-            if (!state.missions[11]) state.missions[11] = { completed: false, data: {} };
-
-            const upgrade1 = document.getElementById('upgrade1').value;
-            const upgrade2 = document.getElementById('upgrade2').value;
-            const upgrade3 = document.getElementById('upgrade3').value;
-            const upgradePrompt = document.getElementById('upgradePrompt').value;
-
-            state.missions[11].data = {
-                upgrade1,
-                upgrade2,
-                upgrade3,
-                upgradePrompt
-            };
-            saveData();
-            alert('저장되었습니다!');
-        }
-
-        function copyUpgradePrompt() {
-            const prompt = document.getElementById('upgradePrompt').value;
-            if (!prompt) {
-                alert('개선 요청을 입력해주세요!');
-                return;
-            }
-            navigator.clipboard.writeText(prompt).then(() => {
-                showCopyFeedback();
-                grantBadge('app_designer');
-            });
-        }
-
-        function saveMission12() {
-            if (!state.missions[12]) state.missions[12] = { completed: false, data: {} };
-
-            const portfolioTitle = document.getElementById('portfolioTitle').value;
-            const portfolioLearning = document.getElementById('portfolioLearning').value;
-            const portfolioGoal = document.getElementById('portfolioGoal').value;
-
-            state.missions[12].data = {
-                portfolioTitle,
-                portfolioLearning,
-                portfolioGoal
-            };
-            saveData();
-            alert('저장되었습니다!');
-        }
-
-        // ========== 배지 ==========
-        function grantBadge(badgeId) {
-            if (!state.badges.includes(badgeId)) {
-                state.badges.push(badgeId);
-                saveData();
-                renderBadges();
-            }
-        }
-
-        // ========== 네비게이션 ==========
-        function showDashboard() {
-            showContent('dashboard-home');
-        }
-
-        function showMissions() {
-            showContent('dashboard-missions');
-        }
-
-        function showMyProject() {
-            showContent('dashboard-project');
-        }
-
-        function showAIToolkit() {
-            showContent('dashboard-toolkit');
-        }
-
-        function showBadges() {
-            showContent('dashboard-badges');
-        }
-
-        function showPortfolio() {
-            showContent('dashboard-portfolio');
-        }
-
-        function showContent(contentName) {
-            try {
-                // 모든 콘텐츠 숨기기
-                const contentElements = document.querySelectorAll('.dashboard-content');
-                contentElements.forEach(el => {
-                    el.classList.remove('active');
-                });
-
-                // 선택된 콘텐츠 보이기
-                const contentElement = document.querySelector(`[data-content="${contentName}"]`);
-                if (!contentElement) {
-                    console.error(`❌ 콘텐츠를 찾을 수 없음: ${contentName}`);
-                    return;
-                }
-
-                contentElement.classList.add('active');
-                console.log(`✓ 콘텐츠 표시: ${contentName}`);
-
-                // 네비게이션 링크 업데이트
-                const navLinks = document.querySelectorAll('.nav-link');
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                });
-
-                const navLink = document.querySelector(`[data-target="${contentName}"]`);
-                if (navLink) {
-                    navLink.classList.add('active');
-                } else {
-                    console.warn(`⚠️ 네비게이션 링크를 찾을 수 없음: ${contentName}`);
-                }
-            } catch (error) {
-                console.error(`콘텐츠 표시 오류: ${error.message}`);
-            }
-        }
-
-        function backToDashboard() {
-            goToScreen('dashboard');
-            showDashboard();
-            renderDashboard();
-        }
-
-        // ========== 애니메이션 ==========
-        function showConfetti() {
-            // 간단한 축하 메시지
-            const message = document.createElement('div');
-            message.style.cssText = `
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background: linear-gradient(135deg, #00d9ff, #7c3aed);
-                color: white;
-                padding: 40px 60px;
-                border-radius: 16px;
-                font-size: 24px;
-                font-weight: 900;
-                z-index: 10000;
-                animation: pop 0.6s ease;
+            // 콘텐츠 업데이트
+            const lesson = currentLevelData[currentWeek];
+            const content = document.getElementById('content');
+            content.innerHTML = `
+                <h1 class="week-title">${lesson.title}</h1>
+                <p class="week-subtitle">${lesson.subtitle}</p>
+                ${lesson.content}
             `;
-            message.textContent = '✓ 미션 완료!';
-            document.body.appendChild(message);
-            setTimeout(() => message.remove(), 1000);
         }
 
-        function showCelebration() {
-            const celebration = document.createElement('div');
-            celebration.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.7);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                z-index: 10001;
-            `;
-            celebration.innerHTML = `
-                <div style="text-align: center; color: white;">
-                    <div style="font-size: 80px; margin-bottom: 20px;">🎉</div>
-                    <div style="font-size: 36px; font-weight: 900; margin-bottom: 20px;">
-                        YOU ARE AN APP MAKER
-                    </div>
-                    <div style="font-size: 18px; color: #00d9ff;">
-                        축하합니다! 당신의 첫 앱이 완성되었습니다!
-                    </div>
-                </div>
-            `;
-            document.body.appendChild(celebration);
-            setTimeout(() => celebration.remove(), 3000);
-        }
-
-        // ========== 네비게이션 이벤트 리스너 설정 ==========
-        function setupEventListeners() {
-            // 좌측 메뉴 버튼 이벤트 리스너
-            const navLinks = document.querySelectorAll('.nav-link');
-            navLinks.forEach(link => {
-                link.removeEventListener('click', handleNavClick);
-                link.addEventListener('click', handleNavClick);
-            });
-        }
-
-        function handleNavClick(event) {
-            event.preventDefault();
-            const target = event.currentTarget.getAttribute('data-target');
-            if (target) {
-                showContent(target);
-            }
-        }
-
-        // ========== 앱 시작 ==========
-        window.addEventListener('load', function() {
-            initApp();
-            setupEventListeners();
-        });
-
-        // 페이지가 보일 때마다 이벤트 리스너 재설정
-        document.addEventListener('visibilitychange', function() {
-            if (!document.hidden) {
-                setTimeout(setupEventListeners, 100);
-            }
-        });
+        updateUI();
     </script>
 </body>
 </html>
