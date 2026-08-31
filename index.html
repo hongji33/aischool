@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vibe Coding Academy - AI로 앱 만들기</title>
+    <title>Vibe Coding Academy - 수업 관리 시스템</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap">
     <style>
         * {
@@ -30,7 +30,115 @@
             color: var(--dark);
         }
 
-        /* 헤더 */
+        /* === 로그인 화면 === */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        .login-box {
+            background: white;
+            padding: 60px 40px;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .login-box h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .login-box p {
+            color: var(--light);
+            margin-bottom: 40px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--dark);
+            font-size: 14px;
+        }
+
+        .form-group select,
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-group select:focus,
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .login-error {
+            color: #e74c3c;
+            font-size: 12px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .teacher-link {
+            margin-top: 20px;
+            font-size: 12px;
+        }
+
+        .teacher-link a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* === 메인 인터페이스 === */
         header {
             display: flex;
             justify-content: space-between;
@@ -52,6 +160,22 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .class-info {
+            font-size: 14px;
+            color: var(--light);
+        }
+
+        .class-info strong {
+            color: var(--primary);
+            font-weight: 700;
         }
 
         .level-buttons {
@@ -81,13 +205,27 @@
             border-color: var(--primary);
         }
 
-        /* 메인 컨테이너 */
+        .logout-btn {
+            padding: 8px 16px;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            box-shadow: 0 4px 12px rgba(78, 205, 196, 0.3);
+        }
+
         .container {
             display: flex;
             height: calc(100vh - 90px);
         }
 
-        /* 왼쪽 사이드바 */
         .sidebar {
             width: 200px;
             background: var(--bg-white);
@@ -122,7 +260,12 @@
             font-weight: 600;
         }
 
-        /* 메인 콘텐츠 */
+        .week-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            color: var(--light);
+        }
+
         .content {
             flex: 1;
             overflow-y: auto;
@@ -144,7 +287,6 @@
             margin-bottom: 30px;
         }
 
-        /* 섹션 */
         .section {
             background: var(--bg-white);
             border-radius: 12px;
@@ -179,10 +321,6 @@
             gap: 10px;
         }
 
-        .section-icon {
-            font-size: 24px;
-        }
-
         .section-content {
             line-height: 1.8;
             color: var(--dark);
@@ -193,7 +331,14 @@
             margin-bottom: 12px;
         }
 
-        /* 프롬프트 박스 */
+        .section-content ul {
+            margin-left: 20px;
+        }
+
+        .section-content li {
+            margin-bottom: 8px;
+        }
+
         .prompt-box {
             background: rgba(95, 158, 160, 0.1);
             border-left: 4px solid var(--accent-blue);
@@ -219,9 +364,9 @@
             border-radius: 6px;
             margin: 8px 0 0 0;
             font-size: 13px;
+            white-space: pre-wrap;
         }
 
-        /* 체크리스트 */
         .checklist {
             margin: 15px 0;
         }
@@ -243,7 +388,6 @@
             accent-color: var(--primary);
         }
 
-        /* 팁과 주의 */
         .tip-card {
             background: rgba(255, 230, 109, 0.15);
             border-left: 4px solid var(--tertiary);
@@ -251,41 +395,190 @@
             margin: 10px 0;
             border-radius: 6px;
             font-size: 14px;
+            white-space: pre-wrap;
         }
 
         .tip-card strong {
             color: var(--primary);
         }
 
-        /* 버튼 */
-        .btn {
-            display: inline-block;
-            padding: 12px 24px;
+        /* === 교사 관리 페이지 === */
+        .teacher-container {
+            display: none;
+            padding: 40px;
+            background: var(--bg-light);
+            min-height: 100vh;
+        }
+
+        .teacher-container.active {
+            display: block;
+        }
+
+        .teacher-header {
+            margin-bottom: 30px;
+        }
+
+        .teacher-header h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .teacher-header p {
+            color: var(--light);
+            font-size: 14px;
+        }
+
+        .teacher-form {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            max-width: 600px;
+        }
+
+        .teacher-form h2 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .form-row.full {
+            flex-direction: column;
+        }
+
+        .form-row input,
+        .form-row select {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-row input:focus,
+        .form-row select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .teacher-btn {
+            padding: 10px 20px;
             background: var(--primary);
             color: white;
             border: none;
             border-radius: 8px;
-            font-weight: 600;
             cursor: pointer;
-            font-size: 14px;
+            font-weight: 600;
             transition: all 0.3s ease;
-            margin-top: 10px;
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(255, 107, 107, 0.3);
+        .teacher-btn:hover {
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
         }
 
-        .btn-secondary {
+        .classes-list {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .class-item {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .class-item:last-child {
+            border-bottom: none;
+        }
+
+        .class-item-info h3 {
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .class-item-info p {
+            font-size: 12px;
+            color: var(--light);
+        }
+
+        .class-item-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .class-item-actions button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .edit-btn {
             background: var(--secondary);
+            color: white;
         }
 
-        .btn-secondary:hover {
-            box-shadow: 0 6px 16px rgba(78, 205, 196, 0.3);
+        .delete-btn {
+            background: #e74c3c;
+            color: white;
         }
 
-        /* 스크롤바 */
+        .weeks-selector {
+            margin-top: 20px;
+            padding: 20px;
+            background: var(--bg-light);
+            border-radius: 8px;
+        }
+
+        .weeks-selector h3 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .weeks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 10px;
+        }
+
+        .week-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .week-checkbox input {
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+        }
+
+        .week-checkbox label {
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -340,384 +633,195 @@
     </style>
 </head>
 <body>
-    <header>
-        <div class="logo">🎨 Vibe Coding Academy</div>
-        <div class="level-buttons">
-            <button class="level-btn active" onclick="setLevel('beginner')">기초</button>
-            <button class="level-btn" onclick="setLevel('intermediate')">중급</button>
-            <button class="level-btn" onclick="setLevel('advanced')">고급</button>
-        </div>
-    </header>
+    <!-- 로그인 화면 -->
+    <div id="loginScreen" class="login-container">
+        <div class="login-box">
+            <h1>🎨 Vibe Coding</h1>
+            <p>AI로 앱 만드는 방법을 배워봅시다</p>
 
-    <div class="container">
-        <aside class="sidebar" id="sidebar"></aside>
-        <main class="content" id="content"></main>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="classSelect">수업 선택</label>
+                    <select id="classSelect" required>
+                        <option value="">-- 수업을 선택해주세요 --</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="passwordInput">비밀번호</label>
+                    <input type="password" id="passwordInput" placeholder="비밀번호를 입력하세요" required>
+                </div>
+
+                <button type="submit" class="login-btn">입장</button>
+                <div class="login-error" id="loginError"></div>
+            </form>
+
+            <div class="teacher-link">
+                <a onclick="showTeacherLogin()">선생님이신가요?</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 메인 화면 -->
+    <div id="mainScreen" style="display: none;">
+        <header>
+            <div class="logo">🎨 Vibe Coding Academy</div>
+            <div class="header-right">
+                <div class="class-info">
+                    📚 <strong id="currentClassName"></strong>
+                </div>
+                <div class="level-buttons">
+                    <button class="level-btn active" onclick="setLevel('beginner')">기초</button>
+                    <button class="level-btn" onclick="setLevel('intermediate')">중급</button>
+                    <button class="level-btn" onclick="setLevel('advanced')">고급</button>
+                </div>
+                <button class="logout-btn" onclick="logout()">나가기</button>
+            </div>
+        </header>
+
+        <div class="container">
+            <aside class="sidebar" id="sidebar"></aside>
+            <main class="content" id="content"></main>
+        </div>
+    </div>
+
+    <!-- 교사 관리 페이지 -->
+    <div id="teacherScreen" style="display: none;">
+        <div style="background: white; padding: 20px 40px; box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08); display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-family: 'Poppins', sans-serif; font-size: 24px; font-weight: 800; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                🎨 교사 관리 페이지
+            </div>
+            <button class="logout-btn" onclick="exitTeacherMode()">나가기</button>
+        </div>
+
+        <div class="teacher-container active">
+            <div class="teacher-header">
+                <h1>수업 관리</h1>
+                <p>학생들에게 공개할 수업을 관리하세요. 각 수업별로 공개할 주차를 선택할 수 있습니다.</p>
+            </div>
+
+            <div class="teacher-form">
+                <h2>새 수업 만들기</h2>
+                <div class="form-row full">
+                    <input type="text" id="newClassName" placeholder="수업명 (예: 26-2-AI팩토리)">
+                </div>
+                <div class="form-row full">
+                    <input type="password" id="newClassPassword" placeholder="비밀번호">
+                </div>
+                <button class="teacher-btn" onclick="createClass()">수업 생성</button>
+            </div>
+
+            <div class="classes-list" id="classesList"></div>
+        </div>
     </div>
 
     <script>
-        // 커리큘럼 데이터
+        // 커리큘럼 데이터 (중급, 고급 포함)
         const curriculum = {
-            beginner: {
-                1: {
-                    title: "1주차 - 운세 앱 함께 만들기",
-                    subtitle: "AI를 사용해서 첫 번째 앱을 만들어봅시다",
-                    sections: [
-                        {
-                            type: "goal",
-                            title: "🎯 이번 주 목표",
-                            content: "<p>제미나이 캔버스를 사용해서 <strong>버튼을 누르면 다양한 운세를 말해주는 앱</strong>을 함께 만들어봅니다.</p><p>이 과정을 통해 AI에게 어떻게 요청하면 우리가 원하는 앱을 만들 수 있는지 배웁니다.</p>"
-                        },
-                        {
-                            type: "activity",
-                            title: "💬 제미나이 캔버스에 이렇게 요청하세요",
-                            content: "<div class='prompt-box'><div class='prompt-box-title'>운세앱 제미나이 프롬프트:</div><div class='prompt-text'>운세를 알려주는 웹 앱을 만들어줘. 다음 조건을 포함해줄래?\n\n1. 제목: \"오늘의 운세\"\n2. 큰 버튼 (클릭하면 운세가 나타남)\n3. 매번 클릭할 때마다 다른 운세가 나오기\n4. 운세들: 대길, 중길, 소길, 흉\n5. 화려한 색상으로 만들어줘\n6. 운세마다 다른 배경색으로 나타나기</div></div>"
-                        },
-                        {
-                            type: "activity",
-                            title: "🔍 결과물 확인하기",
-                            content: "<p><strong>제미나이가 만들어준 앱을 확인해보세요:</strong></p><ul><li>✅ 버튼이 잘 보이나요?</li><li>✅ 버튼을 클릭했을 때 운세가 나오나요?</li><li>✅ 매번 다른 운세가 나오나요?</li><li>✅ 디자인이 마음에 드나요?</li></ul>"
-                        },
-                        {
-                            type: "tips",
-                            title: "💡 학생 활동 - 내 스타일로 커스터마이징",
-                            content: "<p>이제 <strong>너만의 운세앱</strong>을 만들어보세요!</p><div class='prompt-box'><div class='prompt-box-title'>개선 프롬프트 예시:</div><div class='prompt-text'>위의 운세앱을 다음처럼 수정해줄래?\n\n1. 제목을 \"내 반의 운세\"로 바꿔줘\n2. 운세를 우리 반 친구들 이름으로 만들어줘 (예: 김철수 행운, 박영희 대길)\n3. 재미있는 이모지 추가해줘</div></div></p><p><strong>또는 다른 주제로 만들어보기:</strong></p><ul><li>🍕 오늘의 추천 음식</li><li>🎬 오늘의 영화 장르</li><li>🎮 오늘의 게임</li></ul>"
-                        },
-                        {
-                            type: "tips",
-                            title: "📌 주의사항",
-                            content: "<div class='tip-card'><strong>💬 제미나이와 대화할 때:</strong><br>- 원하는 것을 구체적으로 설명하세요<br>- 안 되면 다시 요청하세요 (\"더 크게 해줘\" 같이)<br>- 친구들 것과 다르게 만드는 것이 좋아요!</div>"
-                        }
-                    ]
-                },
-                2: {
-                    title: "2주차 - 운세 앱 업그레이드",
-                    subtitle: "기본 앱에 새로운 기능을 추가해봅시다",
-                    sections: [
-                        {
-                            type: "goal",
-                            title: "🎯 이번 주 목표",
-                            content: "<p>1주차에 만든 운세앱에 <strong>새로운 기능을 추가</strong>합니다.</p><p>제미나이에게 '이 기능 추가해줄래?'라고 요청하는 방법을 배웁니다.</p>"
-                        },
-                        {
-                            type: "activity",
-                            title: "💬 제미나이 캔버스에 이렇게 요청하세요",
-                            content: "<div class='prompt-box'><div class='prompt-box-title'>기능 추가 프롬프트:</div><div class='prompt-text'>운세앱에 다음 기능들을 추가해줄래?\n\n1. 운세 말고 숫자 점수도 함께 보여주기 (1~100점)\n2. 운세별로 추천 색상 알려주기\n3. \"다시 보기\" 버튼 추가\n4. 클릭 횟수 카운트해서 \"총 X번 클릭했어요!\" 표시하기\n5. 화려한 애니메이션 효과 추가</div></div></p><p><strong>선택 기능 (더 하고 싶으면):</strong></p><ul><li>음향 효과 추가</li><li>시간별로 다른 운세 표시 (아침/오후/저녁)</li><li>친구 이름으로 운세 생성</li></ul>"
-                        },
-                        {
-                            type: "tips",
-                            title: "✏️ 학생 활동",
-                            content: "<div class='checklist'><div class='checklist-item'><input type='checkbox'> 제미나이에 요청해서 기능을 추가했나요?</div><div class='checklist-item'><input type='checkbox'> 모든 기능이 제대로 작동하나요?</div><div class='checklist-item'><input type='checkbox'> 더 추가하고 싶은 기능이 있나요?</div><div class='checklist-item'><input type='checkbox'> 친구한테 보여줬나요?</div></div>"
-                        }
-                    ]
-                },
-                3: {
-                    title: "3주차 - 할일 관리 앱 만들기",
-                    subtitle: "실용적인 앱으로 배워봅시다",
-                    sections: [
-                        {
-                            type: "goal",
-                            title: "🎯 이번 주 목표",
-                            content: "<p><strong>할일을 관리하는 웹 앱</strong>을 만듭니다.</p><p>입력하고, 추가하고, 완료 표시 하는 앱을 통해 더 복잡한 기능을 다루어봅니다.</p>"
-                        },
-                        {
-                            type: "activity",
-                            title: "💬 제미나이 캔버스에 이렇게 요청하세요",
-                            content: "<div class='prompt-box'><div class='prompt-box-title'>할일앱 프롬프트:</div><div class='prompt-text'>할일을 관리하는 웹 앱을 만들어줄래?\n\n1. \"할일 입력\" 박스가 있기\n2. \"추가\" 버튼 클릭하면 할일이 목록에 추가되기\n3. 각 할일 옆에 \"완료\" 버튼이 있기\n4. \"완료\" 버튼 클릭하면 그 항목에 줄이 그어지기\n5. \"삭제\" 버튼으로 지우기\n6. 이쁜 색상으로 디자인해주기</div></div></p>"
-                        },
-                        {
-                            type: "tips",
-                            title: "✏️ 학생 활동",
-                            content: "<p><strong>아이디어 발전시키기:</strong></p><ul><li>🎓 공부할 과목별로 정렬하기</li><li>📅 날짜 추가하기</li><li>⭐ 중요도 표시하기 (별 5개까지)</li><li>🎨 카테고리별로 다른 색상</li><li>🔊 소리 효과 추가</li></ul>"
-                        }
-                    ]
-                },
-                4: {
-                    title: "4주차 - 할일 앱 업그레이드",
-                    subtitle: "더 멋진 기능을 추가해봅시다",
-                    sections: [
-                        {
-                            type: "goal",
-                            title: "🎯 이번 주 목표",
-                            content: "<p>3주차 할일 앱에 <strong>고급 기능</strong>을 추가합니다.</p>"
-                        },
-                        {
-                            type: "activity",
-                            title: "💬 제미나이에게 요청하기",
-                            content: "<div class='prompt-box'><div class='prompt-box-title'>업그레이드 프롬프트:</div><div class='prompt-text'>할일앱에 이 기능들을 추가해줄래?\n\n1. 완료한 할일 개수 표시 (예: \"3/10 완료\")\n2. 중요도별로 정렬 기능\n3. 완료한 할일만 보기/전체 보기 선택\n4. 리셋 버튼으로 모든 할일 지우기\n5. 저장된 할일이 새로고침해도 남기 (이전에 배운 거 활용)</div></div></p>"
-                        },
-                        {
-                            type: "tips",
-                            title: "💡 도전 과제",
-                            content: "<p><strong>다음 주제로 비슷한 앱 만들기:</strong></p><ul><li>📚 책 읽은 목록</li><li>🎮 게임 스코어 기록</li><li>📺 보고 싶은 영화 목록</li><li>🎵 좋아하는 노래 모음</li></ul>"
-                        }
-                    ]
-                },
-                5: {
-                    title: "5주차 - 재미있는 앱 만들기",
-                    subtitle: "자유롭게 아이디어를 내서 만들어봅시다",
-                    sections: [
-                        {
-                            type: "goal",
-                            title: "🎯 이번 주 목표",
-                            content: "<p><strong>지금까지 배운 것을 바탕으로 재미있는 앱 하나를 자유롭게 만들기</strong></p>"
-                        },
-                        {
-                            type: "activity",
-                            title: "💡 앱 아이디어 선택",
-                            content: "<p><strong>다음 중에서 선택하거나 새로운 아이디어를 내세요:</strong></p><ul><li>🎲 주사위 게임 (점수 계산)</li><li>🎨 색상 조합 추천 앱</li><li>📝 단어 맞추기 게임</li><li>🌟 캐릭터 만들기 (능력치 랜덤 배치)</li><li>🎵 음악 추천 플레이리스트</li><li>🍕 음식 추천 룰렛</li><li>💬 타로 카드 점술</li><li>🎭 성격 유형 테스트</li></ul>"
-                        },
-                        {
-                            type: "activity",
-                            title: "💬 제미나이 캔버스에 요청하기",
-                            content: "<div class='prompt-box'><div class='prompt-box-title'>자유로운 요청 방법:</div><div class='prompt-text'>예) \"[앱 이름]을(를) 만들어줄래? 다음처럼 작동했으면 좋겠어:\n- [기능 1]\n- [기능 2]\n- [기능 3]\n- [원하는 디자인]\"\n\n구체적으로 설명할수록 더 좋은 앱이 만들어져요!</div></div></p>"
-                        },
-                        {
-                            type: "tips",
-                            title: "✏️ 학생 활동 체크리스트",
-                            content: "<div class='checklist'><div class='checklist-item'><input type='checkbox'> 앱 아이디어를 정했나요?</div><div class='checklist-item'><input type='checkbox'> 기능이 모두 작동하나요?</div><div class='checklist-item'><input type='checkbox'> 색상과 디자인이 예쁜가요?</div><div class='checklist-item'><input type='checkbox'> 친구들과 공유했나요?</div></div>"
-                        }
-                    ]
-                },
-                6: {
-                    title: "6주차 - 나만의 앱 기획",
-                    subtitle: "앞으로 만들 앱을 기획해봅시다",
-                    sections: [
-                        {
-                            type: "goal",
-                            title: "🎯 이번 주 목표",
-                            content: "<p>지금부터는 <strong>학생들이 각자 만들고 싶은 앱을 기획하고 만듭니다</strong></p><p>GitHub에 업로드하는 방법도 배웁니다.</p>"
-                        },
-                        {
-                            type: "activity",
-                            title: "📋 앱 기획서 작성",
-                            content: "<p><strong>다음을 생각해보고 정리해보세요:</strong></p><div class='checklist'><div class='checklist-item'><input type='checkbox'> <strong>앱 이름:</strong> (예: \"우리반 친구 추천 앱\")</div><div class='checklist-item'><input type='checkbox'> <strong>목적:</strong> 이 앱이 뭐 하는 건지? (예: \"친구들의 취향을 알아보기\")</div><div class='checklist-item'><input type='checkbox'> <strong>기능:</strong> 어떤 기능들이 필요한가? (예: \"선택하기, 결과 보기\")</div><div class='checklist-item'><input type='checkbox'> <strong>대상:</strong> 누가 쓸 건가? (예: \"우리반 학생들\")</div><div class='checklist-item'><input type='checkbox'> <strong>디자인:</strong> 어떤 느낌이었으면 좋을까? (예: \"밝고 재미있는\")</div></div>"
-                        },
-                        {
-                            type: "tips",
-                            title: "💡 앱 기획 팁",
-                            content: "<div class='tip-card'><strong>좋은 앱 아이디어의 조건:</strong><br>1. 친구들이 재미있게 쓸 수 있을 것<br>2. 기능이 간단하고 명확할 것<br>3. 누구나 이해할 수 있는 것<br><br><strong>아이디어 예시:</strong><br>- 반 친구 성향 검사<br>- 뭐할지 정하기 게임<br>- 좋아하는 것 투표하기<br>- 학용품 추천 앱<br>- 주말 계획 도우미</div>"
-                        }
-                    ]
-                },
-                7: {
-                    title: "7주차 - 제미나이로 앱 만들기",
-                    subtitle: "기획한 앱을 제미나이로 구현합시다",
-                    sections: [
-                        {
-                            type: "goal",
-                            title: "🎯 이번 주 목표",
-                            content: "<p><strong>6주차에 기획한 앱을 제미나이 캔버스에서 만들기</strong></p>"
-                        },
-                        {
-                            type: "activity",
-                            title: "💬 제미나이 캔버스 사용법",
-                            content: "<p><strong>기획서를 바탕으로 제미나이에 요청하세요:</strong></p><div class='prompt-box'><div class='prompt-box-title'>앱 요청 프롬프트 템플릿:</div><div class='prompt-text'>[앱 이름] 웹앱을 만들어줄래?\n\n목적: [목적 설명]\n대상: [누가 쓸 건지]\n\n필요한 기능:\n1. [기능 1]\n2. [기능 2]\n3. [기능 3]\n\n디자인: [원하는 느낌]\n색상: [선호하는 색상]</div></div></p>"
-                        },
-                        {
-                            type: "activity",
-                            title: "✏️ 앱 수정하기",
-                            content: "<p><strong>제미나이가 만든 앱을 확인하고 수정요청하세요:</strong></p><ul><li>\"버튼을 더 크게 해줄래?\"</li><li>\"색상을 이렇게 바꿔줄래?\"</li><li>\"이 기능을 추가해줄 수 있어?\"</li><li>\"텍스트가 읽기 쉬운가요?\"</li></ul>"
-                        },
-                        {
-                            type: "tips",
-                            title: "💡 팁",
-                            content: "<div class='tip-card'><strong>안 되면 다시 시도하세요:</strong><br>- 첫 번째 요청으로 완벽하지 않을 수 있어요<br>- \"이건 안 됐어. 이렇게 다시 해줄래?\" 라고 말하세요<br>- 작은 요청부터 시작해서 차근차근 만드는 것도 좋아요</div>"
-                        }
-                    ]
-                },
-                8: {
-                    title: "8주차 - 앱 테스트 & 개선",
-                    subtitle: "앱을 테스트하고 더 좋게 만들어봅시다",
-                    sections: [
-                        {
-                            type: "goal",
-                            title: "🎯 이번 주 목표",
-                            content: "<p><strong>만든 앱을 친구들과 공유해서 테스트하고, 피드백을 받아서 개선하기</strong></p>"
-                        },
-                        {
-                            type: "activity",
-                            title: "🔍 테스트 리스트",
-                            content: "<div class='checklist'><div class='checklist-item'><input type='checkbox'> 앱이 제대로 열리나요?</div><div class='checklist-item'><input type='checkbox'> 모든 버튼이 작동하나요?</div><div class='checklist-item'><input type='checkbox'> 화면이 보기 좋나요?</div><div class='checklist-item'><input type='checkbox'> 오류 메시지는 없나요?</div><div class='checklist-item'><input type='checkbox'> 친구들이 쉽게 이해할 수 있나요?</div></div>"
-                        },
-                        {
-                            type: "activity",
-                            title: "👥 친구들 피드백 받기",
-                            content: "<p><strong>2-3명 친구한테 보여주고 물어보세요:</strong></p><ul><li>✅ 이 앱 재미있어?</li><li>✅ 뭐가 좋아?</li><li>✅ 뭐가 빠졌으면 좋겠어?</li><li>✅ 어떻게 개선했으면 좋겠어?</li></ul>"
-                        },
-                        {
-                            type: "activity",
-                            title: "💬 제미나이에 개선 요청하기",
-                            content: "<div class='prompt-box'><div class='prompt-box-title'>개선 프롬프트:</div><div class='prompt-text'>앱을 다음처럼 개선해줄래?\n\n친구들 피드백:\n- [피드백 1]\n- [피드백 2]\n\n개선 내용:\n- [추가할 기능]\n- [바꿀 디자인]\n- [수정할 부분]</div></div></p>"
-                        }
-                    ]
-                },
-                9: {
-                    title: "9주차 - GitHub에 올리기",
-                    subtitle: "만든 앱을 GitHub에 공유해봅시다",
-                    sections: [
-                        {
-                            type: "goal",
-                            title: "🎯 이번 주 목표",
-                            content: "<p><strong>만든 앱의 코드를 GitHub에 올리기</strong></p><p>GitHub는 개발자들이 코드를 공유하고 협력하는 플랫폼입니다.</p>"
-                        },
-                        {
-                            type: "activity",
-                            title: "📝 GitHub 준비하기",
-                            content: "<p><strong>다음 단계를 따라하세요:</strong></p><div class='checklist'><div class='checklist-item'><input type='checkbox'> GitHub 계정 만들기 (github.com)</div><div class='checklist-item'><input type='checkbox'> 새로운 저장소(Repository) 만들기</div><div class='checklist-item'><input type='checkbox'> 저장소 이름: [앱 이름]</div><div class='checklist-item'><input type='checkbox'> README.md 파일에 앱 설명 쓰기</div></div>"
-                        },
-                        {
-                            type: "activity",
-                            title: "📤 앱 올리기",
-                            content: "<p><strong>기본 단계:</strong></p><ol><li>제미나이에서 만든 앱의 전체 코드 복사</li><li>GitHub의 저장소에서 \"Add file\" → \"Create new file\"</li><li>파일 이름: <code>index.html</code></li><li>코드 붙여넣기</li><li>Commit</li></ol><p><strong>또는 더 쉬운 방법:</strong></p><div class='prompt-box'><div class='prompt-box-title'>제미나이에 요청:</div><div class='prompt-text'>이 앱의 코드를 GitHub에 올릴 수 있도록 준비해줄래?\n- 전체 코드를 복사할 수 있도록\n- README.md 파일도 만들어줄래?</div></div></p>"
-                        },
-                        {
-                            type: "tips",
-                            title: "💡 README.md 내용 예시",
-                            content: "<div class='tip-card'><strong># [앱 이름]</strong><br><br>## 설명<br>이 앱은 [앱이 뭐 하는지] 해주는 웹 앱입니다.<br><br>## 기능<br>- 기능 1<br>- 기능 2<br>- 기능 3<br><br>## 사용 방법<br>1. [시작 방법]<br>2. [조작 방법]<br><br>## 만든 사람<br>[이름]</div>"
-                        }
-                    ]
-                },
-                10: {
-                    title: "10주차 - 가족을 위한 앱",
-                    subtitle: "가족이 좋아할 만한 앱을 만들어봅시다",
-                    sections: [
-                        {
-                            type: "goal",
-                            title: "🎯 이번 주 목표",
-                            content: "<p><strong>우리 가족을 위한 특별한 앱 만들기</strong></p><p>엄마, 아빠, 형/누나, 할머니/할아버지 등을 생각해보세요!</p>"
-                        },
-                        {
-                            type: "activity",
-                            title: "💡 앱 아이디어 내기",
-                            content: "<p><strong>가족을 위한 앱 아이디어:</strong></p><ul><li>👨‍👩‍👧‍👦 가족 할일 공유 앱</li><li>🎂 생일 알림 앱</li><li>💝 감사 메시지 작성 앱</li><li>📸 가족 추억 공유 앱</li><li>🍽️ 오늘의 저녁 메뉴 추천</li><li>🎮 가족이 함께 하는 게임</li><li>⏰ 취침 시간 리마인더</li><li>📚 함께 읽을 책 추천</li></ul>"
-                        },
-                        {
-                            type: "activity",
-                            title: "💬 제미나이 캔버스에 요청하기",
-                            content: "<div class='prompt-box'><div class='prompt-box-title'>가족 앱 요청:</div><div class='prompt-text'>[앱 이름]을(를) 만들어줄래?\n\n이건 우리 가족을 위한 앱이야.\n가족 구성원: [엄마, 아빠, 오빠, 나]\n\n목적: [앱의 목적]\n\n기능:\n1. [기능 1]\n2. [기능 2]\n3. [기능 3]\n\n디자인: 따뜻하고 가족 같은 느낌</div></div></p>"
-                        },
-                        {
-                            type: "tips",
-                            title: "✏️ 학생 활동",
-                            content: "<div class='checklist'><div class='checklist-item'><input type='checkbox'> 가족 구성원을 생각했나요?</div><div class='checklist-item'><input type='checkbox'> 가족이 정말 쓸만한 앱인가요?</div><div class='checklist-item'><input type='checkbox'> 가족에게 보여줬나요?</div><div class='checklist-item'><input type='checkbox'> 피드백을 받았나요?</div></div>"
-                        }
-                    ]
-                },
-                11: {
-                    title: "11주차 - 친구들과 협력하기",
-                    subtitle: "친구들과 함께 하나의 큰 앱을 만들어봅시다",
-                    sections: [
-                        {
-                            type: "goal",
-                            title: "🎯 이번 주 목표",
-                            content: "<p><strong>2-3명이 팀을 이루어 하나의 큰 앱을 함께 만들기</strong></p><p>협력하는 방법과 팀 작업의 즐거움을 배웁니다.</p>"
-                        },
-                        {
-                            type: "activity",
-                            title: "👥 팀 구성 & 역할 정하기",
-                            content: "<p><strong>팀 구성:</strong></p><ul><li>팀원: 2-3명</li><li>역할:<br>  - 아이디어 기획자<br>  - 디자인 담당<br>  - 테스트 담당<br>  - 모두가 함께: 제미나이에 요청하고 개선하기</li></ul>"
-                        },
-                        {
-                            type: "activity",
-                            title: "💡 팀 프로젝트 아이디어",
-                            content: "<p><strong>함께 만들면 좋은 앱:</strong></p><ul><li>🏫 반의 시간표 앱</li><li>🎬 우리가 추천하는 영화</li><li>⚽ 스포츠 대회 점수 기록</li><li>🎵 우리 팀 플레이리스트</li><li>🍕 점심 뭐 먹을지 투표 앱</li><li>🎮 게임 토너먼트 관리</li><li>📚 함께 읽은 책 리뷰</li></ul>"
-                        },
-                        {
-                            type: "activity",
-                            title: "💬 함께 제미나이 사용하기",
-                            content: "<div class='prompt-box'><div class='prompt-box-title'>팀 프롬프트:</div><div class='prompt-text'>우리 팀이 [앱 이름]을(를) 만들고 있어.\n팀원: [이름들]\n\n앱의 목적: [목적]\n우리 반 친구들이 사용할 거야.\n\n기능:\n1. [기능 1]\n2. [기능 2]\n3. [기능 3]\n\n디자인: [원하는 느낌]\n\n이 앱이 우리 팀의 프로젝트라는 걸 알 수 있게 만들어줄래?</div></div></p>"
-                        },
-                        {
-                            type: "tips",
-                            title: "💡 팀 작업 팁",
-                            content: "<div class='tip-card'><strong>좋은 팀 작업을 위해:</strong><br>- 모두의 아이디어를 존중해요<br>- 문제가 생기면 함께 해결해요<br>- 서로의 피드백을 받아들여요<br>- 완성되면 친구들한테 함께 설명해요</div>"
-                        }
-                    ]
-                },
-                12: {
-                    title: "12주차 - 최종 발표 & 공유",
-                    subtitle: "12주간의 여정을 마무리하고 나눠봅시다",
-                    sections: [
-                        {
-                            type: "goal",
-                            title: "🎯 이번 주 목표",
-                            content: "<p><strong>12주간 만든 앱들을 발표하고 공유하기</strong></p><p>우리가 만든 앱들이 얼마나 멋있는지 함께 축하해요!</p>"
-                        },
-                        {
-                            type: "activity",
-                            title: "📊 지금까지 만든 것들",
-                            content: "<p><strong>12주간 우리가 만든 앱:</strong></p><ul><li>1주차: 운세 앱</li><li>2주차: 운세 앱 (기능 추가)</li><li>3주차: 할일 관리 앱</li><li>4주차: 할일 앱 (업그레이드)</li><li>5주차: 재미있는 앱</li><li>6-9주차: 나만의 앱 (GitHub 업로드)</li><li>10주차: 가족을 위한 앱</li><li>11주차: 팀 프로젝트 앱</li></ul><p><strong>총 7-8개의 앱을 만들었어요! 🎉</strong></p>"
-                        },
-                        {
-                            type: "activity",
-                            title: "🎤 발표 준비",
-                            content: "<p><strong>각자 또는 팀별로 발표할 때:</strong></p><div class='checklist'><div class='checklist-item'><input type='checkbox'> 앱 이름과 목적 설명하기</div><div class='checklist-item'><input type='checkbox'> 앱의 주요 기능 소개하기</div><div class='checklist-item'><input type='checkbox'> 앱을 직접 보여주기</div><div class='checklist-item'><input type='checkbox'> 만들면서 배운 점 이야기하기</div><div class='checklist-item'><input type='checkbox'> 친구들의 질문에 답변하기</div></div>"
-                        },
-                        {
-                            type: "activity",
-                            title: "🌟 우리의 성장",
-                            content: "<p><strong>12주 후 우리가 할 수 있게 된 것:</strong></p><ul><li>✅ AI에게 정확하게 요청하는 방법</li><li>✅ 내가 원하는 앱을 만드는 방법</li><li>✅ 만들어진 앱을 테스트하고 개선하는 방법</li><li>✅ GitHub에 코드를 올리는 방법</li><li>✅ 친구들과 협력해서 프로젝트하는 방법</li><li>✅ 내 아이디어를 현실로 만드는 능력</li></ul>"
-                        },
-                        {
-                            type: "tips",
-                            title: "🎓 마무리",
-                            content: "<div class='tip-card'><strong>축하합니다! 🎉</strong><br><br>12주간 정말 멋진 여행이었어요!<br>AI를 활용해서 앱을 만드는 능력을 배웠습니다.<br><br>앞으로도 계속 새로운 아이디어를 내고<br>AI와 함께 멋진 것들을 만들어보세요!<br><br>여러분 모두 대단해요! 👏</div>"
-                        }
-                    ]
-                }
-            },
-            intermediate: {
-                1: {
-                    title: "중급 1주차 - 고급 앱 구조 이해",
-                    subtitle: "더 복잡한 앱을 만들어봅시다",
-                    sections: [
-                        {
-                            type: "goal",
-                            title: "🎯 이번 주 목표",
-                            content: "<p><strong>더 복잡한 기능을 가진 앱을 만들고 이해하기</strong></p><p>데이터를 저장하고, 여러 화면을 오갈 수 있는 앱을 배웁니다.</p>"
-                        },
-                        {
-                            type: "activity",
-                            title: "💬 제미나이에 요청하기",
-                            content: "<div class='prompt-box'><div class='prompt-box-title'>고급 앱 프롬프트:</div><div class='prompt-text'>사용자 프로필을 관리하는 웹 앱을 만들어줄래?\n\n기능:\n1. 프로필 생성하기 (이름, 나이, 취미)\n2. 프로필 저장하기\n3. 저장된 프로필 목록 보기\n4. 프로필 수정하기\n5. 프로필 삭제하기\n\n데이터는 새로고침해도 남아있어야 해. (로컬 스토리지 활용)\n\n디자인: 전문적이고 세련된 느낌</div></div></p>"
-                        },
-                        {
-                            type: "tips",
-                            title: "💡 배우는 개념",
-                            content: "<div class='tip-card'><strong>이 앱에서 배우는 것:</strong><br>- 사용자 입력 데이터 처리<br>- 데이터 저장 및 불러오기<br>- 목록 관리<br>- 데이터 수정 및 삭제</div>"
-                        }
-                    ]
-                }
-            },
-            advanced: {
-                1: {
-                    title: "고급 1주차 - API 활용하기",
-                    subtitle: "외부 데이터를 활용한 앱 만들기",
-                    sections: [
-                        {
-                            type: "goal",
-                            title: "🎯 이번 주 목표",
-                            content: "<p><strong>날씨, 환율 등 실제 데이터를 가져와서 보여주는 앱 만들기</strong></p><p>API를 활용해서 더 실용적인 앱을 만듭니다.</p>"
-                        },
-                        {
-                            type: "activity",
-                            title: "💬 제미나이에 요청하기",
-                            content: "<div class='prompt-box'><div class='prompt-box-title'>API 활용 앱 프롬프트:</div><div class='prompt-text'>날씨 정보를 보여주는 웹 앱을 만들어줄래?\n\n기능:\n1. 도시 이름을 입력하면 날씨 정보 표시\n2. 현재 온도, 습도, 풍속 표시\n3. 오늘 날씨 설명\n4. 5일 예보 보기\n\n날씨 API를 사용해줄래. (OpenWeather API 같은)\n\n디자인: 날씨에 맞는 이모지와 색상</div></div></p>"
-                        },
-                        {
-                            type: "tips",
-                            title: "💡 고급 개념",
-                            content: "<div class='tip-card'><strong>API 활용 시 배우는 것:</strong><br>- 실제 데이터 처리<br>- 비동기 프로그래밍 개념<br>- 에러 처리<br>- 실제로 도움이 되는 앱 만들기</div>"
-                        }
-                    ]
-                }
-            }
+            beginner: generateCurriculum('기초', 12),
+            intermediate: generateCurriculum('중급', 12),
+            advanced: generateCurriculum('고급', 12)
         };
 
+        function generateCurriculum(level, weeks) {
+            const lessons = {};
+            const levelEmoji = level === '기초' ? '🌱' : level === '중급' ? '🚀' : '⭐';
+
+            for (let i = 1; i <= weeks; i++) {
+                lessons[i] = {
+                    title: `${level} ${i}주차 - ${getWeekTitle(i, level)}`,
+                    subtitle: `${level} 레벨 ${i}번째 강의`,
+                    sections: [
+                        {
+                            type: "goal",
+                            title: "🎯 이번 주 목표",
+                            content: `<p>${level} 레벨 ${i}주차의 학습 목표입니다.</p><p>제미나이 캔버스에서 새로운 기능을 배워봅시다.</p>`
+                        },
+                        {
+                            type: "activity",
+                            title: "💬 제미나이 캔버스에 이렇게 요청하세요",
+                            content: `<div class='prompt-box'><div class='prompt-box-title'>${level} ${i}주차 프롬프트:</div><div class='prompt-text'>${level} 레벨 ${i}주차 활동을 위한 앱을 만들어줄래?\n\n이전에 배운 내용을 바탕으로 더 고급 기능을 추가해봅시다.\n\n구체적인 요청:\n- 기능 1\n- 기능 2\n- 기능 3</div></div>`
+                        },
+                        {
+                            type: "activity",
+                            title: "✏️ 학생 활동",
+                            content: `<div class='checklist'><div class='checklist-item'><input type='checkbox'> 제미나이에 요청했나요?</div><div class='checklist-item'><input type='checkbox'> 모든 기능이 작동하나요?</div><div class='checklist-item'><input type='checkbox'> 친구들한테 보여줬나요?</div></div>`
+                        }
+                    ]
+                };
+            }
+            return lessons;
+        }
+
+        function getWeekTitle(week, level) {
+            const titles = {
+                'basic': ['운세앱 만들기', '운세앱 업그레이드', '할일 관리', '할일 고급', '자유로운 앱', '앱 기획', '앱 제작', '테스트 개선', 'GitHub 배포', '가족 앱', '팀 프로젝트', '최종 발표'],
+                'intermediate': ['데이터 저장하기', 'API 활용', '사용자 인증', '데이터 시각화', '고급 UI', '성능 최적화', '반응형 디자인', '에러 처리', '고급 기능', '포트폴리오', '자유 프로젝트', '발표'],
+                'advanced': ['웹 아키텍처', '데이터베이스', '백엔드 연동', 'RESTful API', '인증 시스템', '배포 자동화', '모니터링', '보안', '최적화 심화', '실제 프로젝트', '오픈소스 기여', '최종 발표']
+            };
+
+            const key = level === '기초' ? 'basic' : level === '중급' ? 'intermediate' : 'advanced';
+            return titles[key][week - 1] || `주제 ${week}`;
+        }
+
+        let currentUser = null;
         let currentLevel = 'beginner';
         let currentWeek = 1;
+        let currentClass = null;
+        let enabledWeeks = {};
 
-        // 레벨 변경
+        // 로그인 처리
+        function handleLogin(event) {
+            event.preventDefault();
+            const classSelect = document.getElementById('classSelect').value;
+            const password = document.getElementById('passwordInput').value;
+
+            if (!classSelect) {
+                showLoginError('수업을 선택해주세요');
+                return;
+            }
+
+            const classes = JSON.parse(localStorage.getItem('vibeClasses') || '{}');
+
+            if (!classes[classSelect]) {
+                showLoginError('존재하지 않는 수업입니다');
+                return;
+            }
+
+            if (classes[classSelect].password !== password) {
+                showLoginError('비밀번호가 틀렸습니다');
+                return;
+            }
+
+            currentUser = classSelect;
+            currentClass = classSelect;
+            enabledWeeks = classes[classSelect].enabledWeeks || {beginner: [], intermediate: [], advanced: []};
+
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('mainScreen').style.display = 'block';
+            document.getElementById('currentClassName').textContent = classSelect;
+            updateUI();
+        }
+
+        function showLoginError(message) {
+            const errorDiv = document.getElementById('loginError');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 3000);
+        }
+
+        function logout() {
+            currentUser = null;
+            currentClass = null;
+            currentLevel = 'beginner';
+            currentWeek = 1;
+            document.getElementById('mainScreen').style.display = 'none';
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('passwordInput').value = '';
+        }
+
         function setLevel(level) {
             currentLevel = level;
             currentWeek = 1;
@@ -727,28 +831,32 @@
             event.target.classList.add('active');
         }
 
-        // UI 업데이트
         function updateUI() {
             updateSidebar();
             updateContent();
         }
 
-        // 사이드바 업데이트
         function updateSidebar() {
             const sidebar = document.getElementById('sidebar');
             sidebar.innerHTML = '';
 
-            const weeks = Object.keys(curriculum[currentLevel]).length;
-            for (let i = 1; i <= weeks; i++) {
+            const weeks = Object.keys(curriculum[currentLevel]);
+
+            weeks.forEach(week => {
+                const weekNum = parseInt(week);
+                const isEnabled = enabledWeeks[currentLevel].includes(weekNum);
                 const btn = document.createElement('button');
-                btn.className = 'week-btn' + (i === currentWeek ? ' active' : '');
-                btn.textContent = `${i}주차`;
-                btn.onclick = () => setWeek(i);
+                btn.className = 'week-btn' + (weekNum === currentWeek ? ' active' : '') + (!isEnabled ? ' disabled' : '');
+                btn.textContent = `${weekNum}주차`;
+
+                if (isEnabled) {
+                    btn.onclick = () => setWeek(weekNum);
+                }
+
                 sidebar.appendChild(btn);
-            }
+            });
         }
 
-        // 주차 변경
         function setWeek(week) {
             currentWeek = week;
             updateContent();
@@ -757,7 +865,6 @@
             event.target.classList.add('active');
         }
 
-        // 콘텐츠 업데이트
         function updateContent() {
             const content = document.getElementById('content');
             const weekData = curriculum[currentLevel][currentWeek];
@@ -784,8 +891,209 @@
             content.innerHTML = html;
         }
 
+        // 교사 모드
+        function showTeacherLogin() {
+            const password = prompt('교사 비밀번호를 입력하세요:');
+
+            if (password === null) return;
+
+            // localStorage에 저장된 비밀번호 확인 (없으면 '0000')
+            const teacherPassword = localStorage.getItem('teacherPassword') || '0000';
+
+            if (password === teacherPassword) {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('teacherScreen').style.display = 'block';
+                loadTeacherMode();
+
+                // 처음 로그인한 경우 (비밀번호가 기본값 '0000'인 경우)
+                if (teacherPassword === '0000') {
+                    setTimeout(() => {
+                        showChangeTeacherPassword();
+                    }, 300);
+                }
+            } else {
+                alert('❌ 비밀번호가 틀렸습니다');
+            }
+        }
+
+        function showChangeTeacherPassword() {
+            const newPassword = prompt('⚠️ 처음 로그인입니다.\n\n새로운 교사 비밀번호를 설정해주세요:\n(4자리 이상 권장)');
+
+            if (newPassword !== null && newPassword.trim() !== '') {
+                localStorage.setItem('teacherPassword', newPassword);
+                alert('✅ 교사 비밀번호가 변경되었습니다!\n\n다음부터는 새로운 비밀번호로 로그인하세요.');
+            }
+        }
+
+        function exitTeacherMode() {
+            document.getElementById('teacherScreen').style.display = 'none';
+            document.getElementById('loginScreen').style.display = 'flex';
+            loadClassList();
+        }
+
+        function loadTeacherMode() {
+            loadClassList();
+        }
+
+        function loadClassList() {
+            const classes = JSON.parse(localStorage.getItem('vibeClasses') || '{}');
+            const classSelect = document.getElementById('classSelect');
+            classSelect.innerHTML = '<option value="">-- 수업을 선택해주세요 --</option>';
+
+            Object.keys(classes).forEach(className => {
+                const option = document.createElement('option');
+                option.value = className;
+                option.textContent = className;
+                classSelect.appendChild(option);
+            });
+
+            updateClassesList();
+        }
+
+        function createClass() {
+            const className = document.getElementById('newClassName').value.trim();
+            const password = document.getElementById('newClassPassword').value.trim();
+
+            if (!className || !password) {
+                alert('수업명과 비밀번호를 입력해주세요');
+                return;
+            }
+
+            const classes = JSON.parse(localStorage.getItem('vibeClasses') || '{}');
+
+            if (classes[className]) {
+                alert('이미 있는 수업명입니다');
+                return;
+            }
+
+            classes[className] = {
+                password: password,
+                enabledWeeks: {
+                    beginner: [],
+                    intermediate: [],
+                    advanced: []
+                },
+                createdAt: new Date().toLocaleString('ko-KR')
+            };
+
+            localStorage.setItem('vibeClasses', JSON.stringify(classes));
+            document.getElementById('newClassName').value = '';
+            document.getElementById('newClassPassword').value = '';
+
+            loadClassList();
+            alert('수업이 생성되었습니다!');
+        }
+
+        function updateClassesList() {
+            const classes = JSON.parse(localStorage.getItem('vibeClasses') || '{}');
+            const classList = document.getElementById('classesList');
+            classList.innerHTML = '';
+
+            if (Object.keys(classes).length === 0) {
+                classList.innerHTML = '<div style="padding: 40px; text-align: center; color: var(--light);">생성된 수업이 없습니다</div>';
+                return;
+            }
+
+            Object.keys(classes).forEach(className => {
+                const classData = classes[className];
+                const item = document.createElement('div');
+                item.className = 'class-item';
+                item.innerHTML = `
+                    <div class="class-item-info">
+                        <h3>${className}</h3>
+                        <p>생성일: ${classData.createdAt} | 비밀번호: ${classData.password}</p>
+                    </div>
+                    <div class="class-item-actions">
+                        <button class="edit-btn" onclick="editClass('${className}')">주차 설정</button>
+                        <button class="delete-btn" onclick="deleteClass('${className}')">삭제</button>
+                    </div>
+                `;
+                classList.appendChild(item);
+            });
+        }
+
+        function editClass(className) {
+            const classes = JSON.parse(localStorage.getItem('vibeClasses') || '{}');
+            const classData = classes[className];
+
+            let html = `
+                <div style="padding: 20px; background: white; border-radius: 8px; margin-top: 20px;">
+                    <h3>${className} - 주차 설정</h3>
+                    <div style="margin-top: 20px;">
+            `;
+
+            ['beginner', 'intermediate', 'advanced'].forEach(level => {
+                const levelName = level === 'beginner' ? '기초' : level === 'intermediate' ? '중급' : '고급';
+                html += `
+                    <div class="weeks-selector">
+                        <h3>${levelName} 레벨</h3>
+                        <div class="weeks-grid">
+                `;
+
+                for (let i = 1; i <= 12; i++) {
+                    const isChecked = classData.enabledWeeks[level].includes(i) ? 'checked' : '';
+                    html += `
+                        <div class="week-checkbox">
+                            <input type="checkbox" id="${className}_${level}_${i}" ${isChecked} onchange="updateWeekSelection('${className}', '${level}', ${i})">
+                            <label for="${className}_${level}_${i}">${i}주</label>
+                        </div>
+                    `;
+                }
+
+                html += `
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += `
+                    </div>
+                    <button class="teacher-btn" style="margin-top: 20px;" onclick="closeEditClass()">닫기</button>
+                </div>
+            `;
+
+            const classList = document.getElementById('classesList');
+            const editContainer = document.createElement('div');
+            editContainer.id = 'editClassContainer';
+            editContainer.innerHTML = html;
+            classList.appendChild(editContainer);
+        }
+
+        function updateWeekSelection(className, level, week) {
+            const classes = JSON.parse(localStorage.getItem('vibeClasses') || '{}');
+            const checkbox = document.getElementById(`${className}_${level}_${week}`);
+            const index = classes[className].enabledWeeks[level].indexOf(week);
+
+            if (checkbox.checked && index === -1) {
+                classes[className].enabledWeeks[level].push(week);
+            } else if (!checkbox.checked && index !== -1) {
+                classes[className].enabledWeeks[level].splice(index, 1);
+            }
+
+            localStorage.setItem('vibeClasses', JSON.stringify(classes));
+        }
+
+        function closeEditClass() {
+            const editContainer = document.getElementById('editClassContainer');
+            if (editContainer) {
+                editContainer.remove();
+            }
+        }
+
+        function deleteClass(className) {
+            if (confirm(`"${className}" 수업을 삭제하시겠습니까?`)) {
+                const classes = JSON.parse(localStorage.getItem('vibeClasses') || '{}');
+                delete classes[className];
+                localStorage.setItem('vibeClasses', JSON.stringify(classes));
+                updateClassesList();
+                loadClassList();
+            }
+        }
+
         // 초기 로드
-        updateUI();
+        window.addEventListener('load', () => {
+            loadClassList();
+        });
     </script>
 </body>
 </html>
