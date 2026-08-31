@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vibe Coding Academy</title>
+    <title>Vibe Coding Academy - AI로 앱 만들기</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap">
     <style>
         * {
@@ -21,15 +21,16 @@
             --bg-light: #F8F9FA;
             --bg-white: #FFFFFF;
             --border: #DFE6E9;
+            --accent-blue: #5F9EA0;
         }
 
         body {
             font-family: 'Inter', sans-serif;
             background: var(--bg-light);
             color: var(--dark);
-            overflow: hidden;
         }
 
+        /* 헤더 */
         header {
             display: flex;
             justify-content: space-between;
@@ -37,7 +38,10 @@
             background: var(--bg-white);
             padding: 20px 40px;
             box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-            border-bottom: 2px solid var(--border);
+            border-bottom: 3px solid var(--primary);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .logo {
@@ -50,76 +54,79 @@
             background-clip: text;
         }
 
-        .nav-main {
+        .level-buttons {
             display: flex;
-            gap: 20px;
+            gap: 15px;
         }
 
-        .nav-btn {
-            background: none;
+        .level-btn {
+            padding: 10px 20px;
             border: 2px solid var(--border);
-            padding: 10px 24px;
-            border-radius: 50px;
-            font-size: 14px;
+            background: var(--bg-white);
+            color: var(--dark);
             font-weight: 600;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s;
-            color: var(--light);
+            transition: all 0.3s ease;
         }
 
-        .nav-btn.active {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        .level-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .level-btn.active {
+            background: var(--primary);
             color: white;
-            border-color: transparent;
+            border-color: var(--primary);
         }
 
+        /* 메인 컨테이너 */
         .container {
             display: flex;
             height: calc(100vh - 90px);
         }
 
+        /* 왼쪽 사이드바 */
         .sidebar {
-            width: 280px;
-            background: linear-gradient(180deg, var(--bg-white) 0%, var(--bg-light) 100%);
+            width: 200px;
+            background: var(--bg-white);
             border-right: 2px solid var(--border);
-            padding: 30px 20px;
             overflow-y: auto;
-        }
-
-        .sidebar-title {
-            font-family: 'Poppins', sans-serif;
-            font-size: 14px;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: var(--light);
-            margin-bottom: 16px;
-            letter-spacing: 1px;
+            padding: 20px 0;
         }
 
         .week-btn {
             width: 100%;
-            padding: 14px 16px;
-            margin-bottom: 10px;
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            background: var(--bg-white);
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
+            padding: 15px 20px;
+            border: none;
+            background: transparent;
             color: var(--dark);
+            text-align: left;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .week-btn:hover {
+            background: var(--bg-light);
+            border-left-color: var(--secondary);
         }
 
         .week-btn.active {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border-color: transparent;
+            background: rgba(255, 107, 107, 0.1);
+            color: var(--primary);
+            border-left-color: var(--primary);
+            font-weight: 600;
         }
 
-        .main-content {
+        /* 메인 콘텐츠 */
+        .content {
             flex: 1;
-            padding: 40px;
             overflow-y: auto;
+            padding: 40px;
             background: var(--bg-light);
         }
 
@@ -127,8 +134,8 @@
             font-family: 'Poppins', sans-serif;
             font-size: 36px;
             font-weight: 800;
-            color: var(--dark);
-            margin-bottom: 12px;
+            margin-bottom: 10px;
+            color: var(--primary);
         }
 
         .week-subtitle {
@@ -137,775 +144,647 @@
             margin-bottom: 30px;
         }
 
-        .content-card {
+        /* 섹션 */
+        .section {
             background: var(--bg-white);
-            border-radius: 16px;
-            padding: 32px;
-            margin-bottom: 24px;
-            border: 2px solid var(--border);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid var(--secondary);
         }
 
-        .section-label {
-            font-family: 'Poppins', sans-serif;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: var(--primary);
-            letter-spacing: 1.2px;
-            margin-bottom: 12px;
+        .section.goal {
+            border-left-color: var(--primary);
+            background: rgba(255, 107, 107, 0.03);
+        }
+
+        .section.activity {
+            border-left-color: var(--secondary);
+            background: rgba(78, 205, 196, 0.03);
+        }
+
+        .section.tips {
+            border-left-color: var(--tertiary);
+            background: rgba(255, 230, 109, 0.03);
         }
 
         .section-title {
             font-family: 'Poppins', sans-serif;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 16px;
-        }
-
-        .section-description {
-            font-size: 16px;
-            line-height: 1.8;
-            color: var(--light);
-            white-space: pre-line;
-            margin-bottom: 20px;
-        }
-
-        .step {
+            margin-bottom: 15px;
             display: flex;
-            gap: 16px;
-            padding: 16px;
-            background: var(--bg-light);
-            border-radius: 12px;
-            border-left: 4px solid var(--secondary);
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-icon {
+            font-size: 24px;
+        }
+
+        .section-content {
+            line-height: 1.8;
+            color: var(--dark);
+            font-size: 15px;
+        }
+
+        .section-content p {
             margin-bottom: 12px;
         }
 
-        .step-number {
-            font-family: 'Poppins', sans-serif;
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--secondary);
-            min-width: 32px;
-        }
-
-        .step-title {
-            font-family: 'Poppins', sans-serif;
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 6px;
-        }
-
-        .step-description {
+        /* 프롬프트 박스 */
+        .prompt-box {
+            background: rgba(95, 158, 160, 0.1);
+            border-left: 4px solid var(--accent-blue);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-family: 'Inter', monospace;
             font-size: 14px;
-            color: var(--light);
             line-height: 1.6;
-        }
-
-        .code-block {
-            background: #f5f5f5;
-            border-radius: 8px;
-            padding: 16px;
-            overflow-x: auto;
-            margin: 16px 0;
-            border: 1px solid var(--border);
-        }
-
-        .code-block code {
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
             color: var(--dark);
-            line-height: 1.6;
-            white-space: pre-wrap;
-            word-wrap: break-word;
         }
 
-        .tip-box {
-            background: linear-gradient(135deg, rgba(78, 205, 196, 0.1), rgba(255, 107, 107, 0.1));
-            border-left: 4px solid var(--secondary);
-            padding: 16px;
-            border-radius: 8px;
-            margin: 16px 0;
-        }
-
-        .tip-label {
-            font-family: 'Poppins', sans-serif;
+        .prompt-box-title {
             font-weight: 700;
-            font-size: 13px;
-            color: var(--secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            color: var(--accent-blue);
             margin-bottom: 8px;
+            font-size: 13px;
         }
 
-        .tip-text {
-            font-size: 14px;
-            color: var(--light);
-            line-height: 1.6;
-            white-space: pre-line;
-        }
-
-        .demo-app {
-            background: var(--bg-light);
-            border-radius: 12px;
-            padding: 24px;
-            border: 2px solid var(--border);
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        .demo-button {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border: none;
-            padding: 14px 32px;
-            border-radius: 50px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 16px rgba(255, 107, 107, 0.3);
-        }
-
-        .demo-button:hover {
-            transform: translateY(-2px);
-        }
-
-        .demo-result {
-            margin-top: 16px;
-            padding: 16px;
+        .prompt-text {
             background: white;
-            border-radius: 8px;
-            min-height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 8px 0 0 0;
+            font-size: 13px;
         }
 
+        /* 체크리스트 */
         .checklist {
-            margin: 16px 0;
+            margin: 15px 0;
         }
 
         .checklist-item {
             display: flex;
-            align-items: center;
-            padding: 12px;
-            margin-bottom: 8px;
-            background: var(--bg-light);
-            border-radius: 8px;
+            gap: 10px;
+            margin: 8px 0;
+            padding: 8px;
+            background: white;
+            border-radius: 6px;
             font-size: 14px;
         }
 
         .checklist-item input {
-            width: 18px;
-            height: 18px;
-            margin-right: 12px;
             cursor: pointer;
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary);
         }
 
+        /* 팁과 주의 */
+        .tip-card {
+            background: rgba(255, 230, 109, 0.15);
+            border-left: 4px solid var(--tertiary);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .tip-card strong {
+            color: var(--primary);
+        }
+
+        /* 버튼 */
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 6px 16px rgba(78, 205, 196, 0.3);
+        }
+
+        /* 스크롤바 */
         ::-webkit-scrollbar {
             width: 8px;
         }
 
+        ::-webkit-scrollbar-track {
+            background: var(--bg-light);
+        }
+
         ::-webkit-scrollbar-thumb {
-            background: var(--secondary);
+            background: var(--border);
             border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--light);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 2px solid var(--border);
+                display: flex;
+                overflow-x: auto;
+                padding: 0;
+            }
+
+            .week-btn {
+                white-space: nowrap;
+                border-left: none;
+                border-bottom: 4px solid transparent;
+                padding: 12px 20px;
+            }
+
+            .week-btn.active {
+                border-left: none;
+                border-bottom-color: var(--primary);
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .week-title {
+                font-size: 24px;
+            }
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="logo">🎵 Vibe Coding</div>
-        <nav class="nav-main">
-            <button class="nav-btn active" onclick="changeLevel(0)">기초 바이브 코딩</button>
-            <button class="nav-btn" onclick="changeLevel(1)">중급 바이브 코딩</button>
-            <button class="nav-btn" onclick="changeLevel(2)">고급 바이브 코딩</button>
-        </nav>
+        <div class="logo">🎨 Vibe Coding Academy</div>
+        <div class="level-buttons">
+            <button class="level-btn active" onclick="setLevel('beginner')">기초</button>
+            <button class="level-btn" onclick="setLevel('intermediate')">중급</button>
+            <button class="level-btn" onclick="setLevel('advanced')">고급</button>
+        </div>
     </header>
 
     <div class="container">
-        <aside class="sidebar">
-            <div class="sidebar-title">📚 주차별 학습</div>
-            <div id="weekButtons"></div>
-        </aside>
-
-        <main class="main-content">
-            <div id="content"></div>
-        </main>
+        <aside class="sidebar" id="sidebar"></aside>
+        <main class="content" id="content"></main>
     </div>
 
     <script>
-        const lessons = {
+        // 커리큘럼 데이터
+        const curriculum = {
             beginner: {
                 1: {
-                    title: "✨ 오늘의 운세 앱 만들기",
-                    subtitle: "나의 첫 번째 웹앱을 완성하자!",
-                    content: `<div class="content-card">
-                        <div class="section-label">📖 학습 목표</div>
-                        <h2 class="section-title">이 시간에 배울 것</h2>
-                        <p class="section-description">HTML, CSS, JavaScript의 기본 개념을 이해하고, 버튼을 클릭하면 운세가 나오는 앱을 완성한다.</p>
-                    </div>
-
-                    <div class="content-card">
-                        <div class="section-label">💡 핵심 개념</div>
-                        <h2 class="section-title">알아야 할 것</h2>
-                        <p class="section-description">변수(Variable): 데이터를 저장하는 상자
-배열(Array): 여러 데이터를 한 번에 저장
-함수(Function): 특정 작업을 반복해서 사용</p>
-                    </div>
-
-                    <div class="content-card">
-                        <div class="section-label">🎯 활동</div>
-                        <h2 class="section-title">단계별 활동</h2>
-                        <div class="step">
-                            <div class="step-number">1</div>
-                            <div class="step-content">
-                                <div class="step-title">HTML 파일 생성</div>
-                                <div class="step-description">메모장을 열고 운세 앱의 기본 구조를 만들기</div>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">2</div>
-                            <div class="step-content">
-                                <div class="step-title">CSS로 꾸미기</div>
-                                <div class="step-description">버튼과 텍스트를 아름답게 디자인하기</div>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">3</div>
-                            <div class="step-content">
-                                <div class="step-title">JavaScript로 동작시키기</div>
-                                <div class="step-description">버튼을 누르면 운세가 나오도록 프로그래밍</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="content-card">
-                        <div class="section-label">🚀 실습</div>
-                        <h2 class="section-title">지금 바로 시도해봐요!</h2>
-                        <div class="demo-app">
-                            <button class="demo-button" onclick="showFortune()">🎰 운세 보기</button>
-                            <div class="demo-result" id="fortuneResult" style="display: none;"></div>
-                        </div>
-                    </div>`
+                    title: "1주차 - 운세 앱 함께 만들기",
+                    subtitle: "AI를 사용해서 첫 번째 앱을 만들어봅시다",
+                    sections: [
+                        {
+                            type: "goal",
+                            title: "🎯 이번 주 목표",
+                            content: "<p>제미나이 캔버스를 사용해서 <strong>버튼을 누르면 다양한 운세를 말해주는 앱</strong>을 함께 만들어봅니다.</p><p>이 과정을 통해 AI에게 어떻게 요청하면 우리가 원하는 앱을 만들 수 있는지 배웁니다.</p>"
+                        },
+                        {
+                            type: "activity",
+                            title: "💬 제미나이 캔버스에 이렇게 요청하세요",
+                            content: "<div class='prompt-box'><div class='prompt-box-title'>운세앱 제미나이 프롬프트:</div><div class='prompt-text'>운세를 알려주는 웹 앱을 만들어줘. 다음 조건을 포함해줄래?\n\n1. 제목: \"오늘의 운세\"\n2. 큰 버튼 (클릭하면 운세가 나타남)\n3. 매번 클릭할 때마다 다른 운세가 나오기\n4. 운세들: 대길, 중길, 소길, 흉\n5. 화려한 색상으로 만들어줘\n6. 운세마다 다른 배경색으로 나타나기</div></div>"
+                        },
+                        {
+                            type: "activity",
+                            title: "🔍 결과물 확인하기",
+                            content: "<p><strong>제미나이가 만들어준 앱을 확인해보세요:</strong></p><ul><li>✅ 버튼이 잘 보이나요?</li><li>✅ 버튼을 클릭했을 때 운세가 나오나요?</li><li>✅ 매번 다른 운세가 나오나요?</li><li>✅ 디자인이 마음에 드나요?</li></ul>"
+                        },
+                        {
+                            type: "tips",
+                            title: "💡 학생 활동 - 내 스타일로 커스터마이징",
+                            content: "<p>이제 <strong>너만의 운세앱</strong>을 만들어보세요!</p><div class='prompt-box'><div class='prompt-box-title'>개선 프롬프트 예시:</div><div class='prompt-text'>위의 운세앱을 다음처럼 수정해줄래?\n\n1. 제목을 \"내 반의 운세\"로 바꿔줘\n2. 운세를 우리 반 친구들 이름으로 만들어줘 (예: 김철수 행운, 박영희 대길)\n3. 재미있는 이모지 추가해줘</div></div></p><p><strong>또는 다른 주제로 만들어보기:</strong></p><ul><li>🍕 오늘의 추천 음식</li><li>🎬 오늘의 영화 장르</li><li>🎮 오늘의 게임</li></ul>"
+                        },
+                        {
+                            type: "tips",
+                            title: "📌 주의사항",
+                            content: "<div class='tip-card'><strong>💬 제미나이와 대화할 때:</strong><br>- 원하는 것을 구체적으로 설명하세요<br>- 안 되면 다시 요청하세요 (\"더 크게 해줘\" 같이)<br>- 친구들 것과 다르게 만드는 것이 좋아요!</div>"
+                        }
+                    ]
                 },
                 2: {
-                    title: "🎨 운세 앱 업그레이드하기",
-                    subtitle: "지난주 앱에 새로운 기능을 추가해보자!",
-                    content: `<div class="content-card">
-                        <div class="section-label">📖 학습 목표</div>
-                        <h2 class="section-title">더 나은 앱 만들기</h2>
-                        <p class="section-description">사용자 입력 받기, 조건 처리, 이벤트 처리 등 프로그래밍의 중요한 개념들을 배운다</p>
-                    </div>
-
-                    <div class="content-card">
-                        <div class="section-label">💡 새로 배우는 것</div>
-                        <h2 class="section-title">핵심 개념</h2>
-                        <p class="section-description">if문(조건문): 상황에 따라 다른 결과 보여주기
-input 태그: 사용자 입력받기
-concat(): 문자열 합치기</p>
-                    </div>
-
-                    <div class="content-card">
-                        <div class="section-label">🎯 활동</div>
-                        <h2 class="section-title">이름을 입력받아 운세 만들기</h2>
-                        <div class="step">
-                            <div class="step-number">1</div>
-                            <div class="step-content">
-                                <div class="step-title">입력 필드 추가</div>
-                                <div class="step-description">이름을 입력할 수 있는 input 태그 만들기</div>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">2</div>
-                            <div class="step-content">
-                                <div class="step-title">JavaScript 수정</div>
-                                <div class="step-description">입력된 이름을 포함한 운세 보여주기</div>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">3</div>
-                            <div class="step-content">
-                                <div class="step-title">감정별 운세 분류</div>
-                                <div class="step-description">행복한 운세, 동기부여 운세 등으로 구분</div>
-                            </div>
-                        </div>
-                    </div>`
+                    title: "2주차 - 운세 앱 업그레이드",
+                    subtitle: "기본 앱에 새로운 기능을 추가해봅시다",
+                    sections: [
+                        {
+                            type: "goal",
+                            title: "🎯 이번 주 목표",
+                            content: "<p>1주차에 만든 운세앱에 <strong>새로운 기능을 추가</strong>합니다.</p><p>제미나이에게 '이 기능 추가해줄래?'라고 요청하는 방법을 배웁니다.</p>"
+                        },
+                        {
+                            type: "activity",
+                            title: "💬 제미나이 캔버스에 이렇게 요청하세요",
+                            content: "<div class='prompt-box'><div class='prompt-box-title'>기능 추가 프롬프트:</div><div class='prompt-text'>운세앱에 다음 기능들을 추가해줄래?\n\n1. 운세 말고 숫자 점수도 함께 보여주기 (1~100점)\n2. 운세별로 추천 색상 알려주기\n3. \"다시 보기\" 버튼 추가\n4. 클릭 횟수 카운트해서 \"총 X번 클릭했어요!\" 표시하기\n5. 화려한 애니메이션 효과 추가</div></div></p><p><strong>선택 기능 (더 하고 싶으면):</strong></p><ul><li>음향 효과 추가</li><li>시간별로 다른 운세 표시 (아침/오후/저녁)</li><li>친구 이름으로 운세 생성</li></ul>"
+                        },
+                        {
+                            type: "tips",
+                            title: "✏️ 학생 활동",
+                            content: "<div class='checklist'><div class='checklist-item'><input type='checkbox'> 제미나이에 요청해서 기능을 추가했나요?</div><div class='checklist-item'><input type='checkbox'> 모든 기능이 제대로 작동하나요?</div><div class='checklist-item'><input type='checkbox'> 더 추가하고 싶은 기능이 있나요?</div><div class='checklist-item'><input type='checkbox'> 친구한테 보여줬나요?</div></div>"
+                        }
+                    ]
                 },
                 3: {
-                    title: "🎨 색상 성격 테스트",
-                    subtitle: "색상 심리학을 배우며 인터렉티브 앱 만들기",
-                    content: `<div class="content-card">
-                        <div class="section-label">📖 학습 목표</div>
-                        <h2 class="section-title">DOM 조작 배우기</h2>
-                        <p class="section-description">사용자가 선택한 색상에 따라 다른 결과를 보여주는 앱을 만든다.</p>
-                    </div>
-
-                    <div class="content-card">
-                        <div class="section-label">🚀 실습</div>
-                        <h2 class="section-title">색상을 선택해보세요!</h2>
-                        <div class="demo-app">
-                            <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 20px 0;">
-                                <button style="width: 60px; height: 60px; border-radius: 50%; background: #FF6B6B; border: 2px solid #ddd; cursor: pointer;" onclick="selectColor('빨강', '열정적이고 에너지가 넘쳐요!')"></button>
-                                <button style="width: 60px; height: 60px; border-radius: 50%; background: #4ECDC4; border: 2px solid #ddd; cursor: pointer;" onclick="selectColor('청록', '창의적이고 차분해요!')"></button>
-                                <button style="width: 60px; height: 60px; border-radius: 50%; background: #FFE66D; border: 2px solid #ddd; cursor: pointer;" onclick="selectColor('노랑', '밝고 긍정적이에요!')"></button>
-                                <button style="width: 60px; height: 60px; border-radius: 50%; background: #95E1D3; border: 2px solid #ddd; cursor: pointer;" onclick="selectColor('민트', '부드럽고 따뜻해요!')"></button>
-                                <button style="width: 60px; height: 60px; border-radius: 50%; background: #B19CD9; border: 2px solid #ddd; cursor: pointer;" onclick="selectColor('보라', '신비롭고 독특해요!')"></button>
-                            </div>
-                            <div class="demo-result" id="colorResult" style="display: none;"></div>
-                        </div>
-                    </div>`
+                    title: "3주차 - 할일 관리 앱 만들기",
+                    subtitle: "실용적인 앱으로 배워봅시다",
+                    sections: [
+                        {
+                            type: "goal",
+                            title: "🎯 이번 주 목표",
+                            content: "<p><strong>할일을 관리하는 웹 앱</strong>을 만듭니다.</p><p>입력하고, 추가하고, 완료 표시 하는 앱을 통해 더 복잡한 기능을 다루어봅니다.</p>"
+                        },
+                        {
+                            type: "activity",
+                            title: "💬 제미나이 캔버스에 이렇게 요청하세요",
+                            content: "<div class='prompt-box'><div class='prompt-box-title'>할일앱 프롬프트:</div><div class='prompt-text'>할일을 관리하는 웹 앱을 만들어줄래?\n\n1. \"할일 입력\" 박스가 있기\n2. \"추가\" 버튼 클릭하면 할일이 목록에 추가되기\n3. 각 할일 옆에 \"완료\" 버튼이 있기\n4. \"완료\" 버튼 클릭하면 그 항목에 줄이 그어지기\n5. \"삭제\" 버튼으로 지우기\n6. 이쁜 색상으로 디자인해주기</div></div></p>"
+                        },
+                        {
+                            type: "tips",
+                            title: "✏️ 학생 활동",
+                            content: "<p><strong>아이디어 발전시키기:</strong></p><ul><li>🎓 공부할 과목별로 정렬하기</li><li>📅 날짜 추가하기</li><li>⭐ 중요도 표시하기 (별 5개까지)</li><li>🎨 카테고리별로 다른 색상</li><li>🔊 소리 효과 추가</li></ul>"
+                        }
+                    ]
                 },
                 4: {
-                    title: "🎮 숫자 맞추기 게임",
-                    subtitle: "루프와 조건문으로 게임 로직 구현하기",
-                    content: `<div class="content-card">
-                        <div class="section-label">🎮 게임 규칙</div>
-                        <h2 class="section-title">어떻게 진행될까?</h2>
-                        <p class="section-description">1. 컴퓨터가 1~100 사이의 숫자를 정한다
-2. 플레이어가 숫자를 맞춘다
-3. '너무 작아요' 또는 '너무 커요' 힌트를 준다
-4. 맞췄을 때 시도 횟수를 표시한다</p>
-                    </div>
-
-                    <div class="content-card">
-                        <div class="section-label">🚀 실습</div>
-                        <h2 class="section-title">1~100 사이의 숫자를 맞춰보세요!</h2>
-                        <div class="demo-app">
-                            <div style="display: flex; gap: 10px; margin: 20px 0;">
-                                <input type="number" id="gameGuess" min="1" max="100" placeholder="숫자 입력" style="padding:10px; border:2px solid #ddd; border-radius:8px; flex: 1;">
-                                <button class="demo-button" onclick="makeGameGuess()" style="margin-left: 0;">제출</button>
-                            </div>
-                            <div class="demo-result" id="gameResult" style="display: none;"></div>
-                        </div>
-                    </div>`
+                    title: "4주차 - 할일 앱 업그레이드",
+                    subtitle: "더 멋진 기능을 추가해봅시다",
+                    sections: [
+                        {
+                            type: "goal",
+                            title: "🎯 이번 주 목표",
+                            content: "<p>3주차 할일 앱에 <strong>고급 기능</strong>을 추가합니다.</p>"
+                        },
+                        {
+                            type: "activity",
+                            title: "💬 제미나이에게 요청하기",
+                            content: "<div class='prompt-box'><div class='prompt-box-title'>업그레이드 프롬프트:</div><div class='prompt-text'>할일앱에 이 기능들을 추가해줄래?\n\n1. 완료한 할일 개수 표시 (예: \"3/10 완료\")\n2. 중요도별로 정렬 기능\n3. 완료한 할일만 보기/전체 보기 선택\n4. 리셋 버튼으로 모든 할일 지우기\n5. 저장된 할일이 새로고침해도 남기 (이전에 배운 거 활용)</div></div></p>"
+                        },
+                        {
+                            type: "tips",
+                            title: "💡 도전 과제",
+                            content: "<p><strong>다음 주제로 비슷한 앱 만들기:</strong></p><ul><li>📚 책 읽은 목록</li><li>🎮 게임 스코어 기록</li><li>📺 보고 싶은 영화 목록</li><li>🎵 좋아하는 노래 모음</li></ul>"
+                        }
+                    ]
                 },
                 5: {
-                    title: "💬 오늘의 명언 생성기",
-                    subtitle: "기초 단계의 완성! 모든 개념을 종합하기",
-                    content: `<div class="content-card">
-                        <div class="section-label">🎉 축하합니다!</div>
-                        <h2 class="section-title">기초 단계 완료</h2>
-                        <p class="section-description">당신은 이제 HTML, CSS, JavaScript의 기본을 완벽하게 습득했습니다!
-
-✅ 5주 동안 4개의 완성된 웹앱을 만들었습니다
-✅ 변수, 배열, 함수, 조건문, 루프의 개념을 배웠습니다
-✅ DOM을 조작해서 동적인 웹페이지를 만들었습니다
-✅ 사용자와 상호작용하는 앱을 만들 수 있습니다
-
-다음 중급 단계에서는 자신만의 앱을 처음부터 끝까지 기획하고 개발하게 됩니다. 정말 자랑스러워요!</p>
-                    </div>`
+                    title: "5주차 - 재미있는 앱 만들기",
+                    subtitle: "자유롭게 아이디어를 내서 만들어봅시다",
+                    sections: [
+                        {
+                            type: "goal",
+                            title: "🎯 이번 주 목표",
+                            content: "<p><strong>지금까지 배운 것을 바탕으로 재미있는 앱 하나를 자유롭게 만들기</strong></p>"
+                        },
+                        {
+                            type: "activity",
+                            title: "💡 앱 아이디어 선택",
+                            content: "<p><strong>다음 중에서 선택하거나 새로운 아이디어를 내세요:</strong></p><ul><li>🎲 주사위 게임 (점수 계산)</li><li>🎨 색상 조합 추천 앱</li><li>📝 단어 맞추기 게임</li><li>🌟 캐릭터 만들기 (능력치 랜덤 배치)</li><li>🎵 음악 추천 플레이리스트</li><li>🍕 음식 추천 룰렛</li><li>💬 타로 카드 점술</li><li>🎭 성격 유형 테스트</li></ul>"
+                        },
+                        {
+                            type: "activity",
+                            title: "💬 제미나이 캔버스에 요청하기",
+                            content: "<div class='prompt-box'><div class='prompt-box-title'>자유로운 요청 방법:</div><div class='prompt-text'>예) \"[앱 이름]을(를) 만들어줄래? 다음처럼 작동했으면 좋겠어:\n- [기능 1]\n- [기능 2]\n- [기능 3]\n- [원하는 디자인]\"\n\n구체적으로 설명할수록 더 좋은 앱이 만들어져요!</div></div></p>"
+                        },
+                        {
+                            type: "tips",
+                            title: "✏️ 학생 활동 체크리스트",
+                            content: "<div class='checklist'><div class='checklist-item'><input type='checkbox'> 앱 아이디어를 정했나요?</div><div class='checklist-item'><input type='checkbox'> 기능이 모두 작동하나요?</div><div class='checklist-item'><input type='checkbox'> 색상과 디자인이 예쁜가요?</div><div class='checklist-item'><input type='checkbox'> 친구들과 공유했나요?</div></div>"
+                        }
+                    ]
+                },
+                6: {
+                    title: "6주차 - 나만의 앱 기획",
+                    subtitle: "앞으로 만들 앱을 기획해봅시다",
+                    sections: [
+                        {
+                            type: "goal",
+                            title: "🎯 이번 주 목표",
+                            content: "<p>지금부터는 <strong>학생들이 각자 만들고 싶은 앱을 기획하고 만듭니다</strong></p><p>GitHub에 업로드하는 방법도 배웁니다.</p>"
+                        },
+                        {
+                            type: "activity",
+                            title: "📋 앱 기획서 작성",
+                            content: "<p><strong>다음을 생각해보고 정리해보세요:</strong></p><div class='checklist'><div class='checklist-item'><input type='checkbox'> <strong>앱 이름:</strong> (예: \"우리반 친구 추천 앱\")</div><div class='checklist-item'><input type='checkbox'> <strong>목적:</strong> 이 앱이 뭐 하는 건지? (예: \"친구들의 취향을 알아보기\")</div><div class='checklist-item'><input type='checkbox'> <strong>기능:</strong> 어떤 기능들이 필요한가? (예: \"선택하기, 결과 보기\")</div><div class='checklist-item'><input type='checkbox'> <strong>대상:</strong> 누가 쓸 건가? (예: \"우리반 학생들\")</div><div class='checklist-item'><input type='checkbox'> <strong>디자인:</strong> 어떤 느낌이었으면 좋을까? (예: \"밝고 재미있는\")</div></div>"
+                        },
+                        {
+                            type: "tips",
+                            title: "💡 앱 기획 팁",
+                            content: "<div class='tip-card'><strong>좋은 앱 아이디어의 조건:</strong><br>1. 친구들이 재미있게 쓸 수 있을 것<br>2. 기능이 간단하고 명확할 것<br>3. 누구나 이해할 수 있는 것<br><br><strong>아이디어 예시:</strong><br>- 반 친구 성향 검사<br>- 뭐할지 정하기 게임<br>- 좋아하는 것 투표하기<br>- 학용품 추천 앱<br>- 주말 계획 도우미</div>"
+                        }
+                    ]
+                },
+                7: {
+                    title: "7주차 - 제미나이로 앱 만들기",
+                    subtitle: "기획한 앱을 제미나이로 구현합시다",
+                    sections: [
+                        {
+                            type: "goal",
+                            title: "🎯 이번 주 목표",
+                            content: "<p><strong>6주차에 기획한 앱을 제미나이 캔버스에서 만들기</strong></p>"
+                        },
+                        {
+                            type: "activity",
+                            title: "💬 제미나이 캔버스 사용법",
+                            content: "<p><strong>기획서를 바탕으로 제미나이에 요청하세요:</strong></p><div class='prompt-box'><div class='prompt-box-title'>앱 요청 프롬프트 템플릿:</div><div class='prompt-text'>[앱 이름] 웹앱을 만들어줄래?\n\n목적: [목적 설명]\n대상: [누가 쓸 건지]\n\n필요한 기능:\n1. [기능 1]\n2. [기능 2]\n3. [기능 3]\n\n디자인: [원하는 느낌]\n색상: [선호하는 색상]</div></div></p>"
+                        },
+                        {
+                            type: "activity",
+                            title: "✏️ 앱 수정하기",
+                            content: "<p><strong>제미나이가 만든 앱을 확인하고 수정요청하세요:</strong></p><ul><li>\"버튼을 더 크게 해줄래?\"</li><li>\"색상을 이렇게 바꿔줄래?\"</li><li>\"이 기능을 추가해줄 수 있어?\"</li><li>\"텍스트가 읽기 쉬운가요?\"</li></ul>"
+                        },
+                        {
+                            type: "tips",
+                            title: "💡 팁",
+                            content: "<div class='tip-card'><strong>안 되면 다시 시도하세요:</strong><br>- 첫 번째 요청으로 완벽하지 않을 수 있어요<br>- \"이건 안 됐어. 이렇게 다시 해줄래?\" 라고 말하세요<br>- 작은 요청부터 시작해서 차근차근 만드는 것도 좋아요</div>"
+                        }
+                    ]
+                },
+                8: {
+                    title: "8주차 - 앱 테스트 & 개선",
+                    subtitle: "앱을 테스트하고 더 좋게 만들어봅시다",
+                    sections: [
+                        {
+                            type: "goal",
+                            title: "🎯 이번 주 목표",
+                            content: "<p><strong>만든 앱을 친구들과 공유해서 테스트하고, 피드백을 받아서 개선하기</strong></p>"
+                        },
+                        {
+                            type: "activity",
+                            title: "🔍 테스트 리스트",
+                            content: "<div class='checklist'><div class='checklist-item'><input type='checkbox'> 앱이 제대로 열리나요?</div><div class='checklist-item'><input type='checkbox'> 모든 버튼이 작동하나요?</div><div class='checklist-item'><input type='checkbox'> 화면이 보기 좋나요?</div><div class='checklist-item'><input type='checkbox'> 오류 메시지는 없나요?</div><div class='checklist-item'><input type='checkbox'> 친구들이 쉽게 이해할 수 있나요?</div></div>"
+                        },
+                        {
+                            type: "activity",
+                            title: "👥 친구들 피드백 받기",
+                            content: "<p><strong>2-3명 친구한테 보여주고 물어보세요:</strong></p><ul><li>✅ 이 앱 재미있어?</li><li>✅ 뭐가 좋아?</li><li>✅ 뭐가 빠졌으면 좋겠어?</li><li>✅ 어떻게 개선했으면 좋겠어?</li></ul>"
+                        },
+                        {
+                            type: "activity",
+                            title: "💬 제미나이에 개선 요청하기",
+                            content: "<div class='prompt-box'><div class='prompt-box-title'>개선 프롬프트:</div><div class='prompt-text'>앱을 다음처럼 개선해줄래?\n\n친구들 피드백:\n- [피드백 1]\n- [피드백 2]\n\n개선 내용:\n- [추가할 기능]\n- [바꿀 디자인]\n- [수정할 부분]</div></div></p>"
+                        }
+                    ]
+                },
+                9: {
+                    title: "9주차 - GitHub에 올리기",
+                    subtitle: "만든 앱을 GitHub에 공유해봅시다",
+                    sections: [
+                        {
+                            type: "goal",
+                            title: "🎯 이번 주 목표",
+                            content: "<p><strong>만든 앱의 코드를 GitHub에 올리기</strong></p><p>GitHub는 개발자들이 코드를 공유하고 협력하는 플랫폼입니다.</p>"
+                        },
+                        {
+                            type: "activity",
+                            title: "📝 GitHub 준비하기",
+                            content: "<p><strong>다음 단계를 따라하세요:</strong></p><div class='checklist'><div class='checklist-item'><input type='checkbox'> GitHub 계정 만들기 (github.com)</div><div class='checklist-item'><input type='checkbox'> 새로운 저장소(Repository) 만들기</div><div class='checklist-item'><input type='checkbox'> 저장소 이름: [앱 이름]</div><div class='checklist-item'><input type='checkbox'> README.md 파일에 앱 설명 쓰기</div></div>"
+                        },
+                        {
+                            type: "activity",
+                            title: "📤 앱 올리기",
+                            content: "<p><strong>기본 단계:</strong></p><ol><li>제미나이에서 만든 앱의 전체 코드 복사</li><li>GitHub의 저장소에서 \"Add file\" → \"Create new file\"</li><li>파일 이름: <code>index.html</code></li><li>코드 붙여넣기</li><li>Commit</li></ol><p><strong>또는 더 쉬운 방법:</strong></p><div class='prompt-box'><div class='prompt-box-title'>제미나이에 요청:</div><div class='prompt-text'>이 앱의 코드를 GitHub에 올릴 수 있도록 준비해줄래?\n- 전체 코드를 복사할 수 있도록\n- README.md 파일도 만들어줄래?</div></div></p>"
+                        },
+                        {
+                            type: "tips",
+                            title: "💡 README.md 내용 예시",
+                            content: "<div class='tip-card'><strong># [앱 이름]</strong><br><br>## 설명<br>이 앱은 [앱이 뭐 하는지] 해주는 웹 앱입니다.<br><br>## 기능<br>- 기능 1<br>- 기능 2<br>- 기능 3<br><br>## 사용 방법<br>1. [시작 방법]<br>2. [조작 방법]<br><br>## 만든 사람<br>[이름]</div>"
+                        }
+                    ]
+                },
+                10: {
+                    title: "10주차 - 가족을 위한 앱",
+                    subtitle: "가족이 좋아할 만한 앱을 만들어봅시다",
+                    sections: [
+                        {
+                            type: "goal",
+                            title: "🎯 이번 주 목표",
+                            content: "<p><strong>우리 가족을 위한 특별한 앱 만들기</strong></p><p>엄마, 아빠, 형/누나, 할머니/할아버지 등을 생각해보세요!</p>"
+                        },
+                        {
+                            type: "activity",
+                            title: "💡 앱 아이디어 내기",
+                            content: "<p><strong>가족을 위한 앱 아이디어:</strong></p><ul><li>👨‍👩‍👧‍👦 가족 할일 공유 앱</li><li>🎂 생일 알림 앱</li><li>💝 감사 메시지 작성 앱</li><li>📸 가족 추억 공유 앱</li><li>🍽️ 오늘의 저녁 메뉴 추천</li><li>🎮 가족이 함께 하는 게임</li><li>⏰ 취침 시간 리마인더</li><li>📚 함께 읽을 책 추천</li></ul>"
+                        },
+                        {
+                            type: "activity",
+                            title: "💬 제미나이 캔버스에 요청하기",
+                            content: "<div class='prompt-box'><div class='prompt-box-title'>가족 앱 요청:</div><div class='prompt-text'>[앱 이름]을(를) 만들어줄래?\n\n이건 우리 가족을 위한 앱이야.\n가족 구성원: [엄마, 아빠, 오빠, 나]\n\n목적: [앱의 목적]\n\n기능:\n1. [기능 1]\n2. [기능 2]\n3. [기능 3]\n\n디자인: 따뜻하고 가족 같은 느낌</div></div></p>"
+                        },
+                        {
+                            type: "tips",
+                            title: "✏️ 학생 활동",
+                            content: "<div class='checklist'><div class='checklist-item'><input type='checkbox'> 가족 구성원을 생각했나요?</div><div class='checklist-item'><input type='checkbox'> 가족이 정말 쓸만한 앱인가요?</div><div class='checklist-item'><input type='checkbox'> 가족에게 보여줬나요?</div><div class='checklist-item'><input type='checkbox'> 피드백을 받았나요?</div></div>"
+                        }
+                    ]
+                },
+                11: {
+                    title: "11주차 - 친구들과 협력하기",
+                    subtitle: "친구들과 함께 하나의 큰 앱을 만들어봅시다",
+                    sections: [
+                        {
+                            type: "goal",
+                            title: "🎯 이번 주 목표",
+                            content: "<p><strong>2-3명이 팀을 이루어 하나의 큰 앱을 함께 만들기</strong></p><p>협력하는 방법과 팀 작업의 즐거움을 배웁니다.</p>"
+                        },
+                        {
+                            type: "activity",
+                            title: "👥 팀 구성 & 역할 정하기",
+                            content: "<p><strong>팀 구성:</strong></p><ul><li>팀원: 2-3명</li><li>역할:<br>  - 아이디어 기획자<br>  - 디자인 담당<br>  - 테스트 담당<br>  - 모두가 함께: 제미나이에 요청하고 개선하기</li></ul>"
+                        },
+                        {
+                            type: "activity",
+                            title: "💡 팀 프로젝트 아이디어",
+                            content: "<p><strong>함께 만들면 좋은 앱:</strong></p><ul><li>🏫 반의 시간표 앱</li><li>🎬 우리가 추천하는 영화</li><li>⚽ 스포츠 대회 점수 기록</li><li>🎵 우리 팀 플레이리스트</li><li>🍕 점심 뭐 먹을지 투표 앱</li><li>🎮 게임 토너먼트 관리</li><li>📚 함께 읽은 책 리뷰</li></ul>"
+                        },
+                        {
+                            type: "activity",
+                            title: "💬 함께 제미나이 사용하기",
+                            content: "<div class='prompt-box'><div class='prompt-box-title'>팀 프롬프트:</div><div class='prompt-text'>우리 팀이 [앱 이름]을(를) 만들고 있어.\n팀원: [이름들]\n\n앱의 목적: [목적]\n우리 반 친구들이 사용할 거야.\n\n기능:\n1. [기능 1]\n2. [기능 2]\n3. [기능 3]\n\n디자인: [원하는 느낌]\n\n이 앱이 우리 팀의 프로젝트라는 걸 알 수 있게 만들어줄래?</div></div></p>"
+                        },
+                        {
+                            type: "tips",
+                            title: "💡 팀 작업 팁",
+                            content: "<div class='tip-card'><strong>좋은 팀 작업을 위해:</strong><br>- 모두의 아이디어를 존중해요<br>- 문제가 생기면 함께 해결해요<br>- 서로의 피드백을 받아들여요<br>- 완성되면 친구들한테 함께 설명해요</div>"
+                        }
+                    ]
+                },
+                12: {
+                    title: "12주차 - 최종 발표 & 공유",
+                    subtitle: "12주간의 여정을 마무리하고 나눠봅시다",
+                    sections: [
+                        {
+                            type: "goal",
+                            title: "🎯 이번 주 목표",
+                            content: "<p><strong>12주간 만든 앱들을 발표하고 공유하기</strong></p><p>우리가 만든 앱들이 얼마나 멋있는지 함께 축하해요!</p>"
+                        },
+                        {
+                            type: "activity",
+                            title: "📊 지금까지 만든 것들",
+                            content: "<p><strong>12주간 우리가 만든 앱:</strong></p><ul><li>1주차: 운세 앱</li><li>2주차: 운세 앱 (기능 추가)</li><li>3주차: 할일 관리 앱</li><li>4주차: 할일 앱 (업그레이드)</li><li>5주차: 재미있는 앱</li><li>6-9주차: 나만의 앱 (GitHub 업로드)</li><li>10주차: 가족을 위한 앱</li><li>11주차: 팀 프로젝트 앱</li></ul><p><strong>총 7-8개의 앱을 만들었어요! 🎉</strong></p>"
+                        },
+                        {
+                            type: "activity",
+                            title: "🎤 발표 준비",
+                            content: "<p><strong>각자 또는 팀별로 발표할 때:</strong></p><div class='checklist'><div class='checklist-item'><input type='checkbox'> 앱 이름과 목적 설명하기</div><div class='checklist-item'><input type='checkbox'> 앱의 주요 기능 소개하기</div><div class='checklist-item'><input type='checkbox'> 앱을 직접 보여주기</div><div class='checklist-item'><input type='checkbox'> 만들면서 배운 점 이야기하기</div><div class='checklist-item'><input type='checkbox'> 친구들의 질문에 답변하기</div></div>"
+                        },
+                        {
+                            type: "activity",
+                            title: "🌟 우리의 성장",
+                            content: "<p><strong>12주 후 우리가 할 수 있게 된 것:</strong></p><ul><li>✅ AI에게 정확하게 요청하는 방법</li><li>✅ 내가 원하는 앱을 만드는 방법</li><li>✅ 만들어진 앱을 테스트하고 개선하는 방법</li><li>✅ GitHub에 코드를 올리는 방법</li><li>✅ 친구들과 협력해서 프로젝트하는 방법</li><li>✅ 내 아이디어를 현실로 만드는 능력</li></ul>"
+                        },
+                        {
+                            type: "tips",
+                            title: "🎓 마무리",
+                            content: "<div class='tip-card'><strong>축하합니다! 🎉</strong><br><br>12주간 정말 멋진 여행이었어요!<br>AI를 활용해서 앱을 만드는 능력을 배웠습니다.<br><br>앞으로도 계속 새로운 아이디어를 내고<br>AI와 함께 멋진 것들을 만들어보세요!<br><br>여러분 모두 대단해요! 👏</div>"
+                        }
+                    ]
                 }
             },
             intermediate: {
-                6: {
-                    title: "💡 내 앱 아이디어 구체화하기",
-                    subtitle: "나만의 웹앱 프로젝트 기획하기",
-                    content: `<div class="content-card">
-                        <div class="section-label">📖 학습 목표</div>
-                        <h2 class="section-title">앱 개발 계획 수립</h2>
-                        <p class="section-description">좋은 아이디어를 구체적인 개발 계획으로 변환하는 과정을 배운다.</p>
-                    </div>
-
-                    <div class="content-card">
-                        <div class="section-label">💡 아이디어 예시</div>
-                        <h2 class="section-title">어떤 앱을 만들까?</h2>
-                        <p class="section-description">• 할일 관리 앱 (체크리스트)
-• 시간표 앱 (나의 일정)
-• 영어 단어 외우기 앱
-• 음악/영화 추천 앱
-• 저축한 돈 추적 앱
-• 건강 습관 추적 앱
-• 계산기 앱
-• 색상 팔레트 생성기</p>
-                    </div>
-
-                    <div class="content-card">
-                        <div class="section-label">🎯 활동</div>
-                        <h2 class="section-title">아이디어 정리하기</h2>
-                        <div class="step">
-                            <div class="step-number">1</div>
-                            <div class="step-content">
-                                <div class="step-title">문제 정의하기</div>
-                                <div class="step-description">내 앱이 어떤 문제를 해결할까?</div>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">2</div>
-                            <div class="step-content">
-                                <div class="step-title">사용자 정의하기</div>
-                                <div class="step-description">이 앱을 누가 사용할까?</div>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">3</div>
-                            <div class="step-content">
-                                <div class="step-title">핵심 기능 정하기</div>
-                                <div class="step-description">필수 기능 3~5개를 정하기</div>
-                            </div>
-                        </div>
-                    </div>`
-                },
-                7: {
-                    title: "🏗️ 앱 구조 설계하기",
-                    subtitle: "복잡한 기능을 체계적으로 구성하기",
-                    content: `<div class="content-card">
-                        <div class="section-label">📖 학습 목표</div>
-                        <h2 class="section-title">함수 설계 및 구조화</h2>
-                        <p class="section-description">큰 프로젝트를 작은 단위(함수)로 나누어 관리하는 방법을 배운다</p>
-                    </div>
-
-                    <div class="content-card">
-                        <div class="section-label">🎯 설계 요소</div>
-                        <h2 class="section-title">앱 구조 만들기</h2>
-                        <div class="step">
-                            <div class="step-number">1</div>
-                            <div class="step-content">
-                                <div class="step-title">데이터 구조 설계</div>
-                                <div class="step-description">어떤 정보를 저장할 것인가?</div>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">2</div>
-                            <div class="step-content">
-                                <div class="step-title">함수 목록 작성</div>
-                                <div class="step-description">필요한 모든 함수를 나열하기</div>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">3</div>
-                            <div class="step-content">
-                                <div class="step-title">와이어프레임 그리기</div>
-                                <div class="step-description">종이에 앱의 레이아웃 스케치하기</div>
-                            </div>
-                        </div>
-                    </div>`
-                },
-                8: {
-                    title: "💻 앱 코드 작성하기",
-                    subtitle: "설계한 앱을 실제로 구현하기",
-                    content: `<div class="content-card">
-                        <div class="section-label">📖 학습 목표</div>
-                        <h2 class="section-title">독립적인 프로젝트 개발</h2>
-                        <p class="section-description">혼자 완전한 웹앱 프로젝트를 완성하는 경험을 쌓는다</p>
-                    </div>
-
-                    <div class="content-card">
-                        <div class="section-label">📝 개발 순서</div>
-                        <h2 class="section-title">단계별 개발</h2>
-                        <p class="section-description">1. HTML 구조 작성 (모든 요소)
-2. CSS 스타일링 (예쁘게 디자인)
-3. JavaScript 구현 (하나씩, 함수별로)
-4. 테스트 및 버그 수정
-5. 최적화 및 정리</p>
-                    </div>
-
-                    <div class="content-card">
-                        <div class="section-label">💡 개발 팁</div>
-                        <h2 class="section-title">좋은 코딩 습관</h2>
-                        <div class="tip-box">
-                            <div class="tip-label">💡 팁</div>
-                            <div class="tip-text">✅ 한 번에 모든 기능을 완성하려고 하지 말 것
-✅ 자주 저장하기
-✅ 브라우저 개발자 도구(F12)로 디버깅
-✅ console.log()로 변수 확인하기</div>
-                        </div>
-                    </div>`
-                },
-                9: {
-                    title: "🚀 GitHub에 앱 올리기",
-                    subtitle: "완성된 앱을 세상과 공유하기",
-                    content: `<div class="content-card">
-                        <div class="section-label">📖 학습 목표</div>
-                        <h2 class="section-title">버전 관리와 배포</h2>
-                        <p class="section-description">GitHub를 사용하여 코드를 관리하고 인터넷에 공개한다</p>
-                    </div>
-
-                    <div class="content-card">
-                        <div class="section-label">🎯 GitHub 시작하기</div>
-                        <h2 class="section-title">3단계로 배포하기</h2>
-                        <div class="step">
-                            <div class="step-number">1</div>
-                            <div class="step-content">
-                                <div class="step-title">저장소 만들기</div>
-                                <div class="step-description">github.com에서 새 Repository 생성</div>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">2</div>
-                            <div class="step-content">
-                                <div class="step-title">파일 업로드</div>
-                                <div class="step-description">HTML, CSS, JS 파일을 GitHub에 업로드</div>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">3</div>
-                            <div class="step-content">
-                                <div class="step-title">GitHub Pages 배포</div>
-                                <div class="step-description">Settings → Pages에서 배포 활성화</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="content-card">
-                        <div class="section-label">🎉 축하합니다!</div>
-                        <h2 class="section-title">중급 단계 완료</h2>
-                        <p class="section-description">당신의 앱이 인터넷에 공개되었습니다! 이제 누구나 당신의 앱을 사용할 수 있습니다. GitHub는 프로그래머들의 필수 도구입니다. 고급 단계에서 더 멋진 기능들을 배우게 됩니다!</p>
-                    </div>`
+                1: {
+                    title: "중급 1주차 - 고급 앱 구조 이해",
+                    subtitle: "더 복잡한 앱을 만들어봅시다",
+                    sections: [
+                        {
+                            type: "goal",
+                            title: "🎯 이번 주 목표",
+                            content: "<p><strong>더 복잡한 기능을 가진 앱을 만들고 이해하기</strong></p><p>데이터를 저장하고, 여러 화면을 오갈 수 있는 앱을 배웁니다.</p>"
+                        },
+                        {
+                            type: "activity",
+                            title: "💬 제미나이에 요청하기",
+                            content: "<div class='prompt-box'><div class='prompt-box-title'>고급 앱 프롬프트:</div><div class='prompt-text'>사용자 프로필을 관리하는 웹 앱을 만들어줄래?\n\n기능:\n1. 프로필 생성하기 (이름, 나이, 취미)\n2. 프로필 저장하기\n3. 저장된 프로필 목록 보기\n4. 프로필 수정하기\n5. 프로필 삭제하기\n\n데이터는 새로고침해도 남아있어야 해. (로컬 스토리지 활용)\n\n디자인: 전문적이고 세련된 느낌</div></div></p>"
+                        },
+                        {
+                            type: "tips",
+                            title: "💡 배우는 개념",
+                            content: "<div class='tip-card'><strong>이 앱에서 배우는 것:</strong><br>- 사용자 입력 데이터 처리<br>- 데이터 저장 및 불러오기<br>- 목록 관리<br>- 데이터 수정 및 삭제</div>"
+                        }
+                    ]
                 }
             },
             advanced: {
-                10: {
-                    title: "👥 친구/가족을 위한 앱 기획",
-                    subtitle: "실제 사용자를 생각하며 앱 만들기",
-                    content: `<div class="content-card">
-                        <div class="section-label">📖 학습 목표</div>
-                        <h2 class="section-title">사용자 중심 설계</h2>
-                        <p class="section-description">나를 위한 앱이 아닌, 다른 사람을 위한 앱을 설계한다.</p>
-                    </div>
-
-                    <div class="content-card">
-                        <div class="section-label">🎯 활동</div>
-                        <h2 class="section-title">사용자 인터뷰하기</h2>
-                        <div class="step">
-                            <div class="step-number">1</div>
-                            <div class="step-content">
-                                <div class="step-title">대상 선정</div>
-                                <div class="step-description">앱을 사용할 친구나 가족 선택</div>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">2</div>
-                            <div class="step-content">
-                                <div class="step-title">질문하기</div>
-                                <div class="step-description">어떤 앱이 있으면 좋을까? 불편한 점은?</div>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">3</div>
-                            <div class="step-content">
-                                <div class="step-title">기록하기</div>
-                                <div class="step-description">답변을 메모해두기</div>
-                            </div>
-                        </div>
-                    </div>`
-                },
-                11: {
-                    title: "🛠️ 고급 기능 구현하기",
-                    subtitle: "더 강력한 기능들로 앱 완성하기",
-                    content: `<div class="content-card">
-                        <div class="section-label">📖 학습 목표</div>
-                        <h2 class="section-title">고급 프로그래밍 기능</h2>
-                        <p class="section-description">localStorage, API, 애니메이션 등 프로필셔널 기능을 배운다</p>
-                    </div>
-
-                    <div class="content-card">
-                        <div class="section-label">🎯 고급 기능들</div>
-                        <h2 class="section-title">배울 수 있는 것들</h2>
-                        <div class="step">
-                            <div class="step-number">1</div>
-                            <div class="step-content">
-                                <div class="step-title">데이터 저장 (localStorage)</div>
-                                <div class="step-description">사용자 정보를 브라우저에 저장</div>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">2</div>
-                            <div class="step-content">
-                                <div class="step-title">API 활용</div>
-                                <div class="step-description">날씨, 이미지, 뉴스 등 외부 데이터 가져오기</div>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">3</div>
-                            <div class="step-content">
-                                <div class="step-title">애니메이션</div>
-                                <div class="step-description">CSS와 JavaScript로 동적 효과 만들기</div>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">4</div>
-                            <div class="step-content">
-                                <div class="step-title">다크모드</div>
-                                <div class="step-description">라이트/다크 테마 지원하기</div>
-                            </div>
-                        </div>
-                    </div>`
-                },
-                12: {
-                    title: "🎬 앱 완성 및 발표",
-                    subtitle: "당신의 창작물을 반 친구들에게 보여주기",
-                    content: `<div class="content-card">
-                        <div class="section-label">✅ 마무리 체크리스트</div>
-                        <h2 class="section-title">발표 전 확인</h2>
-                        <div class="checklist">
-                            <label class="checklist-item">
-                                <input type="checkbox">
-                                <span>모든 기능이 제대로 작동하는가?</span>
-                            </label>
-                            <label class="checklist-item">
-                                <input type="checkbox">
-                                <span>모바일에서도 잘 보이는가?</span>
-                            </label>
-                            <label class="checklist-item">
-                                <input type="checkbox">
-                                <span>버그나 오류가 없는가?</span>
-                            </label>
-                            <label class="checklist-item">
-                                <input type="checkbox">
-                                <span>GitHub에 올려졌는가?</span>
-                            </label>
-                            <label class="checklist-item">
-                                <input type="checkbox">
-                                <span>발표 자료가 준비되었는가?</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="content-card">
-                        <div class="section-label">🎤 발표 구성</div>
-                        <h2 class="section-title">5분 발표 스크립트</h2>
-                        <div class="step">
-                            <div class="step-number">1</div>
-                            <div class="step-content">
-                                <div class="step-title">인사 (30초)</div>
-                                <div class="step-description">안녕하세요, 저는 홍길동입니다. 오늘 제가 만든 앱을 소개하겠습니다.</div>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">2</div>
-                            <div class="step-content">
-                                <div class="step-title">문제 소개 (30초)</div>
-                                <div class="step-description">현재 많은 학생들이 ~하는데 불편함을 느낍니다.</div>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">3</div>
-                            <div class="step-content">
-                                <div class="step-title">솔루션 (1분)</div>
-                                <div class="step-description">그래서 저는 ~기능이 있는 앱을 만들었습니다.</div>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">4</div>
-                            <div class="step-content">
-                                <div class="step-title">라이브 데모 (2분)</div>
-                                <div class="step-description">실제로 앱을 사용하며 보여주기</div>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">5</div>
-                            <div class="step-content">
-                                <div class="step-title">마무리 (1분)</div>
-                                <div class="step-description">감사합니다! 질문 있으신가요?</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="content-card">
-                        <div class="section-label">🏆 축하합니다!</div>
-                        <h2 class="section-title">당신은 이제 웹 개발자입니다!</h2>
-                        <p class="section-description">12주간의 노력이 결실을 맺었습니다!
-
-✅ HTML, CSS, JavaScript의 기본을 완벽하게 습득했습니다
-✅ 4개의 예시 앱을 만들었습니다
-✅ 자신만의 완성된 웹앱 프로젝트를 만들었습니다
-✅ GitHub를 사용해서 코드를 관리했습니다
-✅ 다른 사람을 위한 앱을 설계했습니다
-✅ 반 친구들 앞에서 당당하게 발표했습니다
-
-이것이 시작입니다. 계속 배우고, 더 많은 앱을 만들고, 세상과 공유하세요!
-
-화이팅! 🚀✨</p>
-                    </div>`
+                1: {
+                    title: "고급 1주차 - API 활용하기",
+                    subtitle: "외부 데이터를 활용한 앱 만들기",
+                    sections: [
+                        {
+                            type: "goal",
+                            title: "🎯 이번 주 목표",
+                            content: "<p><strong>날씨, 환율 등 실제 데이터를 가져와서 보여주는 앱 만들기</strong></p><p>API를 활용해서 더 실용적인 앱을 만듭니다.</p>"
+                        },
+                        {
+                            type: "activity",
+                            title: "💬 제미나이에 요청하기",
+                            content: "<div class='prompt-box'><div class='prompt-box-title'>API 활용 앱 프롬프트:</div><div class='prompt-text'>날씨 정보를 보여주는 웹 앱을 만들어줄래?\n\n기능:\n1. 도시 이름을 입력하면 날씨 정보 표시\n2. 현재 온도, 습도, 풍속 표시\n3. 오늘 날씨 설명\n4. 5일 예보 보기\n\n날씨 API를 사용해줄래. (OpenWeather API 같은)\n\n디자인: 날씨에 맞는 이모지와 색상</div></div></p>"
+                        },
+                        {
+                            type: "tips",
+                            title: "💡 고급 개념",
+                            content: "<div class='tip-card'><strong>API 활용 시 배우는 것:</strong><br>- 실제 데이터 처리<br>- 비동기 프로그래밍 개념<br>- 에러 처리<br>- 실제로 도움이 되는 앱 만들기</div>"
+                        }
+                    ]
                 }
             }
         };
 
-        let currentLevel = 0;
+        let currentLevel = 'beginner';
         let currentWeek = 1;
 
-        // 전역 함수들
-        window.showFortune = function() {
-            const fortunes = [
-                "오늘 하루는 행운이 가득할 거예요! 🍀",
-                "누군가 당신을 응원하고 있어요. 💪",
-                "새로운 친구를 사귈 수 있는 날이에요. 👫",
-                "당신의 노력이 꽃을 피우는 날이에요. 🌸",
-                "웃음이 많은 하루가 될 거예요. 😊"
-            ];
-            const idx = Math.floor(Math.random() * fortunes.length);
-            document.getElementById('fortuneResult').textContent = fortunes[idx];
-            document.getElementById('fortuneResult').style.display = 'flex';
-        };
-
-        window.selectColor = function(name, meaning) {
-            document.getElementById('colorResult').innerHTML = '<div style="font-weight:600;">' + name + '</div><div style="margin-top:8px;">' + meaning + '</div>';
-            document.getElementById('colorResult').style.display = 'flex';
-        };
-
-        let gameTarget = Math.floor(Math.random() * 100) + 1;
-        window.makeGameGuess = function() {
-            const guess = parseInt(document.getElementById('gameGuess').value);
-            if (isNaN(guess) || guess < 1 || guess > 100) {
-                document.getElementById('gameResult').textContent = '❌ 1~100 입력!';
-            } else if (guess === gameTarget) {
-                document.getElementById('gameResult').textContent = '🎉 정답!';
-                document.getElementById('gameGuess').disabled = true;
-            } else if (guess < gameTarget) {
-                document.getElementById('gameResult').textContent = '📈 더 큰 숫자!';
-            } else {
-                document.getElementById('gameResult').textContent = '📉 더 작은 숫자!';
-            }
-            document.getElementById('gameResult').style.display = 'flex';
-        };
-
-        function changeLevel(level) {
+        // 레벨 변경
+        function setLevel(level) {
             currentLevel = level;
-            currentWeek = Object.keys(lessons[['beginner', 'intermediate', 'advanced'][level]])[0];
+            currentWeek = 1;
             updateUI();
 
-            document.querySelectorAll('.nav-btn').forEach((btn, idx) => {
-                btn.classList.toggle('active', idx === level);
-            });
+            document.querySelectorAll('.level-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
         }
 
-        function changeWeek(week) {
-            currentWeek = week;
-            updateUI();
-        }
-
+        // UI 업데이트
         function updateUI() {
-            const levelNames = ['beginner', 'intermediate', 'advanced'];
-            const levelDisplay = ['기초 바이브 코딩', '중급 바이브 코딩', '고급 바이브 코딩'];
-            const currentLevelData = lessons[levelNames[currentLevel]];
-
-            // 주차 버튼 업데이트
-            const weekButtons = document.getElementById('weekButtons');
-            weekButtons.innerHTML = '';
-            Object.keys(currentLevelData).forEach(week => {
-                const btn = document.createElement('button');
-                btn.className = `week-btn ${parseInt(week) === currentWeek ? 'active' : ''}`;
-                btn.textContent = `${week}주차`;
-                btn.onclick = () => changeWeek(parseInt(week));
-                weekButtons.appendChild(btn);
-            });
-
-            // 콘텐츠 업데이트
-            const lesson = currentLevelData[currentWeek];
-            const content = document.getElementById('content');
-            content.innerHTML = `
-                <h1 class="week-title">${lesson.title}</h1>
-                <p class="week-subtitle">${lesson.subtitle}</p>
-                ${lesson.content}
-            `;
+            updateSidebar();
+            updateContent();
         }
 
+        // 사이드바 업데이트
+        function updateSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.innerHTML = '';
+
+            const weeks = Object.keys(curriculum[currentLevel]).length;
+            for (let i = 1; i <= weeks; i++) {
+                const btn = document.createElement('button');
+                btn.className = 'week-btn' + (i === currentWeek ? ' active' : '');
+                btn.textContent = `${i}주차`;
+                btn.onclick = () => setWeek(i);
+                sidebar.appendChild(btn);
+            }
+        }
+
+        // 주차 변경
+        function setWeek(week) {
+            currentWeek = week;
+            updateContent();
+
+            document.querySelectorAll('.week-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        // 콘텐츠 업데이트
+        function updateContent() {
+            const content = document.getElementById('content');
+            const weekData = curriculum[currentLevel][currentWeek];
+
+            if (!weekData) {
+                content.innerHTML = '<p>이 과정은 아직 준비 중입니다.</p>';
+                return;
+            }
+
+            let html = `
+                <h1 class="week-title">${weekData.title}</h1>
+                <p class="week-subtitle">${weekData.subtitle}</p>
+            `;
+
+            weekData.sections.forEach(section => {
+                html += `
+                    <div class="section ${section.type}">
+                        <h2 class="section-title">${section.title}</h2>
+                        <div class="section-content">${section.content}</div>
+                    </div>
+                `;
+            });
+
+            content.innerHTML = html;
+        }
+
+        // 초기 로드
         updateUI();
     </script>
 </body>
