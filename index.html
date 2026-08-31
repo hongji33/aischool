@@ -89,6 +89,12 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             letter-spacing: 2px;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo:hover {
+            opacity: 0.8;
+            cursor: pointer;
         }
 
         .progress-mini {
@@ -543,9 +549,14 @@
 
         /* 대시보드 콘텐츠 높이 제한 */
         .dashboard-content {
+            display: none;
             max-height: 85vh;
             overflow-y: auto;
             padding-right: 8px;
+        }
+
+        .dashboard-content.active {
+            display: block;
         }
 
         .input-label {
@@ -1251,7 +1262,7 @@
     <!-- 헤더 -->
     <header>
         <div class="header-content">
-            <div class="logo">AI APP MAKER</div>
+            <div class="logo" onclick="goToIntro()" style="cursor: pointer;">AI APP MAKER</div>
             <div class="progress-mini">
                 <div>LEVEL <span id="headerLevel">01</span> / 12</div>
                 <div class="progress-bar-mini">
@@ -1516,6 +1527,13 @@
                 screen.classList.remove('active');
             });
             document.querySelector(`[data-screen="${screenName}"]`).classList.add('active');
+        }
+
+        function goToIntro() {
+            goToScreen('intro');
+            document.getElementById('headerLevel').textContent = '01';
+            document.getElementById('headerProgress').style.width = '0%';
+            document.getElementById('headerPercent').textContent = '0%';
         }
 
         function startJourney() {
@@ -2256,7 +2274,10 @@ HTML, CSS, JavaScript를 사용해서 위 요구사항을 만족하는 웹앱을
                 </div>
             `;
 
-            state.missions[7].data.generatedPrompt = prompt;
+            state.missions[7].data = {
+                role, goal, user, features, design,
+                generatedPrompt: prompt
+            };
             saveData();
         }
 
@@ -2381,7 +2402,10 @@ HTML, CSS, JavaScript를 사용해서 위 요구사항을 만족하는 웹앱을
 이 오류를 수정해주세요.`;
 
             document.getElementById('debugPrompt').textContent = debugPrompt;
-            state.missions[9].data.debugPrompt = debugPrompt;
+            state.missions[9].data = {
+                bug1, bug2, bug3,
+                debugPrompt: debugPrompt
+            };
             saveData();
         }
 
@@ -2501,15 +2525,30 @@ HTML, CSS, JavaScript를 사용해서 위 요구사항을 만족하는 웹앱을
         }
 
         function showContent(contentName) {
+            // 모든 콘텐츠 숨기기
             document.querySelectorAll('.dashboard-content').forEach(el => {
                 el.classList.remove('active');
             });
-            document.querySelector(`[data-content="${contentName}"]`).classList.add('active');
 
+            // 선택된 콘텐츠 보이기
+            const contentElement = document.querySelector(`[data-content="${contentName}"]`);
+            if (contentElement) {
+                contentElement.classList.add('active');
+            } else {
+                console.error(`Content not found: ${contentName}`);
+                return;
+            }
+
+            // 네비게이션 링크 업데이트
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.classList.remove('active');
             });
-            document.querySelector(`[data-target="${contentName}"]`).classList.add('active');
+            const navLink = document.querySelector(`[data-target="${contentName}"]`);
+            if (navLink) {
+                navLink.classList.add('active');
+            } else {
+                console.error(`Nav link not found: ${contentName}`);
+            }
         }
 
         function backToDashboard() {
