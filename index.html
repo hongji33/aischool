@@ -856,37 +856,55 @@
         // 주차 데이터 로드
         async function loadWeeksData() {
             try {
-                const levels = ['Beginner', 'Intermediate', 'Advanced'];
-                const levelKeys = ['beginner', 'intermediate', 'advanced'];
+                const levels = [
+                    { name: 'Beginner', key: 'beginner' },
+                    { name: 'Intermediate', key: 'intermediate' },
+                    { name: 'Advanced', key: 'advanced' }
+                ];
 
-                for (let i = 0; i < levels.length; i++) {
-                    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${getGidForSheet(levels[i])}`;
+                // Promise.all을 사용해서 모든 시트 데이터를 기다림
+                await Promise.all(levels.map(async (level) => {
+                    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${getGidForSheet(level.name)}`;
                     const response = await fetch(url);
                     const csvText = await response.text();
 
-                    Papa.parse(csvText, {
-                        complete: (results) => {
-                            const levelKey = levelKeys[i];
-                            for (let j = 1; j < results.data.length; j++) {
-                                const row = results.data[j];
-                                if (row[0] && row[1] && row[1].trim().toUpperCase() === 'TRUE') {
-                                    const week = parseInt(row[0]);
-                                    Object.keys(classesData).forEach(className => {
-                                        if (!classesData[className].enabledWeeks[levelKey].includes(week)) {
-                                            classesData[className].enabledWeeks[levelKey].push(week);
+                    return new Promise((resolve) => {
+                        Papa.parse(csvText, {
+                            complete: (results) => {
+                                console.log(`[${level.name}] CSV 파싱 결과:`, results.data);
+
+                                for (let j = 1; j < results.data.length; j++) {
+                                    const row = results.data[j];
+                                    if (row[0] && row[1]) {
+                                        const isTrue = row[1].trim().toUpperCase() === 'TRUE';
+                                        if (isTrue) {
+                                            const week = parseInt(row[0]);
+                                            if (!isNaN(week)) {
+                                                Object.keys(classesData).forEach(className => {
+                                                    if (!classesData[className].enabledWeeks[level.key].includes(week)) {
+                                                        classesData[className].enabledWeeks[level.key].push(week);
+                                                    }
+                                                });
+                                            }
                                         }
-                                    });
+                                    }
                                 }
+                                resolve();
                             }
-                        }
+                        });
                     });
-                }
+                }));
+
+                console.log('최종 클래스 데이터:', classesData);
 
                 document.getElementById('loadingSpinner').classList.remove('show');
                 document.getElementById('loginForm').style.display = 'block';
                 document.getElementById('teacherLinkDiv').style.display = 'block';
             } catch (error) {
                 console.error('Error loading weeks:', error);
+                document.getElementById('loadingSpinner').classList.remove('show');
+                document.getElementById('loginForm').style.display = 'block';
+                document.getElementById('teacherLinkDiv').style.display = 'block';
             }
         }
 
