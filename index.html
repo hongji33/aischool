@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vibe Coding Academy - 수업 관리 시스템</title>
+    <title>Vibe Coding Academy - 클라우드 수업 관리</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -37,6 +39,7 @@
             align-items: center;
             height: 100vh;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 20px;
         }
 
         .login-box {
@@ -45,8 +48,8 @@
             border-radius: 16px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             text-align: center;
-            max-width: 400px;
-            width: 90%;
+            max-width: 450px;
+            width: 100%;
         }
 
         .login-box h1 {
@@ -62,7 +65,7 @@
 
         .login-box p {
             color: var(--light);
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             font-size: 14px;
         }
 
@@ -108,6 +111,7 @@
             font-size: 16px;
             cursor: pointer;
             transition: all 0.3s ease;
+            margin-bottom: 10px;
         }
 
         .login-btn:hover {
@@ -115,8 +119,21 @@
             box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
         }
 
-        .login-btn:active {
-            transform: translateY(0);
+        .qr-login-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .qr-login-btn:hover {
+            box-shadow: 0 6px 16px rgba(78, 205, 196, 0.3);
         }
 
         .login-error {
@@ -138,6 +155,81 @@
             cursor: pointer;
         }
 
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: var(--light);
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        /* QR 리더 모달 */
+        .qr-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .qr-modal.show {
+            display: flex;
+        }
+
+        .qr-modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 400px;
+        }
+
+        .qr-modal-content h2 {
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        .qr-modal-content input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .qr-modal-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .qr-modal-buttons button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .qr-modal-buttons .cancel-btn {
+            background: var(--border);
+            color: var(--dark);
+        }
+
+        .qr-modal-buttons .submit-btn {
+            background: var(--primary);
+            color: white;
+        }
+
         /* === 메인 인터페이스 === */
         header {
             display: flex;
@@ -150,6 +242,8 @@
             position: sticky;
             top: 0;
             z-index: 100;
+            flex-wrap: wrap;
+            gap: 20px;
         }
 
         .logo {
@@ -166,6 +260,7 @@
             display: flex;
             gap: 20px;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .class-info {
@@ -181,6 +276,7 @@
         .level-buttons {
             display: flex;
             gap: 15px;
+            flex-wrap: wrap;
         }
 
         .level-btn {
@@ -261,7 +357,7 @@
         }
 
         .week-btn.disabled {
-            opacity: 0.5;
+            opacity: 0.4;
             cursor: not-allowed;
             color: var(--light);
         }
@@ -316,9 +412,6 @@
             font-size: 20px;
             font-weight: 700;
             margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
         .section-content {
@@ -426,144 +519,70 @@
             margin-bottom: 10px;
         }
 
-        .teacher-header p {
-            color: var(--light);
-            font-size: 14px;
-        }
-
-        .teacher-form {
+        .class-card {
             background: white;
-            padding: 30px;
             border-radius: 12px;
-            margin-bottom: 30px;
+            padding: 20px;
+            margin-bottom: 20px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-            max-width: 600px;
         }
 
-        .teacher-form h2 {
+        .class-card h3 {
             font-size: 18px;
             font-weight: 700;
-            margin-bottom: 20px;
-            color: var(--dark);
-        }
-
-        .form-row {
-            display: flex;
-            gap: 15px;
             margin-bottom: 15px;
+            color: var(--primary);
         }
 
-        .form-row.full {
-            flex-direction: column;
-        }
-
-        .form-row input,
-        .form-row select {
-            flex: 1;
-            padding: 10px;
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .form-row input:focus,
-        .form-row select:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        .teacher-btn {
-            padding: 10px 20px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .teacher-btn:hover {
-            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
-        }
-
-        .classes-list {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        }
-
-        .class-item {
-            padding: 20px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .class-item:last-child {
-            border-bottom: none;
-        }
-
-        .class-item-info h3 {
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-
-        .class-item-info p {
-            font-size: 12px;
-            color: var(--light);
-        }
-
-        .class-item-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .class-item-actions button {
-            padding: 8px 12px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .edit-btn {
-            background: var(--secondary);
-            color: white;
-        }
-
-        .delete-btn {
-            background: #e74c3c;
-            color: white;
-        }
-
-        .weeks-selector {
-            margin-top: 20px;
+        .qr-section {
+            margin: 20px 0;
             padding: 20px;
             background: var(--bg-light);
             border-radius: 8px;
+            text-align: center;
         }
 
-        .weeks-selector h3 {
+        .qr-section h4 {
             font-size: 14px;
-            font-weight: 700;
-            margin-bottom: 15px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        #qrcode {
+            display: inline-block;
+            margin: 10px 0;
+        }
+
+        .qr-url {
+            margin-top: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 6px;
+            font-size: 12px;
+            word-break: break-all;
+            border: 1px solid var(--border);
+        }
+
+        .weeks-selector {
+            margin-top: 15px;
+        }
+
+        .weeks-selector h4 {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 10px;
         }
 
         .weeks-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            gap: 8px;
         }
 
         .week-checkbox {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 5px;
         }
 
         .week-checkbox input {
@@ -575,8 +594,23 @@
 
         .week-checkbox label {
             cursor: pointer;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 500;
+        }
+
+        .save-btn {
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+
+        .save-btn:hover {
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
         }
 
         ::-webkit-scrollbar {
@@ -617,17 +651,30 @@
                 padding: 12px 20px;
             }
 
-            .week-btn.active {
-                border-left: none;
-                border-bottom-color: var(--primary);
-            }
-
             .content {
                 padding: 20px;
             }
 
             .week-title {
                 font-size: 24px;
+            }
+
+            header {
+                flex-direction: column;
+                padding: 15px 20px;
+            }
+
+            .logo {
+                font-size: 22px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .level-buttons {
+                order: -1;
             }
         }
     </style>
@@ -639,7 +686,11 @@
             <h1>🎨 Vibe Coding</h1>
             <p>AI로 앱 만드는 방법을 배워봅시다</p>
 
-            <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="loading" id="loadingSpinner">
+                <p>📚 수업 목록을 불러오는 중...</p>
+            </div>
+
+            <form id="loginForm" onsubmit="handleLogin(event)" style="display: none;">
                 <div class="form-group">
                     <label for="classSelect">수업 선택</label>
                     <select id="classSelect" required>
@@ -653,11 +704,24 @@
                 </div>
 
                 <button type="submit" class="login-btn">입장</button>
+                <button type="button" class="qr-login-btn" onclick="showQRInput()">📱 QR 코드로 입장</button>
                 <div class="login-error" id="loginError"></div>
             </form>
 
-            <div class="teacher-link">
-                <a onclick="showTeacherLogin()">선생님이신가요?(초기비번:0000)</a>
+            <div class="teacher-link" style="display: none;" id="teacherLinkDiv">
+                <a onclick="showTeacherLogin()">선생님이신가요?</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- QR 입력 모달 -->
+    <div id="qrModal" class="qr-modal">
+        <div class="qr-modal-content">
+            <h2>QR 코드 값 입력</h2>
+            <input type="text" id="qrInput" placeholder="QR 코드에서 복사한 값을 붙여넣으세요">
+            <div class="qr-modal-buttons">
+                <button class="cancel-btn" onclick="closeQRInput()">취소</button>
+                <button class="submit-btn" onclick="handleQRLogin()">확인</button>
             </div>
         </div>
     </div>
@@ -696,27 +760,19 @@
 
         <div class="teacher-container active">
             <div class="teacher-header">
-                <h1>수업 관리</h1>
-                <p>학생들에게 공개할 수업을 관리하세요. 각 수업별로 공개할 주차를 선택할 수 있습니다.</p>
+                <h1>📊 수업 관리</h1>
+                <p>학생들에게 공개할 주차를 선택하고, QR 코드를 생성하세요.</p>
             </div>
 
-            <div class="teacher-form">
-                <h2>새 수업 만들기</h2>
-                <div class="form-row full">
-                    <input type="text" id="newClassName" placeholder="수업명 (예: 26-2-AI팩토리)">
-                </div>
-                <div class="form-row full">
-                    <input type="password" id="newClassPassword" placeholder="비밀번호">
-                </div>
-                <button class="teacher-btn" onclick="createClass()">수업 생성</button>
-            </div>
-
-            <div class="classes-list" id="classesList"></div>
+            <div id="classesContainer"></div>
         </div>
     </div>
 
     <script>
-        // 커리큘럼 데이터 (중급, 고급 포함)
+        // Google Sheets 설정
+        const SHEET_ID = '1cbKLXkfHNacLY1F9PZCKj8GUuwEe7jz_UZ9vBDBQTIw';
+
+        // 커리큘럼 데이터
         const curriculum = {
             beginner: generateCurriculum('기초', 12),
             intermediate: generateCurriculum('중급', 12),
@@ -725,11 +781,9 @@
 
         function generateCurriculum(level, weeks) {
             const lessons = {};
-            const levelEmoji = level === '기초' ? '🌱' : level === '중급' ? '🚀' : '⭐';
-
             for (let i = 1; i <= weeks; i++) {
                 lessons[i] = {
-                    title: `${level} ${i}주차 - ${getWeekTitle(i, level)}`,
+                    title: `${level} ${i}주차`,
                     subtitle: `${level} 레벨 ${i}번째 강의`,
                     sections: [
                         {
@@ -740,12 +794,7 @@
                         {
                             type: "activity",
                             title: "💬 제미나이 캔버스에 이렇게 요청하세요",
-                            content: `<div class='prompt-box'><div class='prompt-box-title'>${level} ${i}주차 프롬프트:</div><div class='prompt-text'>${level} 레벨 ${i}주차 활동을 위한 앱을 만들어줄래?\n\n이전에 배운 내용을 바탕으로 더 고급 기능을 추가해봅시다.\n\n구체적인 요청:\n- 기능 1\n- 기능 2\n- 기능 3</div></div>`
-                        },
-                        {
-                            type: "activity",
-                            title: "✏️ 학생 활동",
-                            content: `<div class='checklist'><div class='checklist-item'><input type='checkbox'> 제미나이에 요청했나요?</div><div class='checklist-item'><input type='checkbox'> 모든 기능이 작동하나요?</div><div class='checklist-item'><input type='checkbox'> 친구들한테 보여줬나요?</div></div>`
+                            content: `<div class='prompt-box'><div class='prompt-box-title'>${level} ${i}주차 프롬프트:</div><div class='prompt-text'>${level} 레벨 ${i}주차 활동을 위한 앱을 만들어줄래?\n\n구체적인 요청을 입력하세요.</div></div>`
                         }
                     ]
                 };
@@ -753,22 +802,115 @@
             return lessons;
         }
 
-        function getWeekTitle(week, level) {
-            const titles = {
-                'basic': ['운세앱 만들기', '운세앱 업그레이드', '할일 관리', '할일 고급', '자유로운 앱', '앱 기획', '앱 제작', '테스트 개선', 'GitHub 배포', '가족 앱', '팀 프로젝트', '최종 발표'],
-                'intermediate': ['데이터 저장하기', 'API 활용', '사용자 인증', '데이터 시각화', '고급 UI', '성능 최적화', '반응형 디자인', '에러 처리', '고급 기능', '포트폴리오', '자유 프로젝트', '발표'],
-                'advanced': ['웹 아키텍처', '데이터베이스', '백엔드 연동', 'RESTful API', '인증 시스템', '배포 자동화', '모니터링', '보안', '최적화 심화', '실제 프로젝트', '오픈소스 기여', '최종 발표']
-            };
-
-            const key = level === '기초' ? 'basic' : level === '중급' ? 'intermediate' : 'advanced';
-            return titles[key][week - 1] || `주제 ${week}`;
-        }
-
         let currentUser = null;
         let currentLevel = 'beginner';
         let currentWeek = 1;
         let currentClass = null;
+        let classesData = {};
         let enabledWeeks = {};
+
+        // 초기 로드
+        window.addEventListener('load', () => {
+            loadClassesFromSheet();
+        });
+
+        // Google Sheets에서 수업 데이터 로드
+        async function loadClassesFromSheet() {
+            try {
+                document.getElementById('loadingSpinner').classList.add('show');
+
+                const classesUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=0`;
+                const response = await fetch(classesUrl);
+                const csvText = await response.text();
+
+                Papa.parse(csvText, {
+                    complete: (results) => {
+                        classesData = {};
+                        if (results.data.length > 1) {
+                            for (let i = 1; i < results.data.length; i++) {
+                                const row = results.data[i];
+                                if (row[0] && row[0].trim()) {
+                                    classesData[row[0].trim()] = {
+                                        password: row[1] ? row[1].trim() : '',
+                                        enabledWeeks: {
+                                            beginner: [],
+                                            intermediate: [],
+                                            advanced: []
+                                        }
+                                    };
+                                }
+                            }
+                        }
+
+                        updateClassSelect();
+                        loadWeeksData();
+                    }
+                });
+            } catch (error) {
+                console.error('Error loading classes:', error);
+                document.getElementById('loginError').textContent = '⚠️ 수업 데이터를 불러올 수 없습니다';
+                document.getElementById('loginError').style.display = 'block';
+            }
+        }
+
+        // 주차 데이터 로드
+        async function loadWeeksData() {
+            try {
+                const levels = ['Beginner', 'Intermediate', 'Advanced'];
+                const levelKeys = ['beginner', 'intermediate', 'advanced'];
+
+                for (let i = 0; i < levels.length; i++) {
+                    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${getGidForSheet(levels[i])}`;
+                    const response = await fetch(url);
+                    const csvText = await response.text();
+
+                    Papa.parse(csvText, {
+                        complete: (results) => {
+                            const levelKey = levelKeys[i];
+                            for (let j = 1; j < results.data.length; j++) {
+                                const row = results.data[j];
+                                if (row[0] && row[1] && row[1].trim().toUpperCase() === 'TRUE') {
+                                    const week = parseInt(row[0]);
+                                    Object.keys(classesData).forEach(className => {
+                                        if (!classesData[className].enabledWeeks[levelKey].includes(week)) {
+                                            classesData[className].enabledWeeks[levelKey].push(week);
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    });
+                }
+
+                document.getElementById('loadingSpinner').classList.remove('show');
+                document.getElementById('loginForm').style.display = 'block';
+                document.getElementById('teacherLinkDiv').style.display = 'block';
+            } catch (error) {
+                console.error('Error loading weeks:', error);
+            }
+        }
+
+        function getGidForSheet(sheetName) {
+            const sheetGids = {
+                'Beginner': 1,
+                'Intermediate': 2,
+                'Advanced': 3
+            };
+            return sheetGids[sheetName] || 0;
+        }
+
+        // 수업 선택 업데이트
+        function updateClassSelect() {
+            const classSelect = document.getElementById('classSelect');
+            classSelect.innerHTML = '<option value="">-- 수업을 선택해주세요 --</option>';
+
+            Object.keys(classesData).forEach(className => {
+                const option = document.createElement('option');
+                option.value = className;
+                option.textContent = className;
+                classSelect.appendChild(option);
+            });
+        }
 
         // 로그인 처리
         function handleLogin(event) {
@@ -781,26 +923,52 @@
                 return;
             }
 
-            const classes = JSON.parse(localStorage.getItem('vibeClasses') || '{}');
-
-            if (!classes[classSelect]) {
+            if (!classesData[classSelect]) {
                 showLoginError('존재하지 않는 수업입니다');
                 return;
             }
 
-            if (classes[classSelect].password !== password) {
-                showLoginError('비밀번호가 틀렸습니다');
+            if (classesData[classSelect].password !== password) {
+                showLoginError('❌ 비밀번호가 틀렸습니다');
                 return;
             }
 
             currentUser = classSelect;
             currentClass = classSelect;
-            enabledWeeks = classes[classSelect].enabledWeeks || {beginner: [], intermediate: [], advanced: []};
+            enabledWeeks = classesData[classSelect].enabledWeeks;
 
             document.getElementById('loginScreen').style.display = 'none';
             document.getElementById('mainScreen').style.display = 'block';
             document.getElementById('currentClassName').textContent = classSelect;
             updateUI();
+        }
+
+        // QR 입력
+        function showQRInput() {
+            document.getElementById('qrModal').classList.add('show');
+        }
+
+        function closeQRInput() {
+            document.getElementById('qrModal').classList.remove('show');
+            document.getElementById('qrInput').value = '';
+        }
+
+        function handleQRLogin() {
+            const qrValue = document.getElementById('qrInput').value.trim();
+
+            try {
+                const data = JSON.parse(decodeURIComponent(qrValue));
+                const classSelect = document.getElementById('classSelect');
+                classSelect.value = data.class;
+
+                const passwordInput = document.getElementById('passwordInput');
+                passwordInput.value = data.password;
+
+                closeQRInput();
+                handleLogin({ preventDefault: () => {} });
+            } catch (error) {
+                alert('❌ 유효하지 않은 QR 코드입니다');
+            }
         }
 
         function showLoginError(message) {
@@ -840,21 +1008,18 @@
             const sidebar = document.getElementById('sidebar');
             sidebar.innerHTML = '';
 
-            const weeks = Object.keys(curriculum[currentLevel]);
-
-            weeks.forEach(week => {
-                const weekNum = parseInt(week);
-                const isEnabled = enabledWeeks[currentLevel].includes(weekNum);
+            for (let i = 1; i <= 12; i++) {
+                const isEnabled = enabledWeeks[currentLevel].includes(i);
                 const btn = document.createElement('button');
-                btn.className = 'week-btn' + (weekNum === currentWeek ? ' active' : '') + (!isEnabled ? ' disabled' : '');
-                btn.textContent = `${weekNum}주차`;
+                btn.className = 'week-btn' + (i === currentWeek ? ' active' : '') + (!isEnabled ? ' disabled' : '');
+                btn.textContent = `${i}주차`;
 
                 if (isEnabled) {
-                    btn.onclick = () => setWeek(weekNum);
+                    btn.onclick = () => setWeek(i);
                 }
 
                 sidebar.appendChild(btn);
-            });
+            }
         }
 
         function setWeek(week) {
@@ -870,7 +1035,7 @@
             const weekData = curriculum[currentLevel][currentWeek];
 
             if (!weekData) {
-                content.innerHTML = '<p>이 과정은 아직 준비 중입니다.</p>';
+                content.innerHTML = '<p>이 과정은 준비 중입니다.</p>';
                 return;
             }
 
@@ -897,7 +1062,6 @@
 
             if (password === null) return;
 
-            // localStorage에 저장된 비밀번호 확인 (없으면 '0000')
             const teacherPassword = localStorage.getItem('teacherPassword') || '0000';
 
             if (password === teacherPassword) {
@@ -905,7 +1069,6 @@
                 document.getElementById('teacherScreen').style.display = 'block';
                 loadTeacherMode();
 
-                // 처음 로그인한 경우 (비밀번호가 기본값 '0000'인 경우)
                 if (teacherPassword === '0000') {
                     setTimeout(() => {
                         showChangeTeacherPassword();
@@ -925,175 +1088,105 @@
             }
         }
 
+        function loadTeacherMode() {
+            const container = document.getElementById('classesContainer');
+            container.innerHTML = '';
+
+            Object.keys(classesData).forEach(className => {
+                const classCard = document.createElement('div');
+                classCard.className = 'class-card';
+
+                let html = `
+                    <h3>${className}</h3>
+                    <p style="font-size: 13px; color: var(--light); margin-bottom: 10px;">비밀번호: ${classesData[className].password}</p>
+
+                    <div class="qr-section">
+                        <h4>📱 학생용 QR 코드</h4>
+                        <div id="qr_${className.replace(/\s/g, '_')}"></div>
+                        <div class="qr-url">
+                            <small>QR 코드를 스캔하거나 값을 복사해서 학생들과 공유하세요</small>
+                        </div>
+                    </div>
+                `;
+
+                ['beginner', 'intermediate', 'advanced'].forEach(level => {
+                    const levelName = level === 'beginner' ? '기초' : level === 'intermediate' ? '중급' : '고급';
+                    html += `
+                        <div class="weeks-selector">
+                            <h4>${levelName} 레벨 - 공개할 주차</h4>
+                            <div class="weeks-grid">
+                    `;
+
+                    for (let i = 1; i <= 12; i++) {
+                        const isChecked = classesData[className].enabledWeeks[level].includes(i) ? 'checked' : '';
+                        html += `
+                            <div class="week-checkbox">
+                                <input type="checkbox" id="${className}_${level}_${i}" ${isChecked}>
+                                <label for="${className}_${level}_${i}">${i}주</label>
+                            </div>
+                        `;
+                    }
+
+                    html += `
+                            </div>
+                        </div>
+                    `;
+                });
+
+                html += `<button class="save-btn" onclick="saveTeacherSettings('${className}')">💾 저장</button>`;
+
+                classCard.innerHTML = html;
+                container.appendChild(classCard);
+
+                // QR 코드 생성
+                setTimeout(() => {
+                    generateQRCode(className);
+                }, 100);
+            });
+        }
+
+        function generateQRCode(className) {
+            const qrData = {
+                class: className,
+                password: classesData[className].password
+            };
+
+            const qrValue = encodeURIComponent(JSON.stringify(qrData));
+            const qrElement = document.getElementById(`qr_${className.replace(/\s/g, '_')}`);
+
+            if (qrElement) {
+                qrElement.innerHTML = '';
+                new QRCode(qrElement, {
+                    text: qrValue,
+                    width: 200,
+                    height: 200,
+                    colorDark: '#000000',
+                    colorLight: '#ffffff'
+                });
+            }
+        }
+
+        function saveTeacherSettings(className) {
+            const levels = ['beginner', 'intermediate', 'advanced'];
+
+            levels.forEach(level => {
+                const enabledWeeks = [];
+                for (let i = 1; i <= 12; i++) {
+                    const checkbox = document.getElementById(`${className}_${level}_${i}`);
+                    if (checkbox && checkbox.checked) {
+                        enabledWeeks.push(i);
+                    }
+                }
+                classesData[className].enabledWeeks[level] = enabledWeeks;
+            });
+
+            alert('✅ 설정이 저장되었습니다!');
+        }
+
         function exitTeacherMode() {
             document.getElementById('teacherScreen').style.display = 'none';
             document.getElementById('loginScreen').style.display = 'flex';
-            loadClassList();
         }
-
-        function loadTeacherMode() {
-            loadClassList();
-        }
-
-        function loadClassList() {
-            const classes = JSON.parse(localStorage.getItem('vibeClasses') || '{}');
-            const classSelect = document.getElementById('classSelect');
-            classSelect.innerHTML = '<option value="">-- 수업을 선택해주세요 --</option>';
-
-            Object.keys(classes).forEach(className => {
-                const option = document.createElement('option');
-                option.value = className;
-                option.textContent = className;
-                classSelect.appendChild(option);
-            });
-
-            updateClassesList();
-        }
-
-        function createClass() {
-            const className = document.getElementById('newClassName').value.trim();
-            const password = document.getElementById('newClassPassword').value.trim();
-
-            if (!className || !password) {
-                alert('수업명과 비밀번호를 입력해주세요');
-                return;
-            }
-
-            const classes = JSON.parse(localStorage.getItem('vibeClasses') || '{}');
-
-            if (classes[className]) {
-                alert('이미 있는 수업명입니다');
-                return;
-            }
-
-            classes[className] = {
-                password: password,
-                enabledWeeks: {
-                    beginner: [],
-                    intermediate: [],
-                    advanced: []
-                },
-                createdAt: new Date().toLocaleString('ko-KR')
-            };
-
-            localStorage.setItem('vibeClasses', JSON.stringify(classes));
-            document.getElementById('newClassName').value = '';
-            document.getElementById('newClassPassword').value = '';
-
-            loadClassList();
-            alert('수업이 생성되었습니다!');
-        }
-
-        function updateClassesList() {
-            const classes = JSON.parse(localStorage.getItem('vibeClasses') || '{}');
-            const classList = document.getElementById('classesList');
-            classList.innerHTML = '';
-
-            if (Object.keys(classes).length === 0) {
-                classList.innerHTML = '<div style="padding: 40px; text-align: center; color: var(--light);">생성된 수업이 없습니다</div>';
-                return;
-            }
-
-            Object.keys(classes).forEach(className => {
-                const classData = classes[className];
-                const item = document.createElement('div');
-                item.className = 'class-item';
-                item.innerHTML = `
-                    <div class="class-item-info">
-                        <h3>${className}</h3>
-                        <p>생성일: ${classData.createdAt} | 비밀번호: ${classData.password}</p>
-                    </div>
-                    <div class="class-item-actions">
-                        <button class="edit-btn" onclick="editClass('${className}')">주차 설정</button>
-                        <button class="delete-btn" onclick="deleteClass('${className}')">삭제</button>
-                    </div>
-                `;
-                classList.appendChild(item);
-            });
-        }
-
-        function editClass(className) {
-            const classes = JSON.parse(localStorage.getItem('vibeClasses') || '{}');
-            const classData = classes[className];
-
-            let html = `
-                <div style="padding: 20px; background: white; border-radius: 8px; margin-top: 20px;">
-                    <h3>${className} - 주차 설정</h3>
-                    <div style="margin-top: 20px;">
-            `;
-
-            ['beginner', 'intermediate', 'advanced'].forEach(level => {
-                const levelName = level === 'beginner' ? '기초' : level === 'intermediate' ? '중급' : '고급';
-                html += `
-                    <div class="weeks-selector">
-                        <h3>${levelName} 레벨</h3>
-                        <div class="weeks-grid">
-                `;
-
-                for (let i = 1; i <= 12; i++) {
-                    const isChecked = classData.enabledWeeks[level].includes(i) ? 'checked' : '';
-                    html += `
-                        <div class="week-checkbox">
-                            <input type="checkbox" id="${className}_${level}_${i}" ${isChecked} onchange="updateWeekSelection('${className}', '${level}', ${i})">
-                            <label for="${className}_${level}_${i}">${i}주</label>
-                        </div>
-                    `;
-                }
-
-                html += `
-                        </div>
-                    </div>
-                `;
-            });
-
-            html += `
-                    </div>
-                    <button class="teacher-btn" style="margin-top: 20px;" onclick="closeEditClass()">닫기</button>
-                </div>
-            `;
-
-            const classList = document.getElementById('classesList');
-            const editContainer = document.createElement('div');
-            editContainer.id = 'editClassContainer';
-            editContainer.innerHTML = html;
-            classList.appendChild(editContainer);
-        }
-
-        function updateWeekSelection(className, level, week) {
-            const classes = JSON.parse(localStorage.getItem('vibeClasses') || '{}');
-            const checkbox = document.getElementById(`${className}_${level}_${week}`);
-            const index = classes[className].enabledWeeks[level].indexOf(week);
-
-            if (checkbox.checked && index === -1) {
-                classes[className].enabledWeeks[level].push(week);
-            } else if (!checkbox.checked && index !== -1) {
-                classes[className].enabledWeeks[level].splice(index, 1);
-            }
-
-            localStorage.setItem('vibeClasses', JSON.stringify(classes));
-        }
-
-        function closeEditClass() {
-            const editContainer = document.getElementById('editClassContainer');
-            if (editContainer) {
-                editContainer.remove();
-            }
-        }
-
-        function deleteClass(className) {
-            if (confirm(`"${className}" 수업을 삭제하시겠습니까?`)) {
-                const classes = JSON.parse(localStorage.getItem('vibeClasses') || '{}');
-                delete classes[className];
-                localStorage.setItem('vibeClasses', JSON.stringify(classes));
-                updateClassesList();
-                loadClassList();
-            }
-        }
-
-        // 초기 로드
-        window.addEventListener('load', () => {
-            loadClassList();
-        });
     </script>
 </body>
 </html>
