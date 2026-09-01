@@ -1182,7 +1182,17 @@
 
             currentUser = classSelect;
             currentClass = classSelect;
-            enabledWeeks = classesData[classSelect].enabledWeeks;
+
+            // "admin" 반은 모든 주차(1-12)가 자동으로 활성화
+            if (classSelect === 'admin') {
+                enabledWeeks = {
+                    beginner: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                    intermediate: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                    advanced: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                };
+            } else {
+                enabledWeeks = classesData[classSelect].enabledWeeks;
+            }
 
             document.getElementById('loginScreen').style.display = 'none';
             document.getElementById('mainScreen').style.display = 'block';
